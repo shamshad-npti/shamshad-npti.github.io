@@ -15,6 +15,7 @@
         border: none;
         color: green;
         background: black;
+        font-size: 1.2em;
       }
       input:focus, input:hover {
         border: none;
@@ -28,7 +29,7 @@
       function calc() {
         elem = document.getElementById("exp");
         sol = document.getElementById("sol");
-        sol.innertText = eval(elem.value);
+        sol.innerText = eval(elem.value);
         return false;
       }
     </script>

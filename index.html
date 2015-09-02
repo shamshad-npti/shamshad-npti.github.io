@@ -11,7 +11,23 @@
         padding-left:10px;
         padding-top:4px;
       }
+      input {
+        border: none;
+        color: green;
+        background: black;
+      }
+      input:before {
+        content: '$ ';
+      }
     </style>
+    <script type="text/javascript" >
+      function calc() {
+        elem = document.getElementById("exp");
+        sol = document.getElementById("sol");
+        sol.append(elem.value);
+        return false;
+      }
+    </script>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -24,6 +40,6 @@
     <div>++++ Version: 0.0.0.0 +++++++++++++++++++++++++++++++++++++++</div>
     <div>=============================================================</div>
     <div id='sol'></div>
-    <div>$<form onsubmit="javascript:alert('ok');"><input type="text" /></form></div>
+    <div><form onsubmit="return calc();"><input type="text" id="exp" /></form></div>
   </body>
 </html>

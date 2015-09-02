@@ -28,7 +28,7 @@
       function calc() {
         elem = document.getElementById("exp");
         sol = document.getElementById("sol");
-        sol.innertText = eval(elem.val);
+        sol.innertText = eval(elem.value);
         return false;
       }
     </script>
@@ -38,12 +38,12 @@
   </head>
   <body style="background:black;color:green;">
     <div>=============================================================</div>
-    <div>++++ Hi there! (2+2=5??) Nope! Impossible! Check it here <div class="right-pd">++++</div></div>
-    <div>++++ This is a simple javascript based calculator with   <div class="right-pd">++++</div></div>
-    <div>++++ very limited capability. Play with it and have fun  <div class="right-pd">++++</div></div>
-    <div>++++ Version: 0.0.0.0                                    <div class="right-pd">++++</div></div>
+    <div>++++ Hi there! (2+2=5??) Nope! Impossible! Check it here     </div>
+    <div>++++ This is a simple javascript based calculator with       </div>
+    <div>++++ very limited capability. Play with it and have fun      </div>
+    <div>++++ Version: 0.0.0.0                                        </div>
     <div>=============================================================</div>
     <div id='sol'></div>
-    <div><form onsubmit="event.preventDefault(); return calc();">$<input type="text" id="exp" focus/></form></div>
+    <div><form onsubmit="event.preventDefault(); return calc();">$ <input type="text" id="exp" tabindex="1"/></form></div>
   </body>
 </html>

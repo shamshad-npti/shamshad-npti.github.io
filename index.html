@@ -16,15 +16,19 @@
         color: green;
         background: black;
       }
-      input:before {
-        content: '$ ';
+      input:focus, input:hover {
+        border: none;
+        outline: none;
+      }
+      div.right-pd{
+        float:right;
       }
     </style>
     <script type="text/javascript" >
       function calc() {
         elem = document.getElementById("exp");
         sol = document.getElementById("sol");
-        sol.append(elem.value);
+        sol.innertText = eval(elem.val);
         return false;
       }
     </script>
@@ -34,12 +38,12 @@
   </head>
   <body style="background:black;color:green;">
     <div>=============================================================</div>
-    <div>++++ Hi there! (2+2=5??) Nope! Impossible! Check it here ++++</div>
-    <div>++++ This is a simple javascript based calculator with ++++++</div>
-    <div>++++ very limited capability. Play with it and have fun +++++</div>
-    <div>++++ Version: 0.0.0.0 +++++++++++++++++++++++++++++++++++++++</div>
+    <div>++++ Hi there! (2+2=5??) Nope! Impossible! Check it here <div class="right-pd">++++</div></div>
+    <div>++++ This is a simple javascript based calculator with   <div class="right-pd">++++</div></div>
+    <div>++++ very limited capability. Play with it and have fun  <div class="right-pd">++++</div></div>
+    <div>++++ Version: 0.0.0.0                                    <div class="right-pd">++++</div></div>
     <div>=============================================================</div>
     <div id='sol'></div>
-    <div><form onsubmit="return calc();"><input type="text" id="exp" /></form></div>
+    <div><form onsubmit="event.preventDefault(); return calc();">$<input type="text" id="exp" focus/></form></div>
   </body>
 </html>

@@ -29,7 +29,7 @@
       function calc() {
         elem = document.getElementById("exp");
         sol = document.getElementById("sol");
-        sol.innerText = eval(elem.value);
+        sol.innerText = elem.value + "=" + eval(elem.value);
         return false;
       }
     </script>

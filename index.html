@@ -1,50 +1,45 @@
-<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Shamshad Alam : Passionate and Professional Programmer</title>
-    <style type="text/css">
-      div {
-        font-family:"helvetica";
-        font-size: 1.2em;
-        padding-left:10px;
-        padding-top:4px;
-      }
-      input {
-        border: none;
-        color: green;
-        background: black;
-        font-size: 1.2em;
-      }
-      input:focus, input:hover {
-        border: none;
-        outline: none;
-      }
-      div.right-pd{
-        float:right;
-      }
-    </style>
-    <script type="text/javascript" >
-      function calc() {
-        elem = document.getElementById("exp");
-        sol = document.getElementById("sol");
-        sol.innerText = elem.value + "=" + eval(elem.value);
-        return false;
-      }
-    </script>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  </head>
-  <body style="background:black;color:green;">
-    <div>=============================================================</div>
-    <div>++++ Hi there! (2+2=5??) Nope! Impossible! Check it here     </div>
-    <div>++++ This is a simple javascript based calculator with       </div>
-    <div>++++ very limited capability. Play with it and have fun      </div>
-    <div>++++ Version: 0.0.0.0                                        </div>
-    <div>=============================================================</div>
-    <div id='sol'></div>
-    <div><form onsubmit="event.preventDefault(); return calc();">$ <input type="text" id="exp" tabindex="1"/></form></div>
-  </body>
+<head>
+	<link rel="stylesheet" href="css/style.css" />
+	<title>Simple Math Calculator</title>
+</head>
+<body>
+	<div class="header">
+		<div>===================================================</div>
+		<div>+++++++ Simple Calulator for Mathematician ++++++++</div>
+		<div>++++++++++++++++ Version: 1.0.0.0 +++++++++++++++++</div>
+		<div>===================================================</div>
+	</div>
+	<div class="help">
+		<div class="head">Learn by Example</div>
+		<div>clear</div>
+		<div>3+4*3+8^2</div>
+		<div>x=5</div>
+		<div>y=10</div>
+		<div>x*y</div>
+		<div>pow(3, 4)</div>
+		<div>sin(pi/2)</div>
+		<div>sin(90 deg)</div>
+		<div>cos(0)</div>
+		<div>sinh(0)</div>
+		<div>m=[3, 4, 5]</div>
+		<div>m*2</div>
+		<div>m.^2</div>
+		<div>n=[[1, 2],[4, 9]]</div>
+		<div>p=[[5, 1],[-9, 1]]</div>
+		<div>n*p</div>
+		<div>log(32, 2)</div>
+		<div>log(e)</div>
+		<div>d(x,y)=sqrt(x^2+y^2)</div>
+	</div>
+	<div class="history" id="history"></div>
+	<div>
+		<form id="calc">
+			<lable for="expression">$</lable>
+			<input type="text" id="expression" autocomplete="off">
+		</font>
+	</div>
+<script type="text/javascript" src="js/math.min.js"></script>
+<script type="text/javascript" src="js/site.js"></script>
+</body>
 </html>

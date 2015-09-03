@@ -20,5 +20,7 @@
 		$("expression").value = "";
 		return false;
 	}
+	$("expression").focus();
+	$("expression").onblur = function() {$("expression").focus();};
 }());
 

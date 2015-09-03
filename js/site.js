@@ -3,7 +3,7 @@
 	clear = function() { $("history").innerHTML = "";};
 	parser = math.parser();
 	append = function(e) {
-		if(!e || e.trim().length === 0) return;
+		if(!e || (e = e.trim()).length === 0) return;
 		if(e == "clear") {clear(); return false;}
 		t = $("history").innerHTML;
 		q = "<div class='question'>" + e + "</div>";

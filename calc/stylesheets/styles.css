@@ -1,0 +1,69 @@
+body {
+    margin: 0px;
+    background: #ddd;
+}
+* {
+    transition: all ease-out 200ms;
+    -webkit-transition: all ease-out 200ms;
+}
+div.header {
+    background-color: black;
+    color: white;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+div.me {
+    float: left;
+    padding: 10px;
+}
+div.me div.name {
+    font-size: 1.6em;
+}
+div.me div.tags span {
+    font-size: .9em;
+}
+div.header a {
+    color: #ddd;
+    padding: 20px;
+    float: right;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+div.header a:visited, a:active {
+    color: #ddd;
+}
+
+div.header a:hover {
+    color:white;
+    background: #222;
+}
+
+div.header a.selected {
+    color: white;
+}
+div.content {
+    margin: 0px auto;
+    width: 1000px;
+}
+div.grouphead {
+    border: solid 5px transparent;
+    text-shadow: -1px 1px white;
+    margin-bottom: -80px;
+}
+div.grouptitle {
+    font-size: 1.6em;
+    padding-top: 80px;
+    text-decoration: underline;
+}
+div.groupcontent {
+    padding: 10px;
+}
+div.groupcontent ul {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+.clearfix {
+    clear: both;
+}

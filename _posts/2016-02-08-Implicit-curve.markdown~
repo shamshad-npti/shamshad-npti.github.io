@@ -1,0 +1,73 @@
+---
+layout: post
+title:  "Implicit curve : An experiment"
+date:   2016-02-08 22:34:34
+categories: Implicit Curve
+---
+The function which is defined as $ f(x, y) = 0 $ is known as
+implicit curve. e.g. <code>x sin(x) + y cos(x) - 1 = 0</code>. Similarly
+The function which is in the form of <code>f(x, y, z) = 0</code> is called
+implicit surface. Sometimes it is possible to convert an implicit reprentation
+into the explicit form, as <code>y - x<sup>2</sup>=0</code> can be written as
+<code>y = x<sup>2</sup></code>, parmeterized form but in some cases the
+transformation can be hard.
+
+### How does quadtree algorithm works
+
+### A simple test
+{% highlight java %}
+public class PerformanceTest {
+	public static void main(String[] str) {
+		long time = now();
+		int k = 0;
+		int z = 10000000;
+		for(int i = 0; i < z; i++) {
+			if(k < z) k += i;
+			else k -= i;
+		}
+		time = now() - time;
+		System.out.println("Value of k : " + k);
+		System.out.println("Time taken to iterate " + z + " times: " + time);
+	}
+	public static long now() {
+		return System.currentTimeMillis();	
+	}
+}
+// output : Time taken to execute 10000000 iteration: 20ms
+{% endhighlight %}
+
+{% highlight javascript %}
+time = Date.now();
+k = 0;
+z = 10000000;
+for(i = 0; i < z; i++) {
+	k++;		
+}
+time = Date.now() - time;
+console.log("Time taken to iterate " + z + " times: " + time + "ms");
+// console output : Time taken to iterate 10000000 times: 15231ms
+{% endhighlight %}
+
+### A digression to compiler optimization optimization
+
+Almost all modern compilers optimize the code during compile time and remove redundate code.
+To verify it you may run a simple double for loop in C++ or java without body. You will notice
+that the loop doesn't affect the total execution time of the program. However when you insert some 
+code in the loop like update a variable and use it outside the loop, you will see the actual
+execution time of the program.
+{% highlight java %}
+// most compiler ignores this code
+for(int i = 0; i < Integer.MAX_VALUE; i++) {
+	for(int j = 0; j < Integer.MAX_VALUE; j++) {
+		// do nothing	
+	}
+}
+// it wouldn't be ignored so it affect total execution time
+long counter = 0;
+for(int i = 0; i < Integer.MAX_VALUE; i++) {
+	for(int j = 0; j < Integer.MAX_VALUE; j++) {
+		counter++;
+	}
+}
+System.out.println("Value of  counter is: " + counter);
+{% endhighlight %}

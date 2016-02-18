@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Intersection between Implicit Curves</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed">
+    <link rel="canonical" href="/implicit/curve/2016/02/09/Intersection-Between-Implicit-Cruve/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script type="text/javascript">!function(t,e,n){function a(t){var a=e.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"===e.location.protocol?"https":"http")+":"+n,(t||e.body||e.head).appendChild(a)}function o(){var t=e.getElementsByTagName("script"),n=t[t.length-1];return n.parentNode} var p=o();t.spotId="sp_9cpH7cp1",t.parentElement=p,a(p)}(window.SPOTIM={},document,"//www.spot.im/launcher/bundle.js");</script>
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Hello!</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About - Shamshad Alam</a>
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Intersection between Implicit Curves</h1>
+    <p class="meta">Feb 9, 2016</p>
+  </header>
+
+  <article class="post-content">
+  <h2 id="interscetion-between-two-implicit-curves">Interscetion between two implicit curves</h2>
+<p>In this post I would discuss two different method to find intersection between two implicit curves <script type="math/tex">f(x, y) = 0</script>
+and <script type="math/tex">g(x, y) = 0</script>. I would start with simple problem formulation, manual solution followed by two methods - Newton’s
+and Broyden’s method to find intersections.</p>
+
+<h3 id="problem-formulation">Problem formulation</h3>
+<p>For two different implicit curves <script type="math/tex">f(x, y) = 0</script> and <script type="math/tex">g(x, y) = 0</script> find some points <script type="math/tex">(x_k, y_k)</script>,
+where <script type="math/tex">x_{min} \le x_k \le x_{max}</script> and <script type="math/tex">y_{min} \le y_k \le y_{max}</script>, in <script type="math/tex">\mathbb{R}^2</script> such that <script type="math/tex">f(x_k, y_k) = 0</script>
+and <script type="math/tex">g(x_k, y_k) = 0</script>.</p>
+
+<h4 id="example">Example</h4>
+<p>Let <script type="math/tex">f(x, y) = y - x^2 - 4 = 0</script> and <script type="math/tex">g(x, y) = y - 2x^2 = 0</script>. From second equation we get <script type="math/tex">y = 2x^2</script>. When we substitute this value in the first equation we get <script type="math/tex">x = \pm 2</script>. Thus <script type="math/tex">(x, y) = \{(-2, 8), (2, 8)\}</script> satisfies both equation. But, it is not always so simple. It is difficult to find the solution of <script type="math/tex">x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0</script> and <script type="math/tex">sin(x + 2y) + xy = 0</script>.</p>
+
+<h3 id="newtons-method">Newton’s Method</h3>
+<p>Newton’s method is an iterative method which is used to find roots of function <script type="math/tex">f(x) = 0</script>. In this method we begin with some intial guess <script type="math/tex">x_0</script> and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved</p>
+
+<script type="math/tex; mode=display">x_{k+1} = x_{k} - \frac {f(x_k)} {f'(x_k)}</script>
+
+<p>The same idea can be extended to <script type="math/tex">\mathbb{R}^2</script> find intersection between two implicit curves. we know that</p>
+
+<script type="math/tex; mode=display">f(x + \Delta x, y + \Delta y) = f(x, y) + [\frac {\partial f(x, y)} {\partial x}, \frac {\partial f(x, y)} {\partial y}] [\Delta x, \Delta y]^T + O(\epsilon^2)</script>
+
+<p>We begin with some intial guess <script type="math/tex">(x, y)</script>, and try to move small step <script type="math/tex">(\Delta x, \Delta y)</script> in the best direction
+that is the move for which <script type="math/tex">f(x + \Delta x, y + \Delta y) \approx g(x + \Delta x, y + \Delta y) \approx 0</script>.</p>
+
+<p>To avoid clutter let’s define</p>
+
+<p><script type="math/tex">\Delta x = x_{k+1} - x_k</script>,
+<script type="math/tex">\Delta y = y_{k+1} - y_k</script>,
+<script type="math/tex">f(x, y) = f_k</script>,
+<script type="math/tex">f(x + \Delta x, y + \Delta y) = f_{k+1}</script>, 
+<script type="math/tex">\partial f(x, y) /\partial x = f_x</script>,
+<script type="math/tex">\partial f(x, y) /\partial y = f_y</script>,
+and the same for g(x). We can write</p>
+
+<script type="math/tex; mode=display">F = - J \Delta X</script>
+
+<script type="math/tex; mode=display">\Rightarrow \Delta X = -J^{-1} F</script>
+
+<p>where <script type="math/tex">% <![CDATA[
+F = \begin{bmatrix}f_k & g_k\end{bmatrix}^T, \Delta X = \begin{bmatrix}\Delta x & \Delta y \end{bmatrix}^T %]]></script>, and</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+J = \begin{bmatrix}
+f_x & f_y \\
+g_x & g_y
+\end{bmatrix} %]]></script>
+
+<p>Since <script type="math/tex">J</script> is a 2x2 square matrix it is simple to find its inverse.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+J^{-1} = \frac{1} {f_xg_y - g_xf_y} \begin{bmatrix}
+g_y & -f_y \\
+-g_x & f_x
+\end{bmatrix} %]]></script>
+
+<p>Now the expression becomes</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{bmatrix} x_{k+1} \\ y_{k+1} \end{bmatrix} = \begin{bmatrix} x_{k} \\ y_{k} \end{bmatrix}
+- \frac{1} {f_xg_y - g_xf_y} \begin{bmatrix}
+g_y & -f_y \\
+-g_x & f_x
+\end{bmatrix} \begin{bmatrix} f_{k} \\ g_{k} \end{bmatrix} %]]></script>
+
+<p>Where <script type="math/tex">{f_xg_y - g_xf_y} \ne 0</script></p>
+
+<p>The idea can be extended to equation even in higher dimension.</p>
+
+<h4 id="damping">Damping</h4>
+<p>Sometimes the step size <script type="math/tex">\Delta X</script> that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor <script type="math/tex">\alpha</script></p>
+
+<p><script type="math/tex">X_{k+1} = X_{k} - \alpha J^{-1} F_k,</script> where <script type="math/tex">0 \lt \alpha \le 1</script></p>
+
+<p>In theory we use line search to find the best <script type="math/tex">\alpha</script>. In practice, for simple application, we can use binary search
+to find a good <script type="math/tex">\alpha</script> that reduces <script type="math/tex">||F_{k+1} - F_k||</script></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// java code for the intersection of implicit curves</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solver</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">interface</span> <span class="nc">FunctionXY</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">evaluate</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">);</span>
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">derivativeX</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">);</span>
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">derivativeY</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isZero</span><span class="o">(</span><span class="kt">double</span> <span class="n">v</span><span class="o">,</span> <span class="kt">double</span> <span class="n">eps</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">eps</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">v</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">[]&gt;</span> <span class="n">sols</span><span class="o">,</span> <span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sols</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">double</span><span class="o">[]</span> <span class="n">v</span> <span class="o">=</span> <span class="n">sols</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">isZero</span><span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">v</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">6</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">isZero</span><span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">v</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">6</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">sols</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="kt">double</span><span class="o">[]{</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">[]&gt;</span> <span class="nf">solve</span><span class="o">(</span><span class="n">FunctionXY</span> <span class="n">f</span><span class="o">,</span> <span class="n">FunctionXY</span> <span class="n">g</span><span class="o">,</span> 
+        <span class="kt">double</span><span class="o">[]</span> <span class="n">bounds</span><span class="o">,</span> <span class="kt">double</span> <span class="n">eps</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span><span class="o">[][]</span> <span class="n">samples</span> <span class="o">=</span> <span class="n">rootSamples</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">g</span><span class="o">,</span> <span class="n">bounds</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">[]&gt;</span> <span class="n">sols</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="kt">double</span> <span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">,</span> <span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">,</span> <span class="n">er</span><span class="o">,</span> <span class="n">er1</span><span class="o">,</span> <span class="n">fv</span><span class="o">,</span> <span class="n">gv</span><span class="o">,</span> <span class="n">fv1</span><span class="o">,</span> <span class="n">gv1</span><span class="o">;</span>
+        <span class="kt">double</span> <span class="n">jfx</span><span class="o">,</span> <span class="n">jfy</span><span class="o">,</span> <span class="n">jgx</span><span class="o">,</span> <span class="n">jgy</span><span class="o">,</span> <span class="n">det</span><span class="o">,</span> <span class="n">alpha</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">MAX_ITR</span> <span class="o">=</span> <span class="mi">8</span><span class="o">;</span>
+        <span class="kt">boolean</span> <span class="n">success</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samples</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="n">samples</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">0</span><span class="o">];</span>
+            <span class="n">y1</span> <span class="o">=</span> <span class="n">samples</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">1</span><span class="o">];</span>
+            <span class="n">fv</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+            <span class="n">gv</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+            <span class="n">er</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">fv</span><span class="o">)</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">gv</span><span class="o">);</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">MAX_ITR</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isZero</span><span class="o">(</span><span class="n">er</span><span class="o">,</span> <span class="n">eps</span><span class="o">);</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">jfx</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">derivativeX</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+                <span class="n">jfy</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">derivativeY</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+                <span class="n">jgx</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="na">derivativeX</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+                <span class="n">jgy</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="na">derivativeY</span><span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+                <span class="n">det</span> <span class="o">=</span> <span class="n">jfx</span> <span class="o">*</span> <span class="n">jgy</span> <span class="o">-</span> <span class="n">jfy</span> <span class="o">*</span> <span class="n">jgx</span><span class="o">;</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">isZero</span><span class="o">(</span><span class="n">det</span><span class="o">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">8</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="n">dx</span> <span class="o">=</span> <span class="o">(</span><span class="n">jgy</span> <span class="o">*</span> <span class="n">fv</span> <span class="o">-</span> <span class="n">jfy</span> <span class="o">*</span> <span class="n">gv</span><span class="o">)</span> <span class="o">/</span> <span class="n">det</span><span class="o">;</span>
+                <span class="n">dy</span> <span class="o">=</span> <span class="o">(</span><span class="n">jgx</span> <span class="o">*</span> <span class="n">fv</span> <span class="o">-</span> <span class="n">jfx</span> <span class="o">*</span> <span class="n">gv</span><span class="o">)</span> <span class="o">/</span> <span class="n">det</span><span class="o">;</span>
+                <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">;</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="c1">// We can use line search that satisfies</span>
+                <span class="c1">// Wolfe condition, but for now keep it</span>
+                <span class="c1">// simple</span>
+                <span class="k">do</span> <span class="o">{</span>
+                    <span class="n">x2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">dx</span><span class="o">;</span>
+                    <span class="n">y2</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">dy</span><span class="o">;</span>
+                    <span class="n">fv1</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">);</span>
+                    <span class="n">gv1</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">evaluate</span><span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">);</span>
+                    <span class="n">er1</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">fv1</span><span class="o">)</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">gv1</span><span class="o">);</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">er1</span> <span class="o">&lt;</span> <span class="n">er</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                        <span class="n">er</span> <span class="o">=</span> <span class="n">er1</span><span class="o">;</span>
+                        <span class="n">fv</span> <span class="o">=</span> <span class="n">fv1</span><span class="o">;</span>
+                        <span class="n">gv</span> <span class="o">=</span> <span class="n">gv1</span><span class="o">;</span>
+                        <span class="n">x1</span> <span class="o">=</span> <span class="n">x2</span><span class="o">;</span>
+                        <span class="n">y1</span> <span class="o">=</span> <span class="n">y2</span><span class="o">;</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">alpha</span> <span class="o">*=</span> <span class="mf">0.8</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">while</span><span class="o">(</span><span class="n">alpha</span> <span class="o">&gt;=</span> <span class="mf">0.01</span><span class="o">);</span>
+
+                <span class="k">if</span><span class="o">(!</span><span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span><span class="o">(</span><span class="n">isZero</span><span class="o">(</span><span class="n">er</span><span class="o">,</span> <span class="n">eps</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">sols</span><span class="o">,</span> <span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">sols</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * divide the entire space in 10x10 grid and evaluate</span>
+<span class="cm">     * f and g at each vertex return mid point of consecutive</span>
+<span class="cm">     * vertices for which both functions change their sign.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">double</span><span class="o">[][]</span> <span class="nf">rootSamples</span><span class="o">(</span><span class="n">FunctionXY</span> <span class="n">f</span><span class="o">,</span> <span class="n">FunctionXY</span> <span class="n">g</span><span class="o">,</span> <span class="kt">double</span><span class="o">[]</span> <span class="n">bounds</span><span class="o">,</span>
+            <span class="kt">int</span> <span class="n">sampleXSize</span><span class="o">,</span> <span class="kt">int</span> <span class="n">sampleYSize</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h4 id="limitations">Limitations</h4>
+<ul>
+  <li>For implicit curve both functions should be smooth in <script type="math/tex">\mathbb{R}^2</script> and differentiable</li>
+  <li>It is computationally expensive to evaluate derivative at each step</li>
+  <li>Near singular jacobian matrix sometimes leads to divergence</li>
+  <li>If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge</li>
+</ul>
+
+<h3 id="broydens-method">Broyden’s Method</h3>
+<p>Broyden’s method, originally described by CG Broyden, is a quasi-Newton method for root finding. In contrast to Newton’s method, in which we have to calculate jacobian matrix <script type="math/tex">\mathbf{J}</script> in each iteration, we calculate jacobian only in the first iteration and we do rank one update in other iterations. Broyden’s method converges to solution in <script type="math/tex">2n</script> iterations for linear system, however it may even fail to converge for non-linear system of equation.</p>
+
+<p>We start with the idea of secant method for one variable. The finite difference approximation of <script type="math/tex">f(x)</script> is given by</p>
+
+<script type="math/tex; mode=display">f'(x_n) = \frac {f(x_n) - f(x_{n-1})} {x_n - x_{n-1}} = \frac {\Delta f(x_n)} {\Delta x_n}</script>
+
+<p>When we substitute this value to Newton iteration, we get</p>
+
+<script type="math/tex; mode=display">x_{n+1} = x_n - \frac {f(x_n)} {f'(x_n)}</script>
+
+<p>To develop intuition about how we can update <script type="math/tex">f'(x_n)</script> from <script type="math/tex">f'(x_{n-1})</script> let’s start with following expression all in <script type="math/tex">\mathbb {R}</script></p>
+
+<script type="math/tex; mode=display">f'(x_n) = \frac {\Delta f(x_n)} {\Delta x_n} = f'(x_{n-1}) + \frac {\Delta f(x_n) - f'(x_{n-1}) \Delta x_n} {\Delta x_n}</script>
+
+<p>Here it seems absurd to expand middle term to get right hand side expression. But we notice that in the middle term we are directly calculating <script type="math/tex">f'(x_n)</script> but in right hand side we are updating previous derivative to get new one.</p>
+
+<p>To extend the idea let us define following notations in <script type="math/tex">\mathbb {R}^n</script></p>
+
+<script type="math/tex; mode=display">\mathbf {x} = (x_1, x_2, \dots, x_n)</script>
+
+<script type="math/tex; mode=display">\mathbf {f} = (f_1(x_1, x_2, \dots, x_n), f_2(x_1, x_2, \dots, x_n), \dots, f_n(x_1, x_2, \dots, x_n))</script>
+
+<p>The secant equation using jacobian matrix can be written as</p>
+
+<script type="math/tex; mode=display">\mathbf {J_n(x_n-x_{n-1})=f(x_n) - f(x_{n-1})}</script>
+
+<p>To reduce clutters we define
+<script type="math/tex">\mathbf {f_n = f(x_n)}</script>, 
+<script type="math/tex">\mathbf {\Delta x_n = x_n-x_{n-1}}</script> and 
+<script type="math/tex">\mathbf {\Delta f_n = f(x_n) - f(x_{n-1})}</script></p>
+
+<p>Now using new notations we can write</p>
+
+<script type="math/tex; mode=display">\mathbf {J_n\Delta x_n = \Delta f_n}</script>
+
+<script type="math/tex; mode=display">\Rightarrow \mathbf {J_n = \Delta f_n \Delta {x_n}^T (\Delta x_n \Delta {x_n}^T)^{-1}}</script>
+
+<p>We can see that,</p>
+
+<script type="math/tex; mode=display">\mathbf {\Delta f_n \Delta x^T = J_{n-1} \Delta x \Delta x^T + \Delta f_n \Delta x^T - J_{n-1} \Delta x \Delta x^T}</script>
+
+<script type="math/tex; mode=display">\Rightarrow \mathbf {\Delta f_n \Delta {x_n}^T = (J_{n-1} + \frac {\Delta f_n - J_{n-1} \Delta x_n} {\Delta {x_n}^T \Delta x_n} \Delta {x_n}^T) (\Delta x_n \Delta {x_n}^T) }</script>
+
+<p>Therefore,</p>
+
+<script type="math/tex; mode=display">\mathbf {J_n = \Delta f_n \Delta {x_n}^T (\Delta x_n \Delta {x_n}^T)^{-1} = J_{n-1} + \frac {\Delta f_n - J_{n-1} \Delta x_n} {\Delta {x_n}^T \Delta x_n} \Delta {x_n}^T}</script>
+
+<p>Alternatively we can use Sherman-Morrison formula to find directly inverse of Jacobian matrix:</p>
+
+<script type="math/tex; mode=display">\mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}^T H_{n-1} \Delta f_n} \Delta {x_n}^T \Delta H_{n-1}}</script>
+
+<p>where <script type="math/tex">\mathbf {H_n = J_n^{-1}}</script></p>
+
+<p>Happy Reading!</p>
+
+<h3 id="reference">Reference</h3>
+
+<p>[1] - Broyden, C. G. (October 1965), <em>“A Class of Methods for Solving Nonlinear Simultaneous Equations”</em>, Mathematics of Computation (American Mathematical Society) 19 (92): 577–593. <a href="https://dx.doi.org/10.2307%2F2003941" target="_blank">doi:https://dx.doi.org/10.2307%2F2003941</a></p>
+
+<p>[2] - Jorge Nocedal, Stephen J. Wright. <em>“Numerical Optimization”</em></p>
+
+  </article>
+
+</div>
+      </div>
+    <div class="spot-im-frame-inpage" data-post-id=""></div>
+    </div>
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Hello!</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Hello!</li>
+        <li><a href="mailto:shamshad.npti@gmail.com">shamshad.npti@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/shamshad.npti">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">shamshad.npti</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/shamshad_saraindia">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">shamshad_saraindia</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

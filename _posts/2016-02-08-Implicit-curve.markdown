@@ -1,8 +1,9 @@
 ---
 layout: post
-title:  "Implicit curve : An experiment"
+title:  "Quadtree Algorithm for Implicit Curve Drawing"
 date:   2016-02-08 22:34:34
 categories: Implicit Curve
+post_id: implicit_curve
 ---
 ## Implicit Curve
 

@@ -294,6 +294,30 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
 <p>where <script type="math/tex">\mathbf {H_n = J_n^{-1}}</script></p>
 
+<h3 id="other-applications">Other Applications</h3>
+
+<h4 id="geometry">Geometry</h4>
+<p>Root finding method can be used to find the tangents of a curve from a given point. For example - let the curve be <script type="math/tex">f(x, y) = 0</script>, point <script type="math/tex">Q (x, y)</script> is a point on the curve and we want to draw some tangent lines from point <script type="math/tex">P (x_k, y_k)</script>. When we draw a line <script type="math/tex">PQ</script>, slope of <script type="math/tex">PQ</script> must be equal to the slope of curve at <script type="math/tex">Q</script>. In mathematical terms we can write</p>
+
+<script type="math/tex; mode=display">\frac {dy} {dx} = \frac {y - y_k} {x - x_k}</script>
+
+<p>The right hand side represents the slope of the line passing through two distinct points <script type="math/tex">P</script> and <script type="math/tex">Q</script>. The term in the left is derivative of curve which can be calculated as</p>
+
+<script type="math/tex; mode=display">\frac {dy} {dx} = - \frac {\partial f(x, y) / \partial x}  {\partial f(x, y) / \partial y}</script>
+
+<p>After some manipulation we will get another implicit curve equation as</p>
+
+<script type="math/tex; mode=display">g(x, y) = \frac {dy} {dx} (x - x_k) - y + y_k = 0</script>
+
+<p>Now we can solve <script type="math/tex">f(x, y)</script> and <script type="math/tex">g(x, y)</script> to get some points <script type="math/tex">Qs</script> on the curve where the slope of the curve is same as that of the line passing through <script type="math/tex">PQ</script>.</p>
+
+<h4 id="local-minimum-of-function-minimising-cost-function--machine-learning">Local minimum of function (Minimising cost function : Machine Learning)</h4>
+<p>This is a widely studied problem because we often need to find minimum or maximum value of a function in engineering, mathematics, statistics, machine learning and operation research. Here we only discuss minimization because maximizing <script type="math/tex">\mathbf {f(x)}</script> is equivalent to minimizing <script type="math/tex">\mathbf {-f(x)}</script>. In this problem we are interested in finding a stationary point <script type="math/tex">\mathbf{x^*}</script> which statisfies <script type="math/tex">\mathbf {f(x^* + p) \ge f(x^*)}</script> where <script type="math/tex">\mathbf {f(x^* + p)}</script> is the value of function in the close neighborhood of <script type="math/tex">x^*</script>. At the stationary point</p>
+
+<script type="math/tex; mode=display">\mathbf { \frac {\partial f(x)} {\partial x_i} } = 0</script>
+
+<p>This partial derivatives will give us <script type="math/tex">n</script> equations in <script type="math/tex">\mathbb{R^n}</script>. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.</p>
+
 <p>Happy Reading!</p>
 
 <h3 id="reference">Reference</h3>

@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Quadtree Algorithm for Implicit Curve Drawing"
+description: "Explanation of quadtree algorithm for implicit curve drawing, and a brief overview of marching square, :-)"
 date:   2016-02-08 22:34:34
 categories: Implicit Curve
 id: implicit_curve

@@ -5,8 +5,8 @@
     <description>This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 19 Feb 2016 11:13:53 +0530</pubDate>
-    <lastBuildDate>Fri, 19 Feb 2016 11:13:53 +0530</lastBuildDate>
+    <pubDate>Fri, 19 Feb 2016 16:59:43 +0530</pubDate>
+    <lastBuildDate>Fri, 19 Feb 2016 16:59:43 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -243,6 +243,30 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}^T H_{n-1} \Delta f_n} \Delta {x_n}^T \Delta H_{n-1}}&lt;/script&gt;
 
 &lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;\mathbf {H_n = J_n^{-1}}&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;other-applications&quot;&gt;Other Applications&lt;/h3&gt;
+
+&lt;h4 id=&quot;geometry&quot;&gt;Geometry&lt;/h4&gt;
+&lt;p&gt;Root finding method can be used to find the tangents of a curve from a given point. For example - let the curve be &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = 0&lt;/script&gt;, point &lt;script type=&quot;math/tex&quot;&gt;Q (x, y)&lt;/script&gt; is a point on the curve and we want to draw some tangent lines from point &lt;script type=&quot;math/tex&quot;&gt;P (x_k, y_k)&lt;/script&gt;. When we draw a line &lt;script type=&quot;math/tex&quot;&gt;PQ&lt;/script&gt;, slope of &lt;script type=&quot;math/tex&quot;&gt;PQ&lt;/script&gt; must be equal to the slope of curve at &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;. In mathematical terms we can write&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac {dy} {dx} = \frac {y - y_k} {x - x_k}&lt;/script&gt;
+
+&lt;p&gt;The right hand side represents the slope of the line passing through two distinct points &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;. The term in the left is derivative of curve which can be calculated as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac {dy} {dx} = - \frac {\partial f(x, y) / \partial x}  {\partial f(x, y) / \partial y}&lt;/script&gt;
+
+&lt;p&gt;After some manipulation we will get another implicit curve equation as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;g(x, y) = \frac {dy} {dx} (x - x_k) - y + y_k = 0&lt;/script&gt;
+
+&lt;p&gt;Now we can solve &lt;script type=&quot;math/tex&quot;&gt;f(x, y)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y)&lt;/script&gt; to get some points &lt;script type=&quot;math/tex&quot;&gt;Qs&lt;/script&gt; on the curve where the slope of the curve is same as that of the line passing through &lt;script type=&quot;math/tex&quot;&gt;PQ&lt;/script&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;local-minimum-of-function-minimising-cost-function--machine-learning&quot;&gt;Local minimum of function (Minimising cost function : Machine Learning)&lt;/h4&gt;
+&lt;p&gt;This is a widely studied problem because we often need to find minimum or maximum value of a function in engineering, mathematics, statistics, machine learning and operation research. Here we only discuss minimization because maximizing &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f(x)}&lt;/script&gt; is equivalent to minimizing &lt;script type=&quot;math/tex&quot;&gt;\mathbf {-f(x)}&lt;/script&gt;. In this problem we are interested in finding a stationary point &lt;script type=&quot;math/tex&quot;&gt;\mathbf{x^*}&lt;/script&gt; which statisfies &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f(x^* + p) \ge f(x^*)}&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f(x^* + p)}&lt;/script&gt; is the value of function in the close neighborhood of &lt;script type=&quot;math/tex&quot;&gt;x^*&lt;/script&gt;. At the stationary point&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf { \frac {\partial f(x)} {\partial x_i} } = 0&lt;/script&gt;
+
+&lt;p&gt;This partial derivatives will give us &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; equations in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R^n}&lt;/script&gt;. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.&lt;/p&gt;
 
 &lt;p&gt;Happy Reading!&lt;/p&gt;
 

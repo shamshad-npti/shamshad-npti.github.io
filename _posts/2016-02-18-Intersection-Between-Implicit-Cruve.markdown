@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Intersection between Implicit Curves"
+description: Discussion on Newton's method and Broyden's method with some interesting application in geometry and machine learning ;-)
 date:   2016-02-08 22:34:34
 categories: Implicit Curve
 id: intersection_between_implicit_curves
@@ -235,6 +236,30 @@ Alternatively we can use Sherman-Morrison formula to find directly inverse of Ja
 $$ \mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}^T H_{n-1} \Delta f_n} \Delta {x_n}^T \Delta H_{n-1}} $$
 
 where $$ \mathbf {H_n = J_n^{-1}} $$
+
+### Other Applications
+
+#### Geometry
+Root finding method can be used to find the tangents of a curve from a given point. For example - let the curve be $$ f(x, y) = 0 $$, point $$ Q (x, y) $$ is a point on the curve and we want to draw some tangent lines from point $$ P (x_k, y_k) $$. When we draw a line $$ PQ $$, slope of $$ PQ $$ must be equal to the slope of curve at $$ Q $$. In mathematical terms we can write
+
+$$ \frac {dy} {dx} = \frac {y - y_k} {x - x_k} $$
+
+The right hand side represents the slope of the line passing through two distinct points $$ P $$ and $$ Q $$. The term in the left is derivative of curve which can be calculated as
+
+$$ \frac {dy} {dx} = - \frac {\partial f(x, y) / \partial x}  {\partial f(x, y) / \partial y} $$
+
+After some manipulation we will get another implicit curve equation as
+
+$$ g(x, y) = \frac {dy} {dx} (x - x_k) - y + y_k = 0 $$
+
+Now we can solve $$ f(x, y) $$ and $$ g(x, y) $$ to get some points $$ Qs $$ on the curve where the slope of the curve is same as that of the line passing through $$ PQ $$.
+
+#### Local minimum of function (Minimising cost function : Machine Learning)
+This is a widely studied problem because we often need to find minimum or maximum value of a function in engineering, mathematics, statistics, machine learning and operation research. Here we only discuss minimization because maximizing $$ \mathbf {f(x)} $$ is equivalent to minimizing $$ \mathbf {-f(x)} $$. In this problem we are interested in finding a stationary point $$ \mathbf{x^*} $$ which statisfies $$ \mathbf {f(x^* + p) \ge f(x^*)} $$ where $$ \mathbf {f(x^* + p)} $$ is the value of function in the close neighborhood of $$ x^* $$. At the stationary point
+
+$$ \mathbf { \frac {\partial f(x)} {\partial x_i} } = 0 $$
+
+This partial derivatives will give us $$ n $$ equations in $$ \mathbb{R^n} $$. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.
 
 Happy Reading!
 

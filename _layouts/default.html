@@ -11,8 +11,24 @@
       <div class="wrap">
       {{ content }}
       </div>
-    <div class="spot-im-frame-inpage" data-post-id="{{ post_id }}"></div>
     </div>
+    {% if page.comments %}
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_config = function () {
+            this.page.url = "{{ site.url }}{{ page.url | replace:'index.html',''}}";
+            this.page.identifier = '{{ page.id }}'; 
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            
+            s.src = '//httpshamshadnptigithubio.disqus.com/embed.js';
+            
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    {% endif %}
     {% include footer.html %}
 
     </body>

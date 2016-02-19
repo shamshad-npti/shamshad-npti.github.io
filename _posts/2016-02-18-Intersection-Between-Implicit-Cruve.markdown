@@ -3,7 +3,8 @@ layout: post
 title:  "Intersection between Implicit Curves"
 date:   2016-02-08 22:34:34
 categories: Implicit Curve
-post_id: intersection_between_implicit_curves
+id: intersection_between_implicit_curves
+comments: true
 ---
 Interscetion between two implicit curves
 ---

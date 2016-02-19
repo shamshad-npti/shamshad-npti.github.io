@@ -3,7 +3,8 @@ layout: post
 title:  "Quadtree Algorithm for Implicit Curve Drawing"
 date:   2016-02-08 22:34:34
 categories: Implicit Curve
-post_id: implicit_curve
+id: implicit_curve
+comments: true
 ---
 ## Implicit Curve
 

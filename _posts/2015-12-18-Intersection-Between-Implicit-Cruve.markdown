@@ -195,7 +195,7 @@ $$ f(x, y) = x^2 - 2xy + y^2 + 10^{-6} = 0 $$
 
 $$ g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0 $$
 
-
+You may try to visualize the graph
 #### Limitations
 * For implicit curve both functions should be smooth in $$ \mathbb{R}^2 $$ and differentiable
 * It is computationally expensive to evaluate derivative at each step

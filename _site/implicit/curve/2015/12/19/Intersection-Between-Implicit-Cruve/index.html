@@ -253,13 +253,12 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
 <script type="math/tex; mode=display">g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0</script>
 
-<h4 id="limitations">Limitations</h4>
-<ul>
-  <li>For implicit curve both functions should be smooth in <script type="math/tex">\mathbb{R}^2</script> and differentiable</li>
-  <li>It is computationally expensive to evaluate derivative at each step</li>
-  <li>Near singular jacobian matrix sometimes leads to divergence</li>
-  <li>If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge</li>
-</ul>
+<p>You may try to visualize the graph
+#### Limitations
+* For implicit curve both functions should be smooth in <script type="math/tex">\mathbb{R}^2</script> and differentiable
+* It is computationally expensive to evaluate derivative at each step
+* Near singular jacobian matrix sometimes leads to divergence
+* If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge</p>
 
 <h3 id="broydens-method">Broyden’s Method</h3>
 <p>Broyden’s method, originally described by CG Broyden, is a quasi-Newton method for root finding. In contrast to Newton’s method, in which we have to calculate jacobian matrix <script type="math/tex">\mathbf{J}</script> in each iteration, we calculate jacobian only in the first iteration and we do rank one update in other iterations. Broyden’s method converges to solution in <script type="math/tex">2n</script> iterations for linear system, however it may even fail to converge for non-linear system of equation.</p>

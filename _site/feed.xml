@@ -5,8 +5,8 @@
     <description>This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 22 Feb 2016 14:31:13 +0530</pubDate>
-    <lastBuildDate>Mon, 22 Feb 2016 14:31:13 +0530</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2016 20:43:48 +0530</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2016 20:43:48 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -203,13 +203,12 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0&lt;/script&gt;
 
-&lt;h4 id=&quot;limitations&quot;&gt;Limitations&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;For implicit curve both functions should be smooth in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^2&lt;/script&gt; and differentiable&lt;/li&gt;
-  &lt;li&gt;It is computationally expensive to evaluate derivative at each step&lt;/li&gt;
-  &lt;li&gt;Near singular jacobian matrix sometimes leads to divergence&lt;/li&gt;
-  &lt;li&gt;If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;You may try to visualize the graph
+#### Limitations
+* For implicit curve both functions should be smooth in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^2&lt;/script&gt; and differentiable
+* It is computationally expensive to evaluate derivative at each step
+* Near singular jacobian matrix sometimes leads to divergence
+* If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge&lt;/p&gt;
 
 &lt;h3 id=&quot;broydens-method&quot;&gt;Broyden’s Method&lt;/h3&gt;
 &lt;p&gt;Broyden’s method, originally described by CG Broyden, is a quasi-Newton method for root finding. In contrast to Newton’s method, in which we have to calculate jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf{J}&lt;/script&gt; in each iteration, we calculate jacobian only in the first iteration and we do rank one update in other iterations. Broyden’s method converges to solution in &lt;script type=&quot;math/tex&quot;&gt;2n&lt;/script&gt; iterations for linear system, however it may even fail to converge for non-linear system of equation.&lt;/p&gt;

@@ -2,7 +2,7 @@
 layout: post
 title:  "Intersection between Implicit Curves"
 description: Discussion on Newton's method and Broyden's method with some interesting application in geometry and machine learning ;-)
-date:   2016-02-08 22:34:34
+date:   2015-12-18 22:34:34
 categories: Implicit Curve
 id: intersection_between_implicit_curves
 comments: true
@@ -81,6 +81,7 @@ $$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
 In theory we use line search to find the best $$ \alpha $$. In practice, for simple application, we can use binary search
 to find a good $$ \alpha $$ that reduces $$ ||F_{k+1} - F_k|| $$
 
+_Browse code [here](https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java)
 {%highlight java%} 
 // java code for the intersection of implicit curves
 public class Solver {
@@ -110,7 +111,7 @@ public class Solver {
         double[][] samples = rootSamples(f, g, bounds, 10, 10);
         List<double[]> sols = new ArrayList<>();
         double x1, y1, x2, y2, er, er1, fv, gv, fv1, gv1;
-        double jfx, jfy, jgx, jgy, det, alpha;
+        double jfx, jfy, jgx, jgy, det, alpha, dx, dy;
         int MAX_ITR = 8;
         boolean success;
         for(int i = 0; i < samples.length; i++) {
@@ -129,7 +130,7 @@ public class Solver {
                     break;
                 }
                 dx = (jgy * fv - jfy * gv) / det;
-                dy = (jgx * fv - jfx * gv) / det;
+                dy = (jfx * fv - jgx * gv) / det;
                 alpha = 1.0;
                 success = false;
                 // We can use line search that satisfies
@@ -143,19 +144,13 @@ public class Solver {
                     er1 = Math.abs(fv1) + Math.abs(gv1);
                     if(er1 < er) {
                         success = true;
-                        er = er1;
-                        fv = fv1;
-                        gv = gv1;
-                        x1 = x2;
-                        y1 = y2;
+                        // variable exchange
                         break;
                     }
                     alpha *= 0.8;
                 } while(alpha >= 0.01);
 
-                if(!success) {
-                    break;
-                }
+                if(!success) break;
             }
 
             if(isZero(er, eps)) {
@@ -177,6 +172,30 @@ public class Solver {
 }
 
 {%endhighlight%}
+
+#### Convergence of Newton's Method
+Let's begin with an intuitive discussion. Suppose both functions, $$ f(x, y) $$ and $$ g(x, y) $$ are linear bivariate function. That is, $$ f(x, y) = a_1x+b_1y+c_1=0 $$ and $$ g(x, y) = a_2x+b_2y+c_2 = 0 $$. Since the higher order error term $$ O(\epsilon^2) $$ is zero, Newton's method should produce the correct answer in a single iteration as long as jacobian matrix $$ \mathbf{J} $$ is invertible. Following derivation shows that in fact it does give the solution in a single step. Notice that the end result is nothing but the solution that we get by directly applying Cramer's rule.
+
+$$ \mathbf{J} = \begin{bmatrix} a_1 & b_1 \\ a_2 & b_2 \end{bmatrix} $$
+
+If the inital guess is $$ (x_k, y_k) $$ then
+
+$$ \begin{bmatrix} x_{k+1} \\ y_{k+1} \end{bmatrix} = $$
+$$ \begin{bmatrix} x_k \\ y_k \end{bmatrix} - {\begin{bmatrix} a_1 & b_1 \\ a_2 & b_2 \end{bmatrix}}^{-1} \begin{bmatrix} f_k \\ g_k \end{bmatrix} = $$
+$$ \begin{bmatrix} x_k \\ y_k \end{bmatrix} - \frac {1} {a_1b_2 - a_2b_1} $$
+$$ \begin{bmatrix} b_2 & -b_1 \\ -a_2 & a_1 \end{bmatrix} $$
+$$ \begin{bmatrix} a_1x_k + b_1y_k + c_1 \\ a_2x_k + b_2y_k + c_2 \end{bmatrix} $$
+
+$$ \Rightarrow \begin{bmatrix} x_{k+1} \\ y_{k+1} \end {bmatrix} = $$
+$$ \frac {1} {a_1b_2 - a_2b_1} \begin{bmatrix} c_2b_1 - c_1b_2 \\ a_2c_1 - a_1c_2 \end{bmatrix} $$
+
+We have seen that in case of linear implicit equation Newton's method converges in one iteration. In general case the behaviour depends upon the error term $$ O(\epsilon^2) $$. That is one of the reasons we use damping factor $$ \alpha $$ - we never want divergence of error. So when we choose the gradient direction $$ \mathbf{p} $$ to move in, we also ensure that the error doesn't exceed the previous error. If it does we reduce (damp) the direction by $$ \alpha $$. You might be thinking about how we can choose a good direction, how much we should damp, and how we can ensure that damping would not help to reach at solution. As in following equation
+
+$$ f(x, y) = x^2 - 2xy + y^2 + 10^{-6} = 0 $$
+
+$$ g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0 $$
+
+
 #### Limitations
 * For implicit curve both functions should be smooth in $$ \mathbb{R}^2 $$ and differentiable
 * It is computationally expensive to evaluate derivative at each step
@@ -200,6 +219,7 @@ $$ f'(x_n) = \frac {\Delta f(x_n)} {\Delta x_n} = f'(x_{n-1}) + \frac {\Delta f(
 
 Here it seems absurd to expand middle term to get right hand side expression. But we notice that in the middle term we are directly calculating $$ f'(x_n) $$ but in right hand side we are updating previous derivative to get new one.
 
+#### A failed attempt
 To extend the idea let us define following notations in $$ \mathbb {R}^n $$
 
 $$ \mathbf {x} = (x_1, x_2, \dots, x_n) $$
@@ -236,6 +256,8 @@ Alternatively we can use Sherman-Morrison formula to find directly inverse of Ja
 $$ \mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}^T H_{n-1} \Delta f_n} \Delta {x_n}^T \Delta H_{n-1}} $$
 
 where $$ \mathbf {H_n = J_n^{-1}} $$
+
+Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the $$ \mathbf {\Delta x_n \Delta {x_n}^T} $$ is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian $$ \mathbf {J_{n-1}} $$. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?
 
 ### Other Applications
 

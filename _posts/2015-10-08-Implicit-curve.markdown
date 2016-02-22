@@ -2,7 +2,7 @@
 layout: post
 title:  "Quadtree Algorithm for Implicit Curve Drawing"
 description: "Explanation of quadtree algorithm for implicit curve drawing, and a brief overview of marching square, :-)"
-date:   2016-02-08 22:34:34
+date:   2015-10-08 22:34:34
 categories: Implicit Curve
 id: implicit_curve
 comments: true
@@ -102,7 +102,7 @@ public class PerformanceTest {
         System.out.println("Time taken to iterate " + z + " times: " + t);
     }
     public static long now() {
-        return System.currentTimeMillis();	
+        return System.currentTimeMillis();  
     }
 }
 // output : Time taken to execute 10000000 iteration: 20ms
@@ -113,7 +113,7 @@ time = Date.now();
 k = 0;
 z = 10000000;
 for(i = 0; i < z; i++) {
-    k++;		
+    k++;    
 }
 time = Date.now() - time;
 console.log("Time taken to iterate " + z + " times: " + time + "ms");

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Intersection between Implicit Curves</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed">
+    <meta name="description" content="Irresistible Math! :)">
     <link rel="canonical" href="/implicit/curve/2015/12/19/Intersection-Between-Implicit-Cruve/">
 
     <!-- Custom CSS -->
@@ -21,7 +21,7 @@
 
   <div class="wrap">
 
-    <a class="site-title" href="/">Hello!</a>
+    <a class="site-title" href="/">Shamshad's Blog!</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -62,9 +62,7 @@
 
   <article class="post-content">
   <h2 id="interscetion-between-two-implicit-curves">Interscetion between two implicit curves</h2>
-<p>In this post I would discuss two different method to find intersection between two implicit curves <script type="math/tex">f(x, y) = 0</script>
-and <script type="math/tex">g(x, y) = 0</script>. I would start with simple problem formulation, manual solution followed by two methods - Newton’s
-and Broyden’s method to find intersections.</p>
+<p>I worked with GeoGebra during summer 2015, and implemented some functionality including intersection of implicit curves. The experience were exciting, and I learnt significantly. Here I would like to share a some of them, hope it may help you. Anyway finding intersection between simple curves are far easy; however, when we have to implement functionality that work well with a wide range of implicit equations the task becomes partially intractable and needs sophisticated approach to deal with edge and corner cases. Particularly, in this post I would discuss two different method to find intersection between two implicit curves <script type="math/tex">f(x, y) = 0</script> and <script type="math/tex">g(x, y) = 0</script>. I would start with simple problem formulation, manual solution followed by two methods - Newton’s and Broyden’s method to find intersections.</p>
 
 <h3 id="problem-formulation">Problem formulation</h3>
 <p>For two different implicit curves <script type="math/tex">f(x, y) = 0</script> and <script type="math/tex">g(x, y) = 0</script> find some points <script type="math/tex">(x_k, y_k)</script>,
@@ -73,6 +71,10 @@ and <script type="math/tex">g(x_k, y_k) = 0</script>.</p>
 
 <h4 id="example">Example</h4>
 <p>Let <script type="math/tex">f(x, y) = y - x^2 - 4 = 0</script> and <script type="math/tex">g(x, y) = y - 2x^2 = 0</script>. From second equation we get <script type="math/tex">y = 2x^2</script>. When we substitute this value in the first equation we get <script type="math/tex">x = \pm 2</script>. Thus <script type="math/tex">(x, y) = \{(-2, 8), (2, 8)\}</script> satisfies both equation. But, it is not always so simple. It is difficult to find the solution of <script type="math/tex">x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0</script> and <script type="math/tex">sin(x + 2y) + xy = 0</script>.</p>
+
+<p><img src="/assets/intersection.png" alt="Intersection example (in GeoGebra Beta)" /></p>
+
+<p><em>Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.</em></p>
 
 <h3 id="newtons-method">Newton’s Method</h3>
 <p>Newton’s method is an iterative method which is used to find roots of function <script type="math/tex">f(x) = 0</script>. In this method we begin with some intial guess <script type="math/tex">x_0</script> and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved</p>
@@ -83,7 +85,7 @@ and <script type="math/tex">g(x_k, y_k) = 0</script>.</p>
 
 <script type="math/tex; mode=display">f(x + \Delta x, y + \Delta y) = f(x, y) + [\frac {\partial f(x, y)} {\partial x}, \frac {\partial f(x, y)} {\partial y}] [\Delta x, \Delta y]^T + O(\epsilon^2)</script>
 
-<p>We begin with some intial guess <script type="math/tex">(x, y)</script>, and try to move small step <script type="math/tex">(\Delta x, \Delta y)</script> in the best direction
+<p>We begin with some intial guess <script type="math/tex">(x, y)</script>, and try to move small step <script type="math/tex">(\Delta x, \Delta y)</script> in the  best direction
 that is the move for which <script type="math/tex">f(x + \Delta x, y + \Delta y) \approx g(x + \Delta x, y + \Delta y) \approx 0</script>.</p>
 
 <p>To avoid clutter let’s define</p>
@@ -138,7 +140,7 @@ g_y & -f_y \\
 <p>In theory we use line search to find the best <script type="math/tex">\alpha</script>. In practice, for simple application, we can use binary search
 to find a good <script type="math/tex">\alpha</script> that reduces <script type="math/tex">||F_{k+1} - F_k||</script></p>
 
-<p>_Browse code <a href="https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java">here</a></p>
+<p>Browse code <a href="https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java">here</a></p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// java code for the intersection of implicit curves</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solver</span> <span class="o">{</span>
@@ -253,12 +255,15 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
 <script type="math/tex; mode=display">g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0</script>
 
-<p>You may try to visualize the graph
-#### Limitations
-* For implicit curve both functions should be smooth in <script type="math/tex">\mathbb{R}^2</script> and differentiable
-* It is computationally expensive to evaluate derivative at each step
-* Near singular jacobian matrix sometimes leads to divergence
-* If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge</p>
+<p>You may try to visualize the graph</p>
+
+<h4 id="limitations">Limitations</h4>
+<ul>
+  <li>For implicit curve both functions should be smooth in <script type="math/tex">\mathbb{R}^2</script> and differentiable</li>
+  <li>It is computationally expensive to evaluate derivative at each step</li>
+  <li>Near singular jacobian matrix sometimes leads to divergence</li>
+  <li>If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge</li>
+</ul>
 
 <h3 id="broydens-method">Broyden’s Method</h3>
 <p>Broyden’s method, originally described by CG Broyden, is a quasi-Newton method for root finding. In contrast to Newton’s method, in which we have to calculate jacobian matrix <script type="math/tex">\mathbf{J}</script> in each iteration, we calculate jacobian only in the first iteration and we do rank one update in other iterations. Broyden’s method converges to solution in <script type="math/tex">2n</script> iterations for linear system, however it may even fail to converge for non-linear system of equation.</p>
@@ -375,11 +380,11 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
   <div class="wrap">
 
-    <h2 class="footer-heading">Hello!</h2>
+    <h2 class="footer-heading">Shamshad's Blog!</h2>
 
     <div class="footer-col-1 column">
       <ul>
-        <li>Hello!</li>
+        <li>Shamshad's Blog!</li>
         <li><a href="mailto:shamshad.npti@gmail.com">shamshad.npti@gmail.com</a></li>
       </ul>
     </div>
@@ -426,7 +431,7 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
     </div>
 
     <div class="footer-col-3 column">
-      <p class="text">This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed</p>
+      <p class="text">Irresistible Math! :)</p>
     </div>
 
   </div>

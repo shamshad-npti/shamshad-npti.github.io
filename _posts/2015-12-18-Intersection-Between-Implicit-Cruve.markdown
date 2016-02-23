@@ -9,9 +9,7 @@ comments: true
 ---
 Interscetion between two implicit curves
 ---
-In this post I would discuss two different method to find intersection between two implicit curves $$ f(x, y) = 0 $$
-and $$ g(x, y) = 0 $$. I would start with simple problem formulation, manual solution followed by two methods - Newton's
-and Broyden's method to find intersections.
+I worked with GeoGebra during summer 2015, and implemented some functionality including intersection of implicit curves. The experience were exciting, and I learnt significantly. Here I would like to share a some of them, hope it may help you. Anyway finding intersection between simple curves are far easy; however, when we have to implement functionality that work well with a wide range of implicit equations the task becomes partially intractable and needs sophisticated approach to deal with edge and corner cases. Particularly, in this post I would discuss two different method to find intersection between two implicit curves $$ f(x, y) = 0 $$ and $$ g(x, y) = 0 $$. I would start with simple problem formulation, manual solution followed by two methods - Newton's and Broyden's method to find intersections.
 
 ### Problem formulation
 For two different implicit curves $$ f(x, y) = 0 $$ and $$ g(x, y) = 0 $$ find some points $$ (x_k, y_k) $$,
@@ -20,6 +18,10 @@ and $$ g(x_k, y_k) = 0 $$.
 
 #### Example
 Let $$ f(x, y) = y - x^2 - 4 = 0 $$ and $$ g(x, y) = y - 2x^2 = 0 $$. From second equation we get $$ y = 2x^2 $$. When we substitute this value in the first equation we get $$ x = \pm 2 $$. Thus $$ (x, y) = \{(-2, 8), (2, 8)\}$$ satisfies both equation. But, it is not always so simple. It is difficult to find the solution of $$ x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0 $$ and $$ sin(x + 2y) + xy = 0 $$.
+
+![Intersection example (in GeoGebra Beta)]({{ site.url }}/assets/intersection.png)
+
+_Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult._
 
 ### Newton's Method
 Newton's method is an iterative method which is used to find roots of function $$ f(x) = 0 $$. In this method we begin with some intial guess $$ x_0 $$ and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved
@@ -30,7 +32,7 @@ The same idea can be extended to $$ \mathbb{R}^2 $$ find intersection between tw
 
 $$ f(x + \Delta x, y + \Delta y) = f(x, y) + [\frac {\partial f(x, y)} {\partial x}, \frac {\partial f(x, y)} {\partial y}] [\Delta x, \Delta y]^T + O(\epsilon^2)$$
 
-We begin with some intial guess $$ (x, y) $$, and try to move small step $$ (\Delta x, \Delta y) $$ in the best direction
+We begin with some intial guess $$ (x, y) $$, and try to move small step $$ (\Delta x, \Delta y) $$ in the  best direction
 that is the move for which $$ f(x + \Delta x, y + \Delta y) \approx g(x + \Delta x, y + \Delta y) \approx 0 $$.
 
 To avoid clutter let's define 
@@ -81,7 +83,9 @@ $$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
 In theory we use line search to find the best $$ \alpha $$. In practice, for simple application, we can use binary search
 to find a good $$ \alpha $$ that reduces $$ ||F_{k+1} - F_k|| $$
 
-_Browse code [here](https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java)
+
+Browse code [here](https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java)
+
 {%highlight java%} 
 // java code for the intersection of implicit curves
 public class Solver {
@@ -196,6 +200,7 @@ $$ f(x, y) = x^2 - 2xy + y^2 + 10^{-6} = 0 $$
 $$ g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0 $$
 
 You may try to visualize the graph
+
 #### Limitations
 * For implicit curve both functions should be smooth in $$ \mathbb{R}^2 $$ and differentiable
 * It is computationally expensive to evaluate derivative at each step

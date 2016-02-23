@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hello!</title>
-    <description>This site is maintained by myself. The content, if not attributed, is my own opinion or something that I have learned from experience over time. You may inform me if you find any part of the content inappropriate or misattributed</description>
+    <title>Shamshad&#39;s Blog!</title>
+    <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 22 Feb 2016 20:43:48 +0530</pubDate>
-    <lastBuildDate>Mon, 22 Feb 2016 20:43:48 +0530</lastBuildDate>
+    <pubDate>Tue, 23 Feb 2016 22:39:20 +0530</pubDate>
+    <lastBuildDate>Tue, 23 Feb 2016 22:39:20 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
         <title>Intersection between Implicit Curves</title>
         <description>&lt;h2 id=&quot;interscetion-between-two-implicit-curves&quot;&gt;Interscetion between two implicit curves&lt;/h2&gt;
-&lt;p&gt;In this post I would discuss two different method to find intersection between two implicit curves &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = 0&lt;/script&gt;
-and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = 0&lt;/script&gt;. I would start with simple problem formulation, manual solution followed by two methods - Newton’s
-and Broyden’s method to find intersections.&lt;/p&gt;
+&lt;p&gt;I worked with GeoGebra during summer 2015, and implemented some functionality including intersection of implicit curves. The experience were exciting, and I learnt significantly. Here I would like to share a some of them, hope it may help you. Anyway finding intersection between simple curves are far easy; however, when we have to implement functionality that work well with a wide range of implicit equations the task becomes partially intractable and needs sophisticated approach to deal with edge and corner cases. Particularly, in this post I would discuss two different method to find intersection between two implicit curves &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = 0&lt;/script&gt;. I would start with simple problem formulation, manual solution followed by two methods - Newton’s and Broyden’s method to find intersections.&lt;/p&gt;
 
 &lt;h3 id=&quot;problem-formulation&quot;&gt;Problem formulation&lt;/h3&gt;
 &lt;p&gt;For two different implicit curves &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = 0&lt;/script&gt; find some points &lt;script type=&quot;math/tex&quot;&gt;(x_k, y_k)&lt;/script&gt;,
@@ -23,6 +21,10 @@ and &lt;script type=&quot;math/tex&quot;&gt;g(x_k, y_k) = 0&lt;/script&gt;.&lt;/
 
 &lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
 &lt;p&gt;Let &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = y - x^2 - 4 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = y - 2x^2 = 0&lt;/script&gt;. From second equation we get &lt;script type=&quot;math/tex&quot;&gt;y = 2x^2&lt;/script&gt;. When we substitute this value in the first equation we get &lt;script type=&quot;math/tex&quot;&gt;x = \pm 2&lt;/script&gt;. Thus &lt;script type=&quot;math/tex&quot;&gt;(x, y) = \{(-2, 8), (2, 8)\}&lt;/script&gt; satisfies both equation. But, it is not always so simple. It is difficult to find the solution of &lt;script type=&quot;math/tex&quot;&gt;x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;sin(x + 2y) + xy = 0&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/intersection.png&quot; alt=&quot;Intersection example (in GeoGebra Beta)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.&lt;/em&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;newtons-method&quot;&gt;Newton’s Method&lt;/h3&gt;
 &lt;p&gt;Newton’s method is an iterative method which is used to find roots of function &lt;script type=&quot;math/tex&quot;&gt;f(x) = 0&lt;/script&gt;. In this method we begin with some intial guess &lt;script type=&quot;math/tex&quot;&gt;x_0&lt;/script&gt; and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved&lt;/p&gt;
@@ -33,7 +35,7 @@ and &lt;script type=&quot;math/tex&quot;&gt;g(x_k, y_k) = 0&lt;/script&gt;.&lt;/
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x + \Delta x, y + \Delta y) = f(x, y) + [\frac {\partial f(x, y)} {\partial x}, \frac {\partial f(x, y)} {\partial y}] [\Delta x, \Delta y]^T + O(\epsilon^2)&lt;/script&gt;
 
-&lt;p&gt;We begin with some intial guess &lt;script type=&quot;math/tex&quot;&gt;(x, y)&lt;/script&gt;, and try to move small step &lt;script type=&quot;math/tex&quot;&gt;(\Delta x, \Delta y)&lt;/script&gt; in the best direction
+&lt;p&gt;We begin with some intial guess &lt;script type=&quot;math/tex&quot;&gt;(x, y)&lt;/script&gt;, and try to move small step &lt;script type=&quot;math/tex&quot;&gt;(\Delta x, \Delta y)&lt;/script&gt; in the  best direction
 that is the move for which &lt;script type=&quot;math/tex&quot;&gt;f(x + \Delta x, y + \Delta y) \approx g(x + \Delta x, y + \Delta y) \approx 0&lt;/script&gt;.&lt;/p&gt;
 
 &lt;p&gt;To avoid clutter let’s define&lt;/p&gt;
@@ -88,7 +90,7 @@ g_y &amp; -f_y \\
 &lt;p&gt;In theory we use line search to find the best &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. In practice, for simple application, we can use binary search
 to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; that reduces &lt;script type=&quot;math/tex&quot;&gt;||F_{k+1} - F_k||&lt;/script&gt;&lt;/p&gt;
 
-&lt;p&gt;_Browse code &lt;a href=&quot;https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Browse code &lt;a href=&quot;https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// java code for the intersection of implicit curves&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -203,12 +205,15 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0&lt;/script&gt;
 
-&lt;p&gt;You may try to visualize the graph
-#### Limitations
-* For implicit curve both functions should be smooth in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^2&lt;/script&gt; and differentiable
-* It is computationally expensive to evaluate derivative at each step
-* Near singular jacobian matrix sometimes leads to divergence
-* If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge&lt;/p&gt;
+&lt;p&gt;You may try to visualize the graph&lt;/p&gt;
+
+&lt;h4 id=&quot;limitations&quot;&gt;Limitations&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;For implicit curve both functions should be smooth in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^2&lt;/script&gt; and differentiable&lt;/li&gt;
+  &lt;li&gt;It is computationally expensive to evaluate derivative at each step&lt;/li&gt;
+  &lt;li&gt;Near singular jacobian matrix sometimes leads to divergence&lt;/li&gt;
+  &lt;li&gt;If starting point is not close to the solution, the algorithm may not converge quickly or even may diverge&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&quot;broydens-method&quot;&gt;Broyden’s Method&lt;/h3&gt;
 &lt;p&gt;Broyden’s method, originally described by CG Broyden, is a quasi-Newton method for root finding. In contrast to Newton’s method, in which we have to calculate jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf{J}&lt;/script&gt; in each iteration, we calculate jacobian only in the first iteration and we do rank one update in other iterations. Broyden’s method converges to solution in &lt;script type=&quot;math/tex&quot;&gt;2n&lt;/script&gt; iterations for linear system, however it may even fail to converge for non-linear system of equation.&lt;/p&gt;

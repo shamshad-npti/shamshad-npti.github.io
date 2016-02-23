@@ -120,6 +120,49 @@ console.log("Time taken to iterate " + z + " times: " + time + "ms");
 // console output : Time taken to iterate 10000000 times: 15231ms
 {% endhighlight %}
 
+#### Bisection vs Linear Interpolation
+Suppose the algorithm has detected a curve segment passing between two points $$ P(x, y) $$ and $$ Q(x, y) $$. That is, the value evaluated at point $$ P $$ and $$ Q $$ have opposite sign. How can we approximate the curve between $$ P $$ and $$ Q $$. There are two method - bisection, linear interpolation. In bisection method we take the mid-point of $$ P $$ and $$ Q $$. Intuitively, it is not a good method, because if the value of funtion at $$ P $$ is more close to zero than that of function at $$ Q $$ then it is more likely that the curve is close to point $$ P $$. 
+
+{% highlight java %}
+// bisection method
+Point bisection(Point p, Point q) {
+    return new Point(0.5 * (p.x + p.y), 0.5 * (q.x + q.y));
+}
+{% endhighlight %} 
+
+Let's assume that $$ PQ $$ is parallel to x-axis and that $$ P = (x_1, y) $$ and $$ Q = (x_2, y) $$. Let $$ R = (x_r, y) $$ be a point on $$ PQ $$ where function evaluate to zero and $$ M = mid(P, Q) $$ be the mid point of $$ P $$ and $$ Q $$.
+
+$$ f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f$$,
+
+$$ f(x_2, y) = f(x_r, y) + (x_2 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_2\delta f$$
+
+The approximation at the right hand side follows because $$ f(x_r, y) = 0 $$ and higher order term have been ignored. Notice that I have dropped y term from the Taylor series expansion because of the assumption that the $$ PQ $$ is parallel to x-axis that is y is a fixed constant. Similarly at mid point M
+
+$$ f(\frac {x_1+x_2} {2}, y) = (x_r - \frac {x_1+x_2} {2}) \delta f_r = \frac {\epsilon_1+\epsilon_2} {2} \delta f_r $$
+
+We can easily notice that in bisection method error is summed up and halved. We can do better using linear interpolation. For simplicity Let's denote $$ f(x_1, y) = f_1, f(x_2, y) = f_2 $$ and $$ f(x_r, y) = f_r $$
+
+$$ f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2), and f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2) $$
+
+$$ \Rightarrow f_2 - f_1 \approx (x_2 - x_1) \delta f_r $$
+
+$$ \Rightarrow \delta f_r = \frac {f_2 - f_1} {x_2 - x_1} $$
+
+$$ \Rightarrow x_r = x_2 - \frac{x_2 - x_1} {f_2 - f_1}f_2 $$
+
+Here the error term in approxmation is $$ O({\epsilon_1}^2 - {\epsilon_2}^2) $$ which is quadratic and therfore smaller than that of the bisection method for $$ \epsilon_1, \epsilon_2 < 1.0 $$
+
+{% highlight java %}
+// code for linear interpolation
+public Point interpolateX(Point p1, Point p2, double f1, double f2) {
+    double r = f2 - f1;
+    if(!Double.isFinite(r) || Double.isNan(r) || isZero(r, eps)) {
+        return bisection(p1, p2);
+    }
+    return new Point(p2.x - f2 * (p2.x - p1.x) / r, p1.y);
+}
+{% endhighlight %}
+
 ### Limitations
 Quadtree algorithm performs better than marching cube algorithm, however it still suffers from certain limitations. It fails to correctly plot curve which is entirely in a single square cell, which has saddle or bifurcation point, or which intersects a square cell twice. We can handle singularities or bifurcation point by maintaining gradient information of curve, because gradient vanishes at singularities. Problem of twice intersection can be handled by communicating information among neighborhood square.
 However the first problem can't be solve without exploring the tree further.

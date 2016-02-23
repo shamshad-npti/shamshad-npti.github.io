@@ -166,6 +166,46 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Time taken to iterate &quot;</span> <span class="o">+</span> <span class="nx">z</span> <span class="o">+</span> <span class="s2">&quot; times: &quot;</span> <span class="o">+</span> <span class="nx">time</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">);</span>
 <span class="c1">// console output : Time taken to iterate 10000000 times: 15231ms</span></code></pre></div>
 
+<h4 id="bisection-vs-linear-interpolation">Bisection vs Linear Interpolation</h4>
+<p>Suppose the algorithm has detected a curve segment passing between two points <script type="math/tex">P(x, y)</script> and <script type="math/tex">Q(x, y)</script>. That is, the value evaluated at point <script type="math/tex">P</script> and <script type="math/tex">Q</script> have opposite sign. How can we approximate the curve between <script type="math/tex">P</script> and <script type="math/tex">Q</script>. There are two method - bisection, linear interpolation. In bisection method we take the mid-point of <script type="math/tex">P</script> and <script type="math/tex">Q</script>. Intuitively, it is not a good method, because if the value of funtion at <script type="math/tex">P</script> is more close to zero than that of function at <script type="math/tex">Q</script> then it is more likely that the curve is close to point <script type="math/tex">P</script>.</p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// bisection method</span>
+<span class="n">Point</span> <span class="nf">bisection</span><span class="o">(</span><span class="n">Point</span> <span class="n">p</span><span class="o">,</span> <span class="n">Point</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">q</span><span class="o">.</span><span class="na">y</span><span class="o">));</span>
+<span class="o">}</span></code></pre></div>
+
+<p>Let’s assume that <script type="math/tex">PQ</script> is parallel to x-axis and that <script type="math/tex">P = (x_1, y)</script> and <script type="math/tex">Q = (x_2, y)</script>. Let <script type="math/tex">R = (x_r, y)</script> be a point on <script type="math/tex">PQ</script> where function evaluate to zero and <script type="math/tex">M = mid(P, Q)</script> be the mid point of <script type="math/tex">P</script> and <script type="math/tex">Q</script>.</p>
+
+<p><script type="math/tex">f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f</script>,</p>
+
+<script type="math/tex; mode=display">f(x_2, y) = f(x_r, y) + (x_2 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_2\delta f</script>
+
+<p>The approximation at the right hand side follows because <script type="math/tex">f(x_r, y) = 0</script> and higher order term have been ignored. Notice that I have dropped y term from the Taylor series expansion because of the assumption that the <script type="math/tex">PQ</script> is parallel to x-axis that is y is a fixed constant. Similarly at mid point M</p>
+
+<script type="math/tex; mode=display">f(\frac {x_1+x_2} {2}, y) = (x_r - \frac {x_1+x_2} {2}) \delta f_r = \frac {\epsilon_1+\epsilon_2} {2} \delta f_r</script>
+
+<p>We can easily notice that in bisection method error is summed up and halved. We can do better using linear interpolation. For simplicity Let’s denote <script type="math/tex">f(x_1, y) = f_1, f(x_2, y) = f_2</script> and <script type="math/tex">f(x_r, y) = f_r</script></p>
+
+<script type="math/tex; mode=display">f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2), and f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2)</script>
+
+<script type="math/tex; mode=display">\Rightarrow f_2 - f_1 \approx (x_2 - x_1) \delta f_r</script>
+
+<script type="math/tex; mode=display">\Rightarrow \delta f_r = \frac {f_2 - f_1} {x_2 - x_1}</script>
+
+<script type="math/tex; mode=display">\Rightarrow x_r = x_2 - \frac{x_2 - x_1} {f_2 - f_1}f_2</script>
+
+<p>Here the error term in approxmation is <script type="math/tex">O({\epsilon_1}^2 - {\epsilon_2}^2)</script> which is quadratic and therfore smaller than that of the bisection method for <script type="math/tex">% <![CDATA[
+\epsilon_1, \epsilon_2 < 1.0 %]]></script></p>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// code for linear interpolation</span>
+<span class="kd">public</span> <span class="n">Point</span> <span class="nf">interpolateX</span><span class="o">(</span><span class="n">Point</span> <span class="n">p1</span><span class="o">,</span> <span class="n">Point</span> <span class="n">p2</span><span class="o">,</span> <span class="kt">double</span> <span class="n">f1</span><span class="o">,</span> <span class="kt">double</span> <span class="n">f2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">f2</span> <span class="o">-</span> <span class="n">f1</span><span class="o">;</span>
+    <span class="k">if</span><span class="o">(!</span><span class="n">Double</span><span class="o">.</span><span class="na">isFinite</span><span class="o">(</span><span class="n">r</span><span class="o">)</span> <span class="o">||</span> <span class="n">Double</span><span class="o">.</span><span class="na">isNan</span><span class="o">(</span><span class="n">r</span><span class="o">)</span> <span class="o">||</span> <span class="n">isZero</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">eps</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">bisection</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">f2</span> <span class="o">*</span> <span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">p1</span><span class="o">.</span><span class="na">x</span><span class="o">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">,</span> <span class="n">p1</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+<span class="o">}</span></code></pre></div>
+
 <h3 id="limitations">Limitations</h3>
 <p>Quadtree algorithm performs better than marching cube algorithm, however it still suffers from certain limitations. It fails to correctly plot curve which is entirely in a single square cell, which has saddle or bifurcation point, or which intersects a square cell twice. We can handle singularities or bifurcation point by maintaining gradient information of curve, because gradient vanishes at singularities. Problem of twice intersection can be handled by communicating information among neighborhood square.
 However the first problem can’t be solve without exploring the tree further.</p>

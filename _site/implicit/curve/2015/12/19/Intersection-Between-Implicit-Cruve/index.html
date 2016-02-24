@@ -138,7 +138,7 @@ g_y & -f_y \\
 <p><script type="math/tex">X_{k+1} = X_{k} - \alpha J^{-1} F_k,</script> where <script type="math/tex">0 \lt \alpha \le 1</script></p>
 
 <p>In theory we use line search to find the best <script type="math/tex">\alpha</script>. In practice, for simple application, we can use binary search
-to find a good <script type="math/tex">\alpha</script> that reduces <script type="math/tex">||F_{k+1} - F_k||</script></p>
+to find a good <script type="math/tex">\alpha</script> that reduces <script type="math/tex">|F_k| - |F_{k+1}|</script></p>
 
 <p>Browse code <a href="https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java">here</a></p>
 
@@ -255,7 +255,7 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
 <script type="math/tex; mode=display">g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0</script>
 
-<p>You may try to visualize the graph</p>
+<p>You may try to visualize the graph. (Edit: No real value of <script type="math/tex">x</script> and <script type="math/tex">y</script> satisfies any of the above equation, though at <script type="math/tex">(x, y) = (0, 0)</script> the left side is very close to zero.)</p>
 
 <h4 id="limitations">Limitations</h4>
 <ul>
@@ -321,6 +321,9 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 <p>where <script type="math/tex">\mathbf {H_n = J_n^{-1}}</script></p>
 
 <p>Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the <script type="math/tex">\mathbf {\Delta x_n \Delta {x_n}^T}</script> is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian <script type="math/tex">\mathbf {J_{n-1}}</script>. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?</p>
+
+<p><em>Figure 2: Intersection with absolute value function(Using Broyden Method)</em>
+<img src="/assets/intersection_discontinuous.png" alt="Intersection with absolute value function" /></p>
 
 <h3 id="other-applications">Other Applications</h3>
 

@@ -132,7 +132,7 @@ Point bisection(Point p, Point q) {
 
 Let's assume that $$ PQ $$ is parallel to x-axis and that $$ P = (x_1, y) $$ and $$ Q = (x_2, y) $$. Let $$ R = (x_r, y) $$ be a point on $$ PQ $$ where function evaluate to zero and $$ M = mid(P, Q) $$ be the mid point of $$ P $$ and $$ Q $$.
 
-$$ f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f$$,
+$$ f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f$$
 
 $$ f(x_2, y) = f(x_r, y) + (x_2 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_2\delta f$$
 
@@ -142,7 +142,9 @@ $$ f(\frac {x_1+x_2} {2}, y) = (x_r - \frac {x_1+x_2} {2}) \delta f_r = \frac {\
 
 We can easily notice that in bisection method error is summed up and halved. We can do better using linear interpolation. For simplicity Let's denote $$ f(x_1, y) = f_1, f(x_2, y) = f_2 $$ and $$ f(x_r, y) = f_r $$
 
-$$ f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2), and f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2) $$
+$$ f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2)$$
+
+$$ f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2) $$
 
 $$ \Rightarrow f_2 - f_1 \approx (x_2 - x_1) \delta f_r $$
 

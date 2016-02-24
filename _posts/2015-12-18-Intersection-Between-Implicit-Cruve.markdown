@@ -81,7 +81,7 @@ Sometimes the step size $$ \Delta X $$ that is chosen by the algorithm is too la
 $$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
 
 In theory we use line search to find the best $$ \alpha $$. In practice, for simple application, we can use binary search
-to find a good $$ \alpha $$ that reduces $$ ||F_{k+1} - F_k|| $$
+to find a good $$ \alpha $$ that reduces $$ |F_k| - |F_{k+1}| $$
 
 
 Browse code [here](https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java)
@@ -199,7 +199,7 @@ $$ f(x, y) = x^2 - 2xy + y^2 + 10^{-6} = 0 $$
 
 $$ g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0 $$
 
-You may try to visualize the graph
+You may try to visualize the graph. (Edit: No real value of $$ x $$ and $$ y $$ satisfies any of the above equation, though at $$ (x, y) = (0, 0) $$ the left side is very close to zero.)
 
 #### Limitations
 * For implicit curve both functions should be smooth in $$ \mathbb{R}^2 $$ and differentiable
@@ -263,6 +263,9 @@ $$ \mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}
 where $$ \mathbf {H_n = J_n^{-1}} $$
 
 Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the $$ \mathbf {\Delta x_n \Delta {x_n}^T} $$ is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian $$ \mathbf {J_{n-1}} $$. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?
+
+_Figure 2: Intersection with absolute value function(Using Broyden Method)_
+![Intersection with absolute value function]({{ site.url }}/assets/intersection_discontinuous.png)
 
 ### Other Applications
 

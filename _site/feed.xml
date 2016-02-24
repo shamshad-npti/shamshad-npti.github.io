@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Feb 2016 00:34:58 +0530</pubDate>
-    <lastBuildDate>Wed, 24 Feb 2016 00:34:58 +0530</lastBuildDate>
+    <pubDate>Wed, 24 Feb 2016 17:39:17 +0530</pubDate>
+    <lastBuildDate>Wed, 24 Feb 2016 17:39:17 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -88,7 +88,7 @@ g_y &amp; -f_y \\
 &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;X_{k+1} = X_{k} - \alpha J^{-1} F_k,&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;0 \lt \alpha \le 1&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;In theory we use line search to find the best &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. In practice, for simple application, we can use binary search
-to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; that reduces &lt;script type=&quot;math/tex&quot;&gt;||F_{k+1} - F_k||&lt;/script&gt;&lt;/p&gt;
+to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; that reduces &lt;script type=&quot;math/tex&quot;&gt;|F_k| - |F_{k+1}|&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Browse code &lt;a href=&quot;https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
@@ -205,7 +205,7 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;g(x, y) = -x^2 + 2xy - y^2 - 10^{-6} = 0&lt;/script&gt;
 
-&lt;p&gt;You may try to visualize the graph&lt;/p&gt;
+&lt;p&gt;You may try to visualize the graph. (Edit: No real value of &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; satisfies any of the above equation, though at &lt;script type=&quot;math/tex&quot;&gt;(x, y) = (0, 0)&lt;/script&gt; the left side is very close to zero.)&lt;/p&gt;
 
 &lt;h4 id=&quot;limitations&quot;&gt;Limitations&lt;/h4&gt;
 &lt;ul&gt;
@@ -271,6 +271,9 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 &lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;\mathbf {H_n = J_n^{-1}}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x_n \Delta {x_n}^T}&lt;/script&gt; is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian &lt;script type=&quot;math/tex&quot;&gt;\mathbf {J_{n-1}}&lt;/script&gt;. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 2: Intersection with absolute value function(Using Broyden Method)&lt;/em&gt;
+&lt;img src=&quot;/assets/intersection_discontinuous.png&quot; alt=&quot;Intersection with absolute value function&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;other-applications&quot;&gt;Other Applications&lt;/h3&gt;
 
@@ -432,7 +435,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 
 &lt;p&gt;Let’s assume that &lt;script type=&quot;math/tex&quot;&gt;PQ&lt;/script&gt; is parallel to x-axis and that &lt;script type=&quot;math/tex&quot;&gt;P = (x_1, y)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;Q = (x_2, y)&lt;/script&gt;. Let &lt;script type=&quot;math/tex&quot;&gt;R = (x_r, y)&lt;/script&gt; be a point on &lt;script type=&quot;math/tex&quot;&gt;PQ&lt;/script&gt; where function evaluate to zero and &lt;script type=&quot;math/tex&quot;&gt;M = mid(P, Q)&lt;/script&gt; be the mid point of &lt;script type=&quot;math/tex&quot;&gt;P&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;Q&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f&lt;/script&gt;,&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x_1, y) = f(x_r, y) + (x_1 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_1\delta f&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x_2, y) = f(x_r, y) + (x_2 - x_r) \delta f(x_r, y) + O(\epsilon^2) \approx \epsilon_2\delta f&lt;/script&gt;
 
@@ -442,7 +445,9 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 
 &lt;p&gt;We can easily notice that in bisection method error is summed up and halved. We can do better using linear interpolation. For simplicity Let’s denote &lt;script type=&quot;math/tex&quot;&gt;f(x_1, y) = f_1, f(x_2, y) = f_2&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;f(x_r, y) = f_r&lt;/script&gt;&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2), and f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2)&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f_1 = (x_1 - x_r) \delta f_r + O({\epsilon_1}^2)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f_2 = (x_2 - x_r) \delta f_r + O({\epsilon_2}^2)&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Rightarrow f_2 - f_1 \approx (x_2 - x_1) \delta f_r&lt;/script&gt;
 

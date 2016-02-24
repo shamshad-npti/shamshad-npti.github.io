@@ -72,31 +72,24 @@ public class Solver {
                 dx = (jgy * fv - jfy * gv) / det;
                 dy = (jfx * gv - jgx * fv) / det;
                 alpha = 1.0;
-                success = false;
                 // We can use line search that satisfies
                 // Wolfe condition, but for now keep it
                 // simple
                 do {
                     x2 = x1 - alpha * dx;
                     y2 = y1 - alpha * dy;
-                    fv1 = f.evaluate(x2, y2);
-                    gv1 = g.evaluate(x2, y2);
-                    er1 = Math.abs(fv1) + Math.abs(gv1);
-                    if(er1 < er) {
-                        success = true;
-                        er = er1;
-                        fv = fv1;
-                        gv = gv1;
-                        x1 = x2;
-                        y1 = y2;
-                        break;
-                    }
+                    fv = f.evaluate(x2, y2);
+                    gv = g.evaluate(x2, y2);
+                    er1 = Math.abs(fv) + Math.abs(gv);
                     alpha *= 0.8;
-                } while(alpha >= 0.01);
+                } while(alpha >= 0.01 && er < er1);
 
-                if(!success) {
+                if(er <= er1) {
                     break;
                 }
+                x1 = x2; 
+                y1 = y2; 
+                er = er1;
             }
 
             if(isZero(er, eps)) {

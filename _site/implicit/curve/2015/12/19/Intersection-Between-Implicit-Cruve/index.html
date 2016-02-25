@@ -11,7 +11,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>    
 </head>
 
 
@@ -72,9 +72,7 @@ and <script type="math/tex">g(x_k, y_k) = 0</script>.</p>
 <h4 id="example">Example</h4>
 <p>Let <script type="math/tex">f(x, y) = y - x^2 - 4 = 0</script> and <script type="math/tex">g(x, y) = y - 2x^2 = 0</script>. From second equation we get <script type="math/tex">y = 2x^2</script>. When we substitute this value in the first equation we get <script type="math/tex">x = \pm 2</script>. Thus <script type="math/tex">(x, y) = \{(-2, 8), (2, 8)\}</script> satisfies both equation. But, it is not always so simple. It is difficult to find the solution of <script type="math/tex">x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0</script> and <script type="math/tex">sin(x + 2y) + xy = 0</script>.</p>
 
-<p><img src="/assets/intersection.png" alt="Intersection example (in GeoGebra Beta)" /></p>
-
-<p><em>Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.</em></p>
+<p class="img"><img src="/assets/intersection.png" alt="Intersection example (in GeoGebra Beta)" /><em>Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relatively hard example with any root near zero converges slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.</em></p>
 
 <h3 id="newtons-method">Newton’s Method</h3>
 <p>Newton’s method is an iterative method which is used to find roots of function <script type="math/tex">f(x) = 0</script>. In this method we begin with some intial guess <script type="math/tex">x_0</script> and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved</p>
@@ -131,14 +129,6 @@ g_y & -f_y \\
 <p>Where <script type="math/tex">{f_xg_y - g_xf_y} \ne 0</script></p>
 
 <p>The idea can be extended to equation even in higher dimension.</p>
-
-<h4 id="damping">Damping</h4>
-<p>Sometimes the step size <script type="math/tex">\Delta X</script> that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor <script type="math/tex">\alpha</script></p>
-
-<p><script type="math/tex">X_{k+1} = X_{k} - \alpha J^{-1} F_k,</script> where <script type="math/tex">0 \lt \alpha \le 1</script></p>
-
-<p>In theory we use line search to find the best <script type="math/tex">\alpha</script>. In practice, for simple application, we can use binary search
-to find a good <script type="math/tex">\alpha</script> that reduces <script type="math/tex">|F_k| - |F_{k+1}|</script></p>
 
 <p>Browse code <a href="https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java">here</a></p>
 
@@ -229,6 +219,18 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
         <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
+
+<h4 id="damping">Damping</h4>
+<p>You maight have noticed that in each iteration algorithm starts with full step size and reduces it until the error become smaller than the previous error or the move becomes too small. It is necessary because sometimes the step size <script type="math/tex">\Delta X</script> that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor <script type="math/tex">\alpha</script></p>
+
+<p><script type="math/tex">X_{k+1} = X_{k} - \alpha J^{-1} F_k,</script> where <script type="math/tex">0 \lt \alpha \le 1</script></p>
+
+<p>Do <script type="math/tex">\alpha > 1</script> be a good choice of damping factor? Let’s take an example of <script type="math/tex">f(x, y) = y - x^2 = 0</script> and <script type="math/tex">g(x, y) = x - y^2 = 0</script>. When we start from point <script type="math/tex">(-1, -1)</script> the step size without damping is <script type="math/tex">(2/3, 2/3)</script>. If we take <script type="math/tex">\alpha = 1.5</script> or <script type="math/tex">\alpha = 3.0</script> we reach at the root in a single step. Therefore which is a good value : <script type="math/tex">0 \lt \alpha \le 1</script>, <script type="math/tex">\alpha = 1.5</script> or <script type="math/tex">\alpha = 3.0</script>. In our example seemingly <script type="math/tex">\alpha \gt 1.0</script> is a better choice than <script type="math/tex">\alpha \le 1</script>. However look at the figure-2, when we start at point <script type="math/tex">A</script> the full step length leads to point <script type="math/tex">C</script> far from the solution, at <script type="math/tex">\alpha \approx 0.4</script> (chosen heuristically) we get point <script type="math/tex">B</script> which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of <script type="math/tex">\alpha</script>. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of <script type="math/tex">\alpha</script> we can apply search heuristic to find better value.</p>
+
+<p class="img"><img src="/assets/alpha_selection.png" alt="Line search for good value of damping factor" /><em>Figure 2: Line search for good value of <script type="math/tex">\alpha</script></em></p>
+
+<h4 id="selecting-damping-factor">Selecting Damping Factor</h4>
+<p>There are several approaches to select damping factor <script type="math/tex">\alpha</script> we can use quadratic interpolation, line search, binary search, quadratic decay rate, (will post more about it soon)</p>
 
 <h4 id="convergence-of-newtons-method">Convergence of Newton’s Method</h4>
 <p>Let’s begin with an intuitive discussion. Suppose both functions, <script type="math/tex">f(x, y)</script> and <script type="math/tex">g(x, y)</script> are linear bivariate function. That is, <script type="math/tex">f(x, y) = a_1x+b_1y+c_1=0</script> and <script type="math/tex">g(x, y) = a_2x+b_2y+c_2 = 0</script>. Since the higher order error term <script type="math/tex">O(\epsilon^2)</script> is zero, Newton’s method should produce the correct answer in a single iteration as long as jacobian matrix <script type="math/tex">\mathbf{J}</script> is invertible. Following derivation shows that in fact it does give the solution in a single step. Notice that the end result is nothing but the solution that we get by directly applying Cramer’s rule.</p>
@@ -322,8 +324,7 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
 
 <p>Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the <script type="math/tex">\mathbf {\Delta x_n \Delta {x_n}^T}</script> is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian <script type="math/tex">\mathbf {J_{n-1}}</script>. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?</p>
 
-<p><em>Figure 2: Intersection with absolute value function(Using Broyden Method)</em>
-<img src="/assets/intersection_discontinuous.png" alt="Intersection with absolute value function" /></p>
+<p class="img"><img src="/assets/intersection_discontinuous.png" alt="Intersection with absolute value function" /><em>Figure 3: Intersection with absolute value function(Using Broyden Method)</em></p>
 
 <h3 id="other-applications">Other Applications</h3>
 
@@ -364,20 +365,7 @@ to find a good <script type="math/tex">\alpha</script> that reduces <script type
     </div>
     
     <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_config = function () {
-            this.page.url = "/implicit/curve/2015/12/19/Intersection-Between-Implicit-Cruve/";
-            this.page.identifier = '/implicit/curve/2015/12/19/Intersection-Between-Implicit-Cruve'; 
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            
-            s.src = '//shamshadblog.disqus.com/embed.js';
-            
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
+    <div class="spot-im-frame-inpage" data-post-id="/implicit/curve/2015/12/19/Intersection-Between-Implicit-Cruve"></div>
     
     <footer class="site-footer">
 

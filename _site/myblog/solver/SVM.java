@@ -91,7 +91,7 @@ public class SVM {
         System.out.format(" with [%.4f, %.4f, %.4f] norm = %.5f\n", w[0], w[1], w[2], length(w));
       }
     }
-    System.out.print(GREEN);        
+    System.out.print(GREEN);
     System.out.print("Best params : ");
     System.out.format("accuracy = %.2f with [%.4f, %.4f, %.4f]\n", mx, best[0], best[1], best[2]);
   }

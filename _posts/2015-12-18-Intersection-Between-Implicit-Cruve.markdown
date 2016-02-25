@@ -19,9 +19,8 @@ and $$ g(x_k, y_k) = 0 $$.
 #### Example
 Let $$ f(x, y) = y - x^2 - 4 = 0 $$ and $$ g(x, y) = y - 2x^2 = 0 $$. From second equation we get $$ y = 2x^2 $$. When we substitute this value in the first equation we get $$ x = \pm 2 $$. Thus $$ (x, y) = \{(-2, 8), (2, 8)\}$$ satisfies both equation. But, it is not always so simple. It is difficult to find the solution of $$ x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0 $$ and $$ sin(x + 2y) + xy = 0 $$.
 
-![Intersection example (in GeoGebra Beta)]({{ site.url }}/assets/intersection.png)
-
-_Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult._
+{: .img} 
+![Intersection example (in GeoGebra Beta)]({{ site.url }}/assets/intersection.png)*Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relatively hard example with any root near zero converges slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.*
 
 ### Newton's Method
 Newton's method is an iterative method which is used to find roots of function $$ f(x) = 0 $$. In this method we begin with some intial guess $$ x_0 $$ and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved
@@ -74,15 +73,6 @@ g_y & -f_y \\
 Where $$ {f_xg_y - g_xf_y} \ne 0 $$
 
 The idea can be extended to equation even in higher dimension.
-
-#### Damping
-Sometimes the step size $$ \Delta X $$ that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor $$ \alpha $$
-
-$$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
-
-In theory we use line search to find the best $$ \alpha $$. In practice, for simple application, we can use binary search
-to find a good $$ \alpha $$ that reduces $$ |F_k| - |F_{k+1}| $$
-
 
 Browse code [here](https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java)
 
@@ -177,6 +167,20 @@ public class Solver {
 
 {%endhighlight%}
 
+#### Damping
+You maight have noticed that in each iteration algorithm starts with full step size and reduces it until the error become smaller than the previous error or the move becomes too small. It is necessary because sometimes the step size $$ \Delta X $$ that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor $$ \alpha $$
+
+$$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
+
+Do $$ \alpha > 1 $$ be a good choice of damping factor? Let's take an example of $$ f(x, y) = y - x^2 = 0 $$ and $$ g(x, y) = x - y^2 = 0 $$. When we start from point $$ (-1, -1) $$ the step size without damping is $$ (2/3, 2/3) $$. If we take $$ \alpha = 1.5 $$ or $$ \alpha = 3.0 $$ we reach at the root in a single step. Therefore which is a good value : $$ 0 \lt \alpha \le 1 $$, $$ \alpha = 1.5 $$ or $$ \alpha = 3.0 $$. In our example seemingly $$ \alpha \gt 1.0 $$ is a better choice than $$ \alpha \le 1 $$. However look at the figure-2, when we start at point $$ A $$ the full step length leads to point $$ C $$ far from the solution, at $$ \alpha \approx 0.4 $$ (chosen heuristically) we get point $$ B $$ which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of $$ \alpha $$. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of $$ \alpha $$ we can apply search heuristic to find better value.
+
+{: .img}
+![Line search for good value of damping factor]({{ site.url }}/assets/alpha_selection.png)*Figure 2: Line search for good value of $$ \alpha $$*
+
+#### Selecting Damping Factor
+There are several approaches to select damping factor $$ \alpha $$ we can use quadratic interpolation, line search, binary search, quadratic decay rate, (will post more about it soon)
+
+
 #### Convergence of Newton's Method
 Let's begin with an intuitive discussion. Suppose both functions, $$ f(x, y) $$ and $$ g(x, y) $$ are linear bivariate function. That is, $$ f(x, y) = a_1x+b_1y+c_1=0 $$ and $$ g(x, y) = a_2x+b_2y+c_2 = 0 $$. Since the higher order error term $$ O(\epsilon^2) $$ is zero, Newton's method should produce the correct answer in a single iteration as long as jacobian matrix $$ \mathbf{J} $$ is invertible. Following derivation shows that in fact it does give the solution in a single step. Notice that the end result is nothing but the solution that we get by directly applying Cramer's rule.
 
@@ -264,8 +268,8 @@ where $$ \mathbf {H_n = J_n^{-1}} $$
 
 Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the $$ \mathbf {\Delta x_n \Delta {x_n}^T} $$ is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian $$ \mathbf {J_{n-1}} $$. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?
 
-_Figure 2: Intersection with absolute value function(Using Broyden Method)_
-![Intersection with absolute value function]({{ site.url }}/assets/intersection_discontinuous.png)
+{: .img}
+![Intersection with absolute value function]({{ site.url }}/assets/intersection_discontinuous.png)*Figure 3: Intersection with absolute value function(Using Broyden Method)*
 
 ### Other Applications
 

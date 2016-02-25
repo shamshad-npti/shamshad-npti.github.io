@@ -11,7 +11,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>    
 </head>
 
 
@@ -95,8 +95,7 @@ possible configuration. First and ninth squares are empty whereas eighth and six
 show ambiguous configuration. Marching square is a better approach than curve following
 however it fails handle singularties and saddle points correctly. Furtheremore, it has to evaluate <script type="math/tex">f(x, y)</script> at each vertex of the square. The evaluation may be costly.</p>
 
-<p><em>Figure 1: Sixteen possible combinations: Circles represent <script type="math/tex">f(x, y) > 0</script></em>
-<img src="/assets/marching_square.png" alt="Sixteen possible configurations: Circles represent f(x, y) &gt; 0" /></p>
+<p class="img"><img src="/assets/marching_square.png" alt="Sixteen possible configurations: Circles represent f(x, y) &gt; 0" /><em>Figure 1: Sixteen possible combinations: Circles represent <script type="math/tex">f(x, y) > 0</script></em></p>
 
 <h2 id="quadtree-algorithm-for-implicit-curve">Quadtree Algorithm for Implicit Curve</h2>
 <p>The quadtree algorithm is an extention of marching square algorithm. The space is
@@ -105,8 +104,7 @@ square. The algorithm maintain two variable <code>SEARCH_DEPTH</code> and <code>
 PLOT_DEPTH</code>. All square cells are examined to the <code>SEARCH_DEPTH</code> without any function evalution. Thereafter the algorithm starts testing if a sqaure
 cell has a curve segment. The square cells with curve segments are explored further up to<code>PLOT_DEPTH</code> then the curve segment is added to the path.</p>
 
-<p><em>Figure 2: Space exploration for <script type="math/tex">|x| - |y| = 0</script></em>
-<img src="/assets/qtree.png" alt="Space exploration for |x| + |y| = 0" /></p>
+<p class="img"><img src="/assets/qtree.png" alt="Space exploration for |x| + |y| = 0" /><em>Figure 2: Space exploration for |x| - |y| = 0</em></p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// this is pseudo code for quadtree algorithm</span>
 <span class="nx">plot</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">dx</span><span class="p">,</span> <span class="nx">dy</span><span class="p">,</span> <span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
@@ -267,20 +265,7 @@ However the first problem can’t be solve without exploring the tree further.</
     </div>
     
     <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_config = function () {
-            this.page.url = "/implicit/curve/2015/10/09/Implicit-curve/";
-            this.page.identifier = '/implicit/curve/2015/10/09/Implicit-curve'; 
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            
-            s.src = '//shamshadblog.disqus.com/embed.js';
-            
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
+    <div class="spot-im-frame-inpage" data-post-id="/implicit/curve/2015/10/09/Implicit-curve"></div>
     
     <footer class="site-footer">
 

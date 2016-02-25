@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Feb 2016 17:39:17 +0530</pubDate>
-    <lastBuildDate>Wed, 24 Feb 2016 17:39:17 +0530</lastBuildDate>
+    <pubDate>Thu, 25 Feb 2016 20:14:20 +0530</pubDate>
+    <lastBuildDate>Thu, 25 Feb 2016 20:14:20 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -22,9 +22,7 @@ and &lt;script type=&quot;math/tex&quot;&gt;g(x_k, y_k) = 0&lt;/script&gt;.&lt;/
 &lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
 &lt;p&gt;Let &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = y - x^2 - 4 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = y - 2x^2 = 0&lt;/script&gt;. From second equation we get &lt;script type=&quot;math/tex&quot;&gt;y = 2x^2&lt;/script&gt;. When we substitute this value in the first equation we get &lt;script type=&quot;math/tex&quot;&gt;x = \pm 2&lt;/script&gt;. Thus &lt;script type=&quot;math/tex&quot;&gt;(x, y) = \{(-2, 8), (2, 8)\}&lt;/script&gt; satisfies both equation. But, it is not always so simple. It is difficult to find the solution of &lt;script type=&quot;math/tex&quot;&gt;x^3 + 3x^2y + 5xy^2 + 4xy + y^3 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;sin(x + 2y) + xy = 0&lt;/script&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/intersection.png&quot; alt=&quot;Intersection example (in GeoGebra Beta)&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relative hard example any root near zero converges relatively slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.&lt;/em&gt;&lt;/p&gt;
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/intersection.png&quot; alt=&quot;Intersection example (in GeoGebra Beta)&quot; /&gt;&lt;em&gt;Figure 1: Intersection example (in GeoGebra Beta): This was a fun and relatively hard example with any root near zero converges slowly towards zero. Also notice that the red curve has a singular point at origin and there exists root at origin but the jacobian matrix at origin is singular which makes the problem difficult.&lt;/em&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;newtons-method&quot;&gt;Newton’s Method&lt;/h3&gt;
 &lt;p&gt;Newton’s method is an iterative method which is used to find roots of function &lt;script type=&quot;math/tex&quot;&gt;f(x) = 0&lt;/script&gt;. In this method we begin with some intial guess &lt;script type=&quot;math/tex&quot;&gt;x_0&lt;/script&gt; and iteratively update initial guess with a better approximation using following expression until desired accuracy is achieved&lt;/p&gt;
@@ -81,14 +79,6 @@ g_y &amp; -f_y \\
 &lt;p&gt;Where &lt;script type=&quot;math/tex&quot;&gt;{f_xg_y - g_xf_y} \ne 0&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;The idea can be extended to equation even in higher dimension.&lt;/p&gt;
-
-&lt;h4 id=&quot;damping&quot;&gt;Damping&lt;/h4&gt;
-&lt;p&gt;Sometimes the step size &lt;script type=&quot;math/tex&quot;&gt;\Delta X&lt;/script&gt; that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;X_{k+1} = X_{k} - \alpha J^{-1} F_k,&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;0 \lt \alpha \le 1&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;In theory we use line search to find the best &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. In practice, for simple application, we can use binary search
-to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; that reduces &lt;script type=&quot;math/tex&quot;&gt;|F_k| - |F_{k+1}|&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Browse code &lt;a href=&quot;https://github.com/shamshad-npti/shamshad-npti.github.io/blob/master/myblog/solver/Solver.java&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
@@ -179,6 +169,18 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;damping&quot;&gt;Damping&lt;/h4&gt;
+&lt;p&gt;You maight have noticed that in each iteration algorithm starts with full step size and reduces it until the error become smaller than the previous error or the move becomes too small. It is necessary because sometimes the step size &lt;script type=&quot;math/tex&quot;&gt;\Delta X&lt;/script&gt; that is chosen by the algorithm is too large that leads to divergence. To avoid it we introduce a damping factor &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;X_{k+1} = X_{k} - \alpha J^{-1} F_k,&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;0 \lt \alpha \le 1&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Do &lt;script type=&quot;math/tex&quot;&gt;\alpha &gt; 1&lt;/script&gt; be a good choice of damping factor? Let’s take an example of &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = y - x^2 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = x - y^2 = 0&lt;/script&gt;. When we start from point &lt;script type=&quot;math/tex&quot;&gt;(-1, -1)&lt;/script&gt; the step size without damping is &lt;script type=&quot;math/tex&quot;&gt;(2/3, 2/3)&lt;/script&gt;. If we take &lt;script type=&quot;math/tex&quot;&gt;\alpha = 1.5&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;\alpha = 3.0&lt;/script&gt; we reach at the root in a single step. Therefore which is a good value : &lt;script type=&quot;math/tex&quot;&gt;0 \lt \alpha \le 1&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\alpha = 1.5&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;\alpha = 3.0&lt;/script&gt;. In our example seemingly &lt;script type=&quot;math/tex&quot;&gt;\alpha \gt 1.0&lt;/script&gt; is a better choice than &lt;script type=&quot;math/tex&quot;&gt;\alpha \le 1&lt;/script&gt;. However look at the figure-2, when we start at point &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; the full step length leads to point &lt;script type=&quot;math/tex&quot;&gt;C&lt;/script&gt; far from the solution, at &lt;script type=&quot;math/tex&quot;&gt;\alpha \approx 0.4&lt;/script&gt; (chosen heuristically) we get point &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; we can apply search heuristic to find better value.&lt;/p&gt;
+
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/alpha_selection.png&quot; alt=&quot;Line search for good value of damping factor&quot; /&gt;&lt;em&gt;Figure 2: Line search for good value of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;selecting-damping-factor&quot;&gt;Selecting Damping Factor&lt;/h4&gt;
+&lt;p&gt;There are several approaches to select damping factor &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; we can use quadratic interpolation, line search, binary search, quadratic decay rate, (will post more about it soon)&lt;/p&gt;
 
 &lt;h4 id=&quot;convergence-of-newtons-method&quot;&gt;Convergence of Newton’s Method&lt;/h4&gt;
 &lt;p&gt;Let’s begin with an intuitive discussion. Suppose both functions, &lt;script type=&quot;math/tex&quot;&gt;f(x, y)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y)&lt;/script&gt; are linear bivariate function. That is, &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = a_1x+b_1y+c_1=0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = a_2x+b_2y+c_2 = 0&lt;/script&gt;. Since the higher order error term &lt;script type=&quot;math/tex&quot;&gt;O(\epsilon^2)&lt;/script&gt; is zero, Newton’s method should produce the correct answer in a single iteration as long as jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf{J}&lt;/script&gt; is invertible. Following derivation shows that in fact it does give the solution in a single step. Notice that the end result is nothing but the solution that we get by directly applying Cramer’s rule.&lt;/p&gt;
@@ -272,8 +274,7 @@ to find a good &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; tha
 
 &lt;p&gt;Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x_n \Delta {x_n}^T}&lt;/script&gt; is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian &lt;script type=&quot;math/tex&quot;&gt;\mathbf {J_{n-1}}&lt;/script&gt;. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Figure 2: Intersection with absolute value function(Using Broyden Method)&lt;/em&gt;
-&lt;img src=&quot;/assets/intersection_discontinuous.png&quot; alt=&quot;Intersection with absolute value function&quot; /&gt;&lt;/p&gt;
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/intersection_discontinuous.png&quot; alt=&quot;Intersection with absolute value function&quot; /&gt;&lt;em&gt;Figure 3: Intersection with absolute value function(Using Broyden Method)&lt;/em&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;other-applications&quot;&gt;Other Applications&lt;/h3&gt;
 
@@ -354,8 +355,7 @@ possible configuration. First and ninth squares are empty whereas eighth and six
 show ambiguous configuration. Marching square is a better approach than curve following
 however it fails handle singularties and saddle points correctly. Furtheremore, it has to evaluate &lt;script type=&quot;math/tex&quot;&gt;f(x, y)&lt;/script&gt; at each vertex of the square. The evaluation may be costly.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Figure 1: Sixteen possible combinations: Circles represent &lt;script type=&quot;math/tex&quot;&gt;f(x, y) &gt; 0&lt;/script&gt;&lt;/em&gt;
-&lt;img src=&quot;/assets/marching_square.png&quot; alt=&quot;Sixteen possible configurations: Circles represent f(x, y) &amp;gt; 0&quot; /&gt;&lt;/p&gt;
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/marching_square.png&quot; alt=&quot;Sixteen possible configurations: Circles represent f(x, y) &amp;gt; 0&quot; /&gt;&lt;em&gt;Figure 1: Sixteen possible combinations: Circles represent &lt;script type=&quot;math/tex&quot;&gt;f(x, y) &gt; 0&lt;/script&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;quadtree-algorithm-for-implicit-curve&quot;&gt;Quadtree Algorithm for Implicit Curve&lt;/h2&gt;
 &lt;p&gt;The quadtree algorithm is an extention of marching square algorithm. The space is
@@ -364,8 +364,7 @@ square. The algorithm maintain two variable &lt;code&gt;SEARCH_DEPTH&lt;/code&gt
 PLOT_DEPTH&lt;/code&gt;. All square cells are examined to the &lt;code&gt;SEARCH_DEPTH&lt;/code&gt; without any function evalution. Thereafter the algorithm starts testing if a sqaure
 cell has a curve segment. The square cells with curve segments are explored further up to&lt;code&gt;PLOT_DEPTH&lt;/code&gt; then the curve segment is added to the path.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Figure 2: Space exploration for &lt;script type=&quot;math/tex&quot;&gt;|x| - |y| = 0&lt;/script&gt;&lt;/em&gt;
-&lt;img src=&quot;/assets/qtree.png&quot; alt=&quot;Space exploration for |x| + |y| = 0&quot; /&gt;&lt;/p&gt;
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/qtree.png&quot; alt=&quot;Space exploration for |x| + |y| = 0&quot; /&gt;&lt;em&gt;Figure 2: Space exploration for |x| - |y| = 0&lt;/em&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// this is pseudo code for quadtree algorithm&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;

@@ -41,8 +41,8 @@ possible configuration. First and ninth squares are empty whereas eighth and six
 show ambiguous configuration. Marching square is a better approach than curve following
 however it fails handle singularties and saddle points correctly. Furtheremore, it has to evaluate $$ f(x, y) $$ at each vertex of the square. The evaluation may be costly. 
 
-_Figure 1: Sixteen possible combinations: Circles represent $$ f(x, y) > 0 $$_
-![Sixteen possible configurations: Circles represent f(x, y) > 0]({{ site.url }}/assets/marching_square.png)
+{: .img}
+![Sixteen possible configurations: Circles represent f(x, y) > 0]({{ site.url }}/assets/marching_square.png)*Figure 1: Sixteen possible combinations: Circles represent $$ f(x, y) > 0 $$*
 
 Quadtree Algorithm for Implicit Curve
 ---
@@ -52,8 +52,8 @@ square. The algorithm maintain two variable <code>SEARCH_DEPTH</code> and <code>
 PLOT_DEPTH</code>. All square cells are examined to the <code>SEARCH_DEPTH</code> without any function evalution. Thereafter the algorithm starts testing if a sqaure
 cell has a curve segment. The square cells with curve segments are explored further up to<code>PLOT_DEPTH</code> then the curve segment is added to the path.
 
-_Figure 2: Space exploration for $$ |x| - |y| = 0 $$_
-![Space exploration for \|x\| + \|y\| = 0]({{ site.url }}/assets/qtree.png)
+{: .img}
+![Space exploration for \|x\| + \|y\| = 0]({{ site.url }}/assets/qtree.png)*Figure 2: Space exploration for \|x\| - \|y\| = 0*
 
 {%highlight javascript%}
 // this is pseudo code for quadtree algorithm

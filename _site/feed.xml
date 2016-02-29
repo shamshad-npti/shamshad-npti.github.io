@@ -5,9 +5,39 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 27 Feb 2016 10:53:23 +0530</pubDate>
-    <lastBuildDate>Sat, 27 Feb 2016 10:53:23 +0530</lastBuildDate>
+    <pubDate>Mon, 29 Feb 2016 21:55:17 +0530</pubDate>
+    <lastBuildDate>Mon, 29 Feb 2016 21:55:17 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
+    
+      <item>
+        <title>Error Function Minimization</title>
+        <description>
+</description>
+        <pubDate>Fri, 05 Feb 2016 01:00:03 +0530</pubDate>
+        <link>/implicit/curve/2016/02/05/Error-Function-Minimization/</link>
+        <guid isPermaLink="true">/implicit/curve/2016/02/05/Error-Function-Minimization/</guid>
+        
+        
+        <category>implicit</category>
+        
+        <category>curve</category>
+        
+      </item>
+    
+      <item>
+        <title>Marching Cube Algorithm For Implicit Surface Plotting</title>
+        <description>
+</description>
+        <pubDate>Mon, 11 Jan 2016 02:35:40 +0530</pubDate>
+        <link>/implicit/curve/2016/01/11/Marching-Cube/</link>
+        <guid isPermaLink="true">/implicit/curve/2016/01/11/Marching-Cube/</guid>
+        
+        
+        <category>implicit</category>
+        
+        <category>curve</category>
+        
+      </item>
     
       <item>
         <title>Intersection between Implicit Curves</title>

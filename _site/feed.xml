@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 04 Mar 2016 19:45:04 +0530</pubDate>
-    <lastBuildDate>Fri, 04 Mar 2016 19:45:04 +0530</lastBuildDate>
+    <pubDate>Fri, 04 Mar 2016 20:19:10 +0530</pubDate>
+    <lastBuildDate>Fri, 04 Mar 2016 20:19:10 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -26,7 +26,14 @@
     
       <item>
         <title>Marching Cube Algorithm For Implicit Surface Plotting</title>
-        <description>
+        <description>&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
+&lt;p&gt;Equations in the form of &lt;script type=&quot;math/tex&quot;&gt;f(x, y, z) = 0&lt;/script&gt; are called implicit surface, e.g. &lt;script type=&quot;math/tex&quot;&gt;3x^2 + 4y^2 + 9z^2 - 16&lt;/script&gt; is an implicit equation of the ellipsoid. Such equations are often arises in engineering and mathematics. It is helpful to visualize these equations to understand the system clearly or to communicate the idea with others. If we can convert an implicit equation to a parameteric equation the surface plotting task become easy, and computationally less expensive. However such transformation are not always possible. Therefore we need an algorithm that accept an arbitrary equation of implicit surface and bounding space as parameters, and generate surface within the bound. Ray tracing method is often used for this task. The other approach which we discuss here is to use marching cube. Though it suffers from some limitations, it has capability to plot arbitrary surface with acceptable deviation.&lt;/p&gt;
+
+&lt;h4 id=&quot;marching-cube-algorithm&quot;&gt;Marching Cube Algorithm&lt;/h4&gt;
+&lt;p&gt;The algorithm divide the space in a finite number of small cube and evaluate the equation at the corner of each cube. The evaluated value can be either non-negative or negative (ignoring discontinuity), therefore there are &lt;script type=&quot;math/tex&quot;&gt;256 = (2^8)&lt;/script&gt; possibilities. However half of them are reflection of the other half. Moreover if we notice carefully we see there are only fifteen different combinations that we need to care about. They are shown in the following figure.&lt;/p&gt;
+
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/marching_cube.png&quot; alt=&quot;fifteen possible unique combinations of vertices&quot; /&gt;&lt;em&gt;Figure 1: Fifteen possible unique combination of vertices $$&lt;/em&gt;&lt;/p&gt;
+
 </description>
         <pubDate>Mon, 11 Jan 2016 02:35:40 +0530</pubDate>
         <link>/implicit/curve/2016/01/11/Marching-Cube/</link>

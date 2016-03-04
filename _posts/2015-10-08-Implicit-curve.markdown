@@ -166,8 +166,10 @@ public Point interpolateX(Point p1, Point p2, double f1, double f2) {
 {% endhighlight %}
 
 ### Limitations
-Quadtree algorithm performs better than marching cube algorithm, however it still suffers from certain limitations. It fails to correctly plot curve which is entirely in a single square cell, which has saddle or bifurcation point, or which intersects a square cell twice. We can handle singularities or bifurcation point by maintaining gradient information of curve, because gradient vanishes at singularities. Problem of twice intersection can be handled by communicating information among neighborhood square.
-However the first problem can't be solve without exploring the tree further.
+Quadtree algorithm performs better than marching cube algorithm, however it still suffers from certain limitations. It fails to correctly plot curve which is entirely in a single square cell, which has saddle or bifurcation point, or which intersects a square cell twice. We can handle singularities or bifurcation point by maintaining gradient information of curve, because gradient vanishes at singularities. Problem of twice intersection can be handled by communicating information among neighborhood square. 
+However the first problem can't be solve without exploring the tree further. 
+
+Quadtree and marching cube algorithm fails when a function changes sign but doesn't approach to zero or a function doesn't change sign but become zero evantually between two point. For example $$ \frac {1} {y-1} - 1 = 0 $$ is discontinous at $$ y = 1 $$, and it changes sign at $$ y = 1 $$ without having any segment there. Similarly $$ (x^2 + y^2 - 4)^2 = 0 $$ represents a circle with radius $$ 2 $$ and center $$ (0, 0) $$ however the implicit equation $$ (x^2 + y^2 - 4)^2 $$ never become negative.
 
 ### Improvement in quadtree
 To improve the algorithm we need to maintain gradient information and share information among neighbors. Both can increase the complexity if evaluated at each level of the tree.Therefore, combined idea of marching cube and quadtree is used. The function and its gradient is evalauted at the <code>SEARCH_DEPTH</code>. The gradients tend to zero near singularity. If gradients are too close to zero the algorithm mark the cell as singular. The algorithm when proceed beyond the <code>SEARCH_DEPTH</code>, it checks the neiborhood and mark them whenever it add a segment.

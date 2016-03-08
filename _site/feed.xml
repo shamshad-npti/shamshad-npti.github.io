@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 04 Mar 2016 20:19:10 +0530</pubDate>
-    <lastBuildDate>Fri, 04 Mar 2016 20:19:10 +0530</lastBuildDate>
+    <pubDate>Tue, 08 Mar 2016 17:09:02 +0530</pubDate>
+    <lastBuildDate>Tue, 08 Mar 2016 17:09:02 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -32,8 +32,21 @@
 &lt;h4 id=&quot;marching-cube-algorithm&quot;&gt;Marching Cube Algorithm&lt;/h4&gt;
 &lt;p&gt;The algorithm divide the space in a finite number of small cube and evaluate the equation at the corner of each cube. The evaluated value can be either non-negative or negative (ignoring discontinuity), therefore there are &lt;script type=&quot;math/tex&quot;&gt;256 = (2^8)&lt;/script&gt; possibilities. However half of them are reflection of the other half. Moreover if we notice carefully we see there are only fifteen different combinations that we need to care about. They are shown in the following figure.&lt;/p&gt;
 
-&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/marching_cube.png&quot; alt=&quot;fifteen possible unique combinations of vertices&quot; /&gt;&lt;em&gt;Figure 1: Fifteen possible unique combination of vertices $$&lt;/em&gt;&lt;/p&gt;
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/marching_cube.png&quot; alt=&quot;fifteen possible unique combinations of vertices&quot; /&gt;&lt;em&gt;Figure 1: Fifteen possible unique combination of vertices&lt;/em&gt;&lt;/p&gt;
 
+&lt;p&gt;Similar to marching square we have to some ambiguous configuration too - first and third configuration in the last. Here we also have to take care of the topology of the surface, that is our algorithm should not produce holes in the surface. Moreover, if we want to add lighting support for the surface so that it looks nice instead of patches of triangles we have to add surface normals at each vertex. Finally we can extend idea of quadtree to create a more robust octet tree surface plotting algorithm. However unlike quadtree where number of leaf node grows exponentially by a factor of 4, the condition is even worse, the tree will grow exponentially by a factor of 8. That is at the depth of six we have &lt;script type=&quot;math/tex&quot;&gt;2^{18}&lt;/script&gt; nodes and about &lt;script type=&quot;math/tex&quot;&gt;3e6&lt;/script&gt; function evaluations - no visual rendering at all!&lt;/p&gt;
+
+&lt;h4 id=&quot;handling-configurations-efficiently&quot;&gt;Handling configurations efficiently&lt;/h4&gt;
+&lt;p&gt;To handle the configuration efficiently we use bit-wise trick, we pack the sign information of vertices in a 8-bit integer. By doing so we get a number between 0 and 255(both inclusive). We assign a number between 0 and 7 to each vertex and between 0 and 11 to each edge. We create a lookup table which gives information about the edges that are the part of the triangular patches for each of 256 configurations. In particular the look up table will store a list of edges in the multiple of three. These edges tell that which two vertices we need to interpolate. The total size of table is bounded above by &lt;script type=&quot;math/tex&quot;&gt;256 * 12 = 3072&lt;/script&gt;, as each entry in the table may have at most 12 edges, that is space complexity is still small as compared to time complexity of the algorithm. Though we can’t visualize in higher dimension but complexity of space partitioning based algorithms increases exponentially as more and more dimension is added.&lt;/p&gt;
+
+&lt;p&gt;I haven’t included the code to avoid mess, however I have already uploaded configuration table to github.If you need full code you can browse Geogebra Library. Maybe soon I would upload some javascript based demo using threee.js framework as WebGL engine.&lt;/p&gt;
+
+&lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
+&lt;p&gt;The implemented algorithm can plot a wide range of equation. However it fails to plot surface with singularities and sometimes ends up with missing a whole patch of the surface. I have included some outputs of the algorithm [see fig]. The second plot looks quite like an ellipsoid and in fact it is! When we take log both side of the equation and manipulate it a little bit we get an equation of ellipsiod. Similarly contour of gaussing with two variable in &lt;script type=&quot;math/tex&quot;&gt;\mathbf {R^2}&lt;/script&gt; is an ellipse.&lt;/p&gt;
+
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/implicit-surface.png&quot; alt=&quot;Implicit surface of gaussian with two variable&quot; /&gt;&lt;em&gt;Figure 1: Implicit surface of gaussian with two variable (not-normalized)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/guassian.png&quot; alt=&quot;3D contour surface of gaussian&quot; /&gt;&lt;em&gt;Figure 1: You can interprete it as a contour surface of gaussian with three variables&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 11 Jan 2016 02:35:40 +0530</pubDate>
         <link>/implicit/curve/2016/01/11/Marching-Cube/</link>

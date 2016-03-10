@@ -280,8 +280,7 @@ $$ \frac {\partial {f_i}} {\partial{t}} = \sum_{k=1}^{n} \frac{\partial f_i} {\p
 
 $$ \Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i} $$
 
-Hence if an accurate estimate of $$ \mathbf {\frac{df}{dt}} $$ estimate of $$ \mathbf {df/dt} $$ availabe we can approximate jacobian matrix $$ \mathbf {A} $$. For now assuming $$ \mathbf {f} $$
-only function of $$ t $$ Taylor series about $$ t $$ ignoring higher order terms can be written as
+Hence if an accurate estimate of $$ \mathbf {\frac{df}{dt}} $$ availabe we can approximate jacobian matrix $$ \mathbf {J} $$. For now assuming $$ \mathbf {f} $$ only function of $$ t $$ Taylor series expansion about $$ t $$ ignoring higher order terms can be written as
 
 $$ \mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}} $$
 
@@ -291,16 +290,17 @@ The last equation relates to four already known quantities to fifth $$ \mathbf {
 
 $$ \mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}} $$
 
-The above expression relates the change in function vector to change of $$ \mathbf {x} $$ in the direction of $$ \mathbf {\Delta x} $$, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden $$B_{i+1}$$ chosen so that the change is $$ \mathbf
-{f} $$ predicted by $$ \mathbf {B_{i+1}} $$ in a direction $$ q_i $$ orthogonal to $$ p_i $$ is the same as would be predicted by $$ B_i $$. Symbolically,
+The above expression relates the change in function vector to change of $$ \mathbf {x} $$ in the direction of $$ \mathbf {\Delta x} $$, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden $$\mathbf{B_{i+1}}$$ chosen so that the change is $$ \mathbf{f} $$ predicted by $$ \mathbf {B_{i+1}} $$ in a direction $$ \mathbf {q_i} $$ orthogonal to $$ \mathbf {\Delta x_i} $$ is the same as would be predicted by $$ \mathbf{B_i} $$. Symbolically,
 
 $$ \mathbf {B_{i+1}q_i = B_iq_i} $$
 
 $$ \mathbf {q_{i}^{T}\Delta x = 0} $$
 
-Above two eqaution is sufficient to define $$ B_{i+1} $$ uniquely and it's unique value is given by 
+Above two eqaution is sufficient to define $$ \mathbf {B_{i+1}} $$ uniquely and its unique value is given by 
 
 $$ \mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}} $$
+
+- - - - 
 
 {: .img}
 ![Intersection with absolute value function]({{ site.url }}/assets/intersection_discontinuous.png)*Figure 3: Intersection with absolute value function(Using Broyden Method)*
@@ -330,6 +330,8 @@ $$ \mathbf { \frac {\partial f(x)} {\partial x_i} } = 0 $$
 This partial derivatives will give us $$ n $$ equations in $$ \mathbb{R^n} $$. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.
 
 Happy Reading!
+
+- - -
 
 ### Reference
 

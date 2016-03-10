@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 10 Mar 2016 13:03:03 +0530</pubDate>
-    <lastBuildDate>Thu, 10 Mar 2016 13:03:03 +0530</lastBuildDate>
+    <pubDate>Thu, 10 Mar 2016 13:20:41 +0530</pubDate>
+    <lastBuildDate>Thu, 10 Mar 2016 13:20:41 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -336,8 +336,7 @@ g_y &amp; -f_y \\
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i}&lt;/script&gt;
 
-&lt;p&gt;Hence if an accurate estimate of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\frac{df}{dt}}&lt;/script&gt; estimate of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {df/dt}&lt;/script&gt; availabe we can approximate jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf {A}&lt;/script&gt;. For now assuming &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f}&lt;/script&gt;
-only function of &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; Taylor series about &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; ignoring higher order terms can be written as&lt;/p&gt;
+&lt;p&gt;Hence if an accurate estimate of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\frac{df}{dt}}&lt;/script&gt; availabe we can approximate jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf {J}&lt;/script&gt;. For now assuming &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f}&lt;/script&gt; only function of &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; Taylor series expansion about &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; ignoring higher order terms can be written as&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}}&lt;/script&gt;
 
@@ -347,16 +346,17 @@ only function of &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; Taylor
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}}&lt;/script&gt;
 
-&lt;p&gt;The above expression relates the change in function vector to change of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {x}&lt;/script&gt; in the direction of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x}&lt;/script&gt;, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden &lt;script type=&quot;math/tex&quot;&gt;B_{i+1}&lt;/script&gt; chosen so that the change is &lt;script type=&quot;math/tex&quot;&gt;\mathbf
-{f}&lt;/script&gt; predicted by &lt;script type=&quot;math/tex&quot;&gt;\mathbf {B_{i+1}}&lt;/script&gt; in a direction &lt;script type=&quot;math/tex&quot;&gt;q_i&lt;/script&gt; orthogonal to &lt;script type=&quot;math/tex&quot;&gt;p_i&lt;/script&gt; is the same as would be predicted by &lt;script type=&quot;math/tex&quot;&gt;B_i&lt;/script&gt;. Symbolically,&lt;/p&gt;
+&lt;p&gt;The above expression relates the change in function vector to change of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {x}&lt;/script&gt; in the direction of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x}&lt;/script&gt;, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden &lt;script type=&quot;math/tex&quot;&gt;\mathbf{B_{i+1}}&lt;/script&gt; chosen so that the change is &lt;script type=&quot;math/tex&quot;&gt;\mathbf{f}&lt;/script&gt; predicted by &lt;script type=&quot;math/tex&quot;&gt;\mathbf {B_{i+1}}&lt;/script&gt; in a direction &lt;script type=&quot;math/tex&quot;&gt;\mathbf {q_i}&lt;/script&gt; orthogonal to &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x_i}&lt;/script&gt; is the same as would be predicted by &lt;script type=&quot;math/tex&quot;&gt;\mathbf{B_i}&lt;/script&gt;. Symbolically,&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {B_{i+1}q_i = B_iq_i}&lt;/script&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {q_{i}^{T}\Delta x = 0}&lt;/script&gt;
 
-&lt;p&gt;Above two eqaution is sufficient to define &lt;script type=&quot;math/tex&quot;&gt;B_{i+1}&lt;/script&gt; uniquely and it’s unique value is given by&lt;/p&gt;
+&lt;p&gt;Above two eqaution is sufficient to define &lt;script type=&quot;math/tex&quot;&gt;\mathbf {B_{i+1}}&lt;/script&gt; uniquely and its unique value is given by&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}}&lt;/script&gt;
+
+&lt;hr /&gt;
 
 &lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/intersection_discontinuous.png&quot; alt=&quot;Intersection with absolute value function&quot; /&gt;&lt;em&gt;Figure 3: Intersection with absolute value function(Using Broyden Method)&lt;/em&gt;&lt;/p&gt;
 
@@ -385,6 +385,8 @@ only function of &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; Taylor
 &lt;p&gt;This partial derivatives will give us &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; equations in &lt;script type=&quot;math/tex&quot;&gt;\mathbb{R^n}&lt;/script&gt;. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.&lt;/p&gt;
 
 &lt;p&gt;Happy Reading!&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;reference&quot;&gt;Reference&lt;/h3&gt;
 

@@ -336,8 +336,7 @@ g_y & -f_y \\
 
 <script type="math/tex; mode=display">\Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i}</script>
 
-<p>Hence if an accurate estimate of <script type="math/tex">\mathbf {\frac{df}{dt}}</script> estimate of <script type="math/tex">\mathbf {df/dt}</script> availabe we can approximate jacobian matrix <script type="math/tex">\mathbf {A}</script>. For now assuming <script type="math/tex">\mathbf {f}</script>
-only function of <script type="math/tex">t</script> Taylor series about <script type="math/tex">t</script> ignoring higher order terms can be written as</p>
+<p>Hence if an accurate estimate of <script type="math/tex">\mathbf {\frac{df}{dt}}</script> availabe we can approximate jacobian matrix <script type="math/tex">\mathbf {J}</script>. For now assuming <script type="math/tex">\mathbf {f}</script> only function of <script type="math/tex">t</script> Taylor series expansion about <script type="math/tex">t</script> ignoring higher order terms can be written as</p>
 
 <script type="math/tex; mode=display">\mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}}</script>
 
@@ -347,16 +346,17 @@ only function of <script type="math/tex">t</script> Taylor series about <script 
 
 <script type="math/tex; mode=display">\mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}}</script>
 
-<p>The above expression relates the change in function vector to change of <script type="math/tex">\mathbf {x}</script> in the direction of <script type="math/tex">\mathbf {\Delta x}</script>, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden <script type="math/tex">B_{i+1}</script> chosen so that the change is <script type="math/tex">\mathbf
-{f}</script> predicted by <script type="math/tex">\mathbf {B_{i+1}}</script> in a direction <script type="math/tex">q_i</script> orthogonal to <script type="math/tex">p_i</script> is the same as would be predicted by <script type="math/tex">B_i</script>. Symbolically,</p>
+<p>The above expression relates the change in function vector to change of <script type="math/tex">\mathbf {x}</script> in the direction of <script type="math/tex">\mathbf {\Delta x}</script>, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden <script type="math/tex">\mathbf{B_{i+1}}</script> chosen so that the change is <script type="math/tex">\mathbf{f}</script> predicted by <script type="math/tex">\mathbf {B_{i+1}}</script> in a direction <script type="math/tex">\mathbf {q_i}</script> orthogonal to <script type="math/tex">\mathbf {\Delta x_i}</script> is the same as would be predicted by <script type="math/tex">\mathbf{B_i}</script>. Symbolically,</p>
 
 <script type="math/tex; mode=display">\mathbf {B_{i+1}q_i = B_iq_i}</script>
 
 <script type="math/tex; mode=display">\mathbf {q_{i}^{T}\Delta x = 0}</script>
 
-<p>Above two eqaution is sufficient to define <script type="math/tex">B_{i+1}</script> uniquely and it’s unique value is given by</p>
+<p>Above two eqaution is sufficient to define <script type="math/tex">\mathbf {B_{i+1}}</script> uniquely and its unique value is given by</p>
 
 <script type="math/tex; mode=display">\mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}}</script>
+
+<hr />
 
 <p class="img"><img src="/assets/intersection_discontinuous.png" alt="Intersection with absolute value function" /><em>Figure 3: Intersection with absolute value function(Using Broyden Method)</em></p>
 
@@ -385,6 +385,8 @@ only function of <script type="math/tex">t</script> Taylor series about <script 
 <p>This partial derivatives will give us <script type="math/tex">n</script> equations in <script type="math/tex">\mathbb{R^n}</script>. We can solve these equations using the technique discussed above, or we can use some advanced optimization techniques such as BFGS, L-BFGS, or conjugate gradient.</p>
 
 <p>Happy Reading!</p>
+
+<hr />
 
 <h3 id="reference">Reference</h3>
 

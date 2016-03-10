@@ -174,6 +174,8 @@ $$ X_{k+1} = X_{k} - \alpha J^{-1} F_k, $$ where $$ 0 \lt \alpha \le 1 $$
 
 Do $$ \alpha > 1 $$ be a good choice of damping factor? Let's take an example of $$ f(x, y) = y - x^2 = 0 $$ and $$ g(x, y) = x - y^2 = 0 $$. When we start from point $$ (-1, -1) $$ the step size without damping is $$ (2/3, 2/3) $$. If we take $$ \alpha = 1.5 $$ or $$ \alpha = 3.0 $$ we reach at the root in a single step. Therefore which is a good value : $$ 0 \lt \alpha \le 1 $$, $$ \alpha = 1.5 $$ or $$ \alpha = 3.0 $$. In our example seemingly $$ \alpha \gt 1.0 $$ is a better choice than $$ \alpha \le 1 $$. However look at the figure-2, when we start at point $$ A $$ the full step length leads to point $$ C $$ far from the solution, at $$ \alpha \approx 0.4 $$ (chosen heuristically) we get point $$ B $$ which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of $$ \alpha $$. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of $$ \alpha $$ we can apply search heuristic to find better value.
 
+Read here about damping related tricks and optimization
+
 {: .img}
 ![Line search for good value of damping factor]({{ site.url }}/assets/alpha_selection.png)*Figure 2: Line search for good value of $$ \alpha $$*
 
@@ -267,6 +269,38 @@ $$ \mathbf {H_n = H_{n-1}+ \frac {\Delta x_n - H_{n-1} \Delta f_n} {\Delta {x_n}
 where $$ \mathbf {H_n = J_n^{-1}} $$
 
 Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the $$ \mathbf {\Delta x_n \Delta {x_n}^T} $$ is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian $$ \mathbf {J_{n-1}} $$. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?
+
+Let's start from scratch, in Newton's Method the next good approximation is given by following expression
+
+$$ \mathbf {x_{i+1} = x_i - J^{-1}\Delta f_i} $$
+
+and to prevent divergence we use $$ \mathbf {x = x_i + t\Delta x_i} $$, where $$ t $$ can take any value. Now each function can be regarded as a function of single variable namely $$ t $$ and we would like to find an optimum value of it. Since partial derivative is assumed to exist we can take partial derivative of each function with respect to $$ t $$ and applying chain rule we can write - 
+
+$$ \frac {\partial {f_i}} {\partial{t}} = \sum_{k=1}^{n} \frac{\partial f_i} {\partial x_k} \frac {dx_k}{dt}$$
+
+$$ \Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i} $$
+
+Hence if an accurate estimate of $$ \mathbf {\frac{df}{dt}} $$ estimate of $$ \mathbf {df/dt} $$ availabe we can approximate jacobian matrix $$ \mathbf {A} $$. For now assuming $$ \mathbf {f} $$
+only function of $$ t $$ Taylor series about $$ t $$ ignoring higher order terms can be written as
+
+$$ \mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}} $$
+
+$$ \Rightarrow \mathbf{f_{i+1} - f(t_i-s_i) = s_iJ\Delta x_i} $$
+
+The last equation relates to four already known quantities to fifth $$ \mathbf {J} $$ to which an approximation $$ \mathbf{B_i} $$ is available and to which a new estimation $$ \mathbf {B_{i+1}} $$ is sought. In the class of method explained by Broyden $$ \mathbf{B_{i+1}} $$ is chosen in such a way as to satisfy the equation
+
+$$ \mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}} $$
+
+The above expression relates the change in function vector to change of $$ \mathbf {x} $$ in the direction of $$ \mathbf {\Delta x} $$, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden $$B_{i+1}$$ chosen so that the change is $$ \mathbf
+{f} $$ predicted by $$ \mathbf {B_{i+1}} $$ in a direction $$ q_i $$ orthogonal to $$ p_i $$ is the same as would be predicted by $$ B_i $$. Symbolically,
+
+$$ \mathbf {B_{i+1}q_i = B_iq_i} $$
+
+$$ \mathbf {q_{i}^{T}\Delta x = 0} $$
+
+Above two eqaution is sufficient to define $$ B_{i+1} $$ uniquely and it's unique value is given by 
+
+$$ \mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}} $$
 
 {: .img}
 ![Intersection with absolute value function]({{ site.url }}/assets/intersection_discontinuous.png)*Figure 3: Intersection with absolute value function(Using Broyden Method)*

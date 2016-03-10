@@ -227,6 +227,8 @@ g_y & -f_y \\
 
 <p>Do <script type="math/tex">\alpha > 1</script> be a good choice of damping factor? Let’s take an example of <script type="math/tex">f(x, y) = y - x^2 = 0</script> and <script type="math/tex">g(x, y) = x - y^2 = 0</script>. When we start from point <script type="math/tex">(-1, -1)</script> the step size without damping is <script type="math/tex">(2/3, 2/3)</script>. If we take <script type="math/tex">\alpha = 1.5</script> or <script type="math/tex">\alpha = 3.0</script> we reach at the root in a single step. Therefore which is a good value : <script type="math/tex">0 \lt \alpha \le 1</script>, <script type="math/tex">\alpha = 1.5</script> or <script type="math/tex">\alpha = 3.0</script>. In our example seemingly <script type="math/tex">\alpha \gt 1.0</script> is a better choice than <script type="math/tex">\alpha \le 1</script>. However look at the figure-2, when we start at point <script type="math/tex">A</script> the full step length leads to point <script type="math/tex">C</script> far from the solution, at <script type="math/tex">\alpha \approx 0.4</script> (chosen heuristically) we get point <script type="math/tex">B</script> which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of <script type="math/tex">\alpha</script>. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of <script type="math/tex">\alpha</script> we can apply search heuristic to find better value.</p>
 
+<p>Read here about damping related tricks and optimization</p>
+
 <p class="img"><img src="/assets/alpha_selection.png" alt="Line search for good value of damping factor" /><em>Figure 2: Line search for good value of <script type="math/tex">\alpha</script></em></p>
 
 <h4 id="selecting-damping-factor">Selecting Damping Factor</h4>
@@ -323,6 +325,38 @@ g_y & -f_y \\
 <p>where <script type="math/tex">\mathbf {H_n = J_n^{-1}}</script></p>
 
 <p>Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the <script type="math/tex">\mathbf {\Delta x_n \Delta {x_n}^T}</script> is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian <script type="math/tex">\mathbf {J_{n-1}}</script>. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?</p>
+
+<p>Let’s start from scratch, in Newton’s Method the next good approximation is given by following expression</p>
+
+<script type="math/tex; mode=display">\mathbf {x_{i+1} = x_i - J^{-1}\Delta f_i}</script>
+
+<p>and to prevent divergence we use <script type="math/tex">\mathbf {x = x_i + t\Delta x_i}</script>, where <script type="math/tex">t</script> can take any value. Now each function can be regarded as a function of single variable namely <script type="math/tex">t</script> and we would like to find an optimum value of it. Since partial derivative is assumed to exist we can take partial derivative of each function with respect to <script type="math/tex">t</script> and applying chain rule we can write -</p>
+
+<script type="math/tex; mode=display">\frac {\partial {f_i}} {\partial{t}} = \sum_{k=1}^{n} \frac{\partial f_i} {\partial x_k} \frac {dx_k}{dt}</script>
+
+<script type="math/tex; mode=display">\Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i}</script>
+
+<p>Hence if an accurate estimate of <script type="math/tex">\mathbf {\frac{df}{dt}}</script> estimate of <script type="math/tex">\mathbf {df/dt}</script> availabe we can approximate jacobian matrix <script type="math/tex">\mathbf {A}</script>. For now assuming <script type="math/tex">\mathbf {f}</script>
+only function of <script type="math/tex">t</script> Taylor series about <script type="math/tex">t</script> ignoring higher order terms can be written as</p>
+
+<script type="math/tex; mode=display">\mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}}</script>
+
+<script type="math/tex; mode=display">\Rightarrow \mathbf{f_{i+1} - f(t_i-s_i) = s_iJ\Delta x_i}</script>
+
+<p>The last equation relates to four already known quantities to fifth <script type="math/tex">\mathbf {J}</script> to which an approximation <script type="math/tex">\mathbf{B_i}</script> is available and to which a new estimation <script type="math/tex">\mathbf {B_{i+1}}</script> is sought. In the class of method explained by Broyden <script type="math/tex">\mathbf{B_{i+1}}</script> is chosen in such a way as to satisfy the equation</p>
+
+<script type="math/tex; mode=display">\mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}}</script>
+
+<p>The above expression relates the change in function vector to change of <script type="math/tex">\mathbf {x}</script> in the direction of <script type="math/tex">\mathbf {\Delta x}</script>, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden <script type="math/tex">B_{i+1}</script> chosen so that the change is <script type="math/tex">\mathbf
+{f}</script> predicted by <script type="math/tex">\mathbf {B_{i+1}}</script> in a direction <script type="math/tex">q_i</script> orthogonal to <script type="math/tex">p_i</script> is the same as would be predicted by <script type="math/tex">B_i</script>. Symbolically,</p>
+
+<script type="math/tex; mode=display">\mathbf {B_{i+1}q_i = B_iq_i}</script>
+
+<script type="math/tex; mode=display">\mathbf {q_{i}^{T}\Delta x = 0}</script>
+
+<p>Above two eqaution is sufficient to define <script type="math/tex">B_{i+1}</script> uniquely and it’s unique value is given by</p>
+
+<script type="math/tex; mode=display">\mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}}</script>
 
 <p class="img"><img src="/assets/intersection_discontinuous.png" alt="Intersection with absolute value function" /><em>Figure 3: Intersection with absolute value function(Using Broyden Method)</em></p>
 

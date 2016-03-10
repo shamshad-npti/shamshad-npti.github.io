@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 08 Mar 2016 17:09:02 +0530</pubDate>
-    <lastBuildDate>Tue, 08 Mar 2016 17:09:02 +0530</lastBuildDate>
+    <pubDate>Thu, 10 Mar 2016 13:03:03 +0530</pubDate>
+    <lastBuildDate>Thu, 10 Mar 2016 13:03:03 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -227,6 +227,8 @@ g_y &amp; -f_y \\
 
 &lt;p&gt;Do &lt;script type=&quot;math/tex&quot;&gt;\alpha &gt; 1&lt;/script&gt; be a good choice of damping factor? Let’s take an example of &lt;script type=&quot;math/tex&quot;&gt;f(x, y) = y - x^2 = 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(x, y) = x - y^2 = 0&lt;/script&gt;. When we start from point &lt;script type=&quot;math/tex&quot;&gt;(-1, -1)&lt;/script&gt; the step size without damping is &lt;script type=&quot;math/tex&quot;&gt;(2/3, 2/3)&lt;/script&gt;. If we take &lt;script type=&quot;math/tex&quot;&gt;\alpha = 1.5&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;\alpha = 3.0&lt;/script&gt; we reach at the root in a single step. Therefore which is a good value : &lt;script type=&quot;math/tex&quot;&gt;0 \lt \alpha \le 1&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\alpha = 1.5&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;\alpha = 3.0&lt;/script&gt;. In our example seemingly &lt;script type=&quot;math/tex&quot;&gt;\alpha \gt 1.0&lt;/script&gt; is a better choice than &lt;script type=&quot;math/tex&quot;&gt;\alpha \le 1&lt;/script&gt;. However look at the figure-2, when we start at point &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; the full step length leads to point &lt;script type=&quot;math/tex&quot;&gt;C&lt;/script&gt; far from the solution, at &lt;script type=&quot;math/tex&quot;&gt;\alpha \approx 0.4&lt;/script&gt; (chosen heuristically) we get point &lt;script type=&quot;math/tex&quot;&gt;B&lt;/script&gt; which is close to the solution. For an arbitray unknown equation there is no known good way to select the exact value of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. We assume that the function is continuous in the neiborhood, and try to move in the direction that may have solution. A long jump may violet our initial assumption. Furhtermore when we bound the range of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; we can apply search heuristic to find better value.&lt;/p&gt;
 
+&lt;p&gt;Read here about damping related tricks and optimization&lt;/p&gt;
+
 &lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/alpha_selection.png&quot; alt=&quot;Line search for good value of damping factor&quot; /&gt;&lt;em&gt;Figure 2: Line search for good value of &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;selecting-damping-factor&quot;&gt;Selecting Damping Factor&lt;/h4&gt;
@@ -323,6 +325,38 @@ g_y &amp; -f_y \\
 &lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;\mathbf {H_n = J_n^{-1}}&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;Though the final expression for the rank-one jacobian update is a valid expression the steps that lead to it is not valid. Notice the &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x_n \Delta {x_n}^T}&lt;/script&gt; is a singular matrix therefore it is not invertible. Suppose for a moment that it is invertible, to reach at conclusion we have added and substracted previous jacobian &lt;script type=&quot;math/tex&quot;&gt;\mathbf {J_{n-1}}&lt;/script&gt;. Why do we have chosen the previous jacobian? We may have selected a null matrix or nothing at all. What the last expression is actually doing?&lt;/p&gt;
+
+&lt;p&gt;Let’s start from scratch, in Newton’s Method the next good approximation is given by following expression&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {x_{i+1} = x_i - J^{-1}\Delta f_i}&lt;/script&gt;
+
+&lt;p&gt;and to prevent divergence we use &lt;script type=&quot;math/tex&quot;&gt;\mathbf {x = x_i + t\Delta x_i}&lt;/script&gt;, where &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; can take any value. Now each function can be regarded as a function of single variable namely &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; and we would like to find an optimum value of it. Since partial derivative is assumed to exist we can take partial derivative of each function with respect to &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; and applying chain rule we can write -&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac {\partial {f_i}} {\partial{t}} = \sum_{k=1}^{n} \frac{\partial f_i} {\partial x_k} \frac {dx_k}{dt}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Rightarrow \mathbf {\frac{df}{dt} = J\Delta x_i}&lt;/script&gt;
+
+&lt;p&gt;Hence if an accurate estimate of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\frac{df}{dt}}&lt;/script&gt; estimate of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {df/dt}&lt;/script&gt; availabe we can approximate jacobian matrix &lt;script type=&quot;math/tex&quot;&gt;\mathbf {A}&lt;/script&gt;. For now assuming &lt;script type=&quot;math/tex&quot;&gt;\mathbf {f}&lt;/script&gt;
+only function of &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; Taylor series about &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; ignoring higher order terms can be written as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {f(t - s) \approx f_{i+1} - s\frac{df}{dt}}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Rightarrow \mathbf{f_{i+1} - f(t_i-s_i) = s_iJ\Delta x_i}&lt;/script&gt;
+
+&lt;p&gt;The last equation relates to four already known quantities to fifth &lt;script type=&quot;math/tex&quot;&gt;\mathbf {J}&lt;/script&gt; to which an approximation &lt;script type=&quot;math/tex&quot;&gt;\mathbf{B_i}&lt;/script&gt; is available and to which a new estimation &lt;script type=&quot;math/tex&quot;&gt;\mathbf {B_{i+1}}&lt;/script&gt; is sought. In the class of method explained by Broyden &lt;script type=&quot;math/tex&quot;&gt;\mathbf{B_{i+1}}&lt;/script&gt; is chosen in such a way as to satisfy the equation&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {f_{i+1} - f(t_i-s_i) = s_iB_{i+1}\Delta {x_i}}&lt;/script&gt;
+
+&lt;p&gt;The above expression relates the change in function vector to change of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {x}&lt;/script&gt; in the direction of &lt;script type=&quot;math/tex&quot;&gt;\mathbf {\Delta x}&lt;/script&gt;, there is no information available about the behavior of function in other directions. Therefore it is not possible to obtain fresh rate of change in these directions. According to the first method suggested by Broyden &lt;script type=&quot;math/tex&quot;&gt;B_{i+1}&lt;/script&gt; chosen so that the change is &lt;script type=&quot;math/tex&quot;&gt;\mathbf
+{f}&lt;/script&gt; predicted by &lt;script type=&quot;math/tex&quot;&gt;\mathbf {B_{i+1}}&lt;/script&gt; in a direction &lt;script type=&quot;math/tex&quot;&gt;q_i&lt;/script&gt; orthogonal to &lt;script type=&quot;math/tex&quot;&gt;p_i&lt;/script&gt; is the same as would be predicted by &lt;script type=&quot;math/tex&quot;&gt;B_i&lt;/script&gt;. Symbolically,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {B_{i+1}q_i = B_iq_i}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {q_{i}^{T}\Delta x = 0}&lt;/script&gt;
+
+&lt;p&gt;Above two eqaution is sufficient to define &lt;script type=&quot;math/tex&quot;&gt;B_{i+1}&lt;/script&gt; uniquely and it’s unique value is given by&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf {B_{i+1} = {B_i} + \frac {\Delta f_i - s_i B_i \Delta x} {s_i \Delta x^T \Delta x} \Delta x^{T}}&lt;/script&gt;
 
 &lt;p class=&quot;img&quot;&gt;&lt;img src=&quot;/assets/intersection_discontinuous.png&quot; alt=&quot;Intersection with absolute value function&quot; /&gt;&lt;em&gt;Figure 3: Intersection with absolute value function(Using Broyden Method)&lt;/em&gt;&lt;/p&gt;
 

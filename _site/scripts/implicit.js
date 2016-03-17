@@ -474,139 +474,98 @@ var Implicit = function(func, finish) {
 
  var CanvasPlotter = function(canvas, func) {
   var me = this;
-  me.canvas = canvas;
-  me.x1 = -10;
-  me.x2 = 10;
-  me.y1 = -10;
-  me.y2 = 10;
-  me.func = func;
+  me.canvas = canvas; me.func = func;
+  me.style = attr(canvas, "style");
+  me.x1 = -10; me.x2 = 10;
+  me.y1 = -10; me.y2 = 10;
   me.ctx = canvas.getContext("2d");
   me.color = "green";
-  me.axisColor = "#0cc";
-  me.gridColor = "#444";
-  me.clearColor = "black";
-  me.px = 300;
-  me.py = 300;
-  me.tx = 0;
-  me.ty = 0;
+  me.axisColor = "#222";
+  me.gridColor = "#ccc";
+  me.clearColor = "#efefef";
+  me.px = 300; me.py = 300;
+  me.tx = 0; me.ty = 0;
   me.isdown = false;
-  me.mouseX = 0;
-  me.mouseY = 0;
-  me.timer = new Timer();
+  me.mouseX = 0; me.mouseY = 0;
+
+  function attr(elem, name) {
+    var atr = elem.getAttribute(name);
+    if(atr !== undefined && atr !== null) return atr;
+    return "";
+  }
   me.mousedown = function(evt) {
     if(evt.button != 0) return;
-    var bRect = me.canvas.getBoundingClientRect();
-    me.mouseX = (evt.clientX - bRect.left)*(me.canvas.width/bRect.width);
-    me.mouseY = (evt.clientY - bRect.top)*(me.canvas.height/bRect.height);
+    me.processEvt(evt);
+    me.mouseX = me.mx; me.mouseY = me.my;
     me.isdown = true;
-    me.timer.reset();
   };
 
   me.mousemove = function(evt) { 
     if(!me.isdown) return;
-    var bRect = me.canvas.getBoundingClientRect();
-    var mx = (evt.clientX - bRect.left)*(me.canvas.width/bRect.width);
-    var my = (evt.clientY - bRect.top)*(me.canvas.height/bRect.height);
-    var dx = mx - me.mouseX;
-    var dy = my - me.mouseY;
-    me.mouseX = mx;
-    me.mouseY = my;
-    dx /= me.tx;
-    dy /= me.ty;
-    me.x1 -= dx; me.x2 -= dx; me.y1 += dy; me.y2 += dy;
-    me.canvas.style = "cursor: move";
+    me.processEvt(evt);
+    var dx = me.mx - me.mouseX;
+    var dy = me.my - me.mouseY;
+    me.mouseX = me.mx; me.mouseY = me.my;
+    dx /= me.tx; dy /= me.ty;
+    me.x1 -= dx; me.x2 -= dx; 
+    me.y1 += dy; me.y2 += dy;
+    me.canvas.style = me.style + ";cursor: move;";
     me.update();
   };
 
   me.mouseup = function(evt) {
     if(!me.isdown) return;
-    var bRect = me.canvas.getBoundingClientRect();
-    var mx = (evt.clientX - bRect.left)*(me.canvas.width/bRect.width);
-    var my = (evt.clientY - bRect.top)*(me.canvas.height/bRect.height);
-    mx -= me.mouseX;
-    my -= me.mouseY;
-    mx /= me.tx;
-    my /= me.ty;
-    me.x1 -= mx; me.x2 -= mx; me.y1 += my; me.y2 += my;
+    me.processEvt(evt);
+    me.mx -= me.mouseX; me.my -= me.mouseY;
+    me.mx /= me.tx; me.my /= me.ty;
+    me.x1 -= me.mx; me.x2 -= me.mx; 
+    me.y1 += me.my; me.y2 += me.my;
     me.isdown = false;
-    me.canvas.style = "cursor: default";
+    me.canvas.style = me.style;
     me.update();
   }
 
-  function transform(p) {
-    p.x = me.tx * (p.x - me.x1);
-    p.y = me.ty * (me.y2 - p.y);
+  me.processEvt = function(evt) {
+    var rect = me.canvas.getBoundingClientRect();
+    me.mx = (evt.clientX - rect.left)*(me.canvas.width/rect.width);
+    me.my = (evt.clientY - rect.top)*(me.canvas.height/rect.height);
   }
 
   function beforeplot() {
+    me.ctx.setTransform(me.tx, 0, 0, -me.ty, -me.x1 * me.tx, me.y2 * me.ty);
+    me.lineWidth = 1 / Math.max(Math.abs(me.tx), Math.abs(me.ty));
     me.ctx.beginPath();
-    me.ctx.rect(0, 0, me.px, me.py);
+    me.ctx.rect(me.x1, me.y1, me.x2 - me.x1, me.y2 - me.y1);
     me.ctx.fillStyle = me.clearColor;
     me.ctx.fill();
     me.ctx.beginPath();
-    var p = new Point(0, me.y1, false);
-    transform(p);
-    me.ctx.moveTo(p.x, p.y);
-    p.x = 0, p.y = me.y2;
-    transform(p);
-    me.ctx.lineTo(p.x, p.y);
-    p.x = me.x1, p.y = 0;
-    transform(p);
-    me.ctx.moveTo(p.x, p.y);
-    p.x = me.x2, p.y = 0;
-    transform(p);
-    me.ctx.lineTo(p.x, p.y);
-    me.ctx.lineWidth = 0.5;
+    me.ctx.moveTo(0, me.y1);
+    me.ctx.lineTo(0, me.y2);
+    me.ctx.moveTo(me.x1, 0);
+    me.ctx.lineTo(me.x2, 0);
+    me.ctx.lineWidth = 0.5 * me.lineWidth;
     me.ctx.strokeStyle = me.axisColor;
     me.ctx.stroke();
     me.ctx.beginPath();
     var dx = (me.x2 - me.x1) / 10;
     var dy = (me.y2 - me.y1) / 10;
-    for(var i = 1; ; i++) {
-      p.x = i * dx;
-      if(p.x >= me.x2) break;
-      p.y = me.y1;
-      transform(p);
-      me.ctx.moveTo(p.x, p.y);
-      p.x = i * dx;
-      p.y = me.y2;
-      transform(p);
-      me.ctx.lineTo(p.x, p.y);
+    for(var i = dx; i < me.x2; i += dx) {
+      me.ctx.moveTo(i, me.y1);
+      me.ctx.lineTo(i, me.y2);
     }
-    for(var i = -1; ; i--) {
-      p.x = i * dx;
-      if(p.x <= me.x1) break;
-      p.y = me.y1;
-      transform(p);
-      me.ctx.moveTo(p.x, p.y);
-      p.x = i * dx;
-      p.y = me.y2;
-      transform(p);
-      me.ctx.lineTo(p.x, p.y);      
+    for(var i = -dx; i > me.x1; i -= dx) {
+      me.ctx.moveTo(i, me.y1);
+      me.ctx.lineTo(i, me.y2);
     }
-    for(var i = 1; ; i++) {
-      p.y = i * dy;
-      if(p.y >= me.y2) break;
-      p.x = me.x1;
-      transform(p);
-      me.ctx.moveTo(p.x, p.y);
-      p.y = i * dy;
-      p.x = me.x2;
-      transform(p);
-      me.ctx.lineTo(p.x, p.y);      
+    for(var i = dy; i < me.y2; i += dy) {
+      me.ctx.moveTo(me.x1, i);
+      me.ctx.lineTo(me.x2, i);
     }
-    for(var i = -1; ; i--) {
-      p.y = i * dy;
-      if(p.y <= me.y1) break;
-      p.x = me.x1;
-      transform(p);
-      me.ctx.moveTo(p.x, p.y);
-      p.y = i * dy;
-      p.x = me.x2;
-      transform(p);
-      me.ctx.lineTo(p.x, p.y);      
+    for(var i = -dy; i > me.y1; i -= dy) {
+      me.ctx.moveTo(me.x1, i);
+      me.ctx.lineTo(me.x2, i);
     }
-    me.ctx.lineWidth = 0.5;
+    me.ctx.lineWidth = 0.5 * me.lineWidth;
     me.ctx.strokeStyle = me.gridColor;
     me.ctx.stroke();
   }
@@ -615,7 +574,6 @@ var Implicit = function(func, finish) {
     beforeplot();
     me.ctx.beginPath();
     for(var i = 0; i < segments.length; i++) {
-      transform(segments[i]);
       if(segments[i].lineTo) {
         me.ctx.lineTo(segments[i].x, segments[i].y);
       } else {
@@ -623,7 +581,7 @@ var Implicit = function(func, finish) {
       }
     }
     me.ctx.strokeStyle = me.color;
-    me.ctx.lineWidth = 2;
+    me.ctx.lineWidth = 2 * me.lineWidth;
     me.ctx.stroke();
   }
 
@@ -638,4 +596,5 @@ var Implicit = function(func, finish) {
   me.canvas.addEventListener("mousedown", me.mousedown, false);
   me.canvas.addEventListener("mouseup", me.mouseup, false);
   me.canvas.addEventListener("mousemove", me.mousemove, false);
+  document.body.addEventListener("mouseup", function() { me.isdown = false; }, false);
  };

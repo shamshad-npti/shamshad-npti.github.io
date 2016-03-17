@@ -11,7 +11,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>    
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 
@@ -259,6 +259,24 @@ However the first problem can’t be solve without exploring the tree further.</
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
+
+<hr />
+
+<h2 id="javascript-implementation-of-quadtree-algorithm">Javascript implementation of quadtree algorithm</h2>
+
+<script type="text/javascript" src="/scripts/implicit.js"></script>
+
+<canvas id="paint" style="border: solid 1px green;" width="640" height="480"></canvas>
+<form>
+    Enter equation* (Not supported)
+    <input type="text" name="equation" value="2x^2+y^4-144=0" readonly="" />
+</form>
+<p><script type="math/tex">2x^2+y^4-144=0</script>
+<script type="text/javascript">
+var canvas = document.getElementById("paint");
+var cv = new CanvasPlotter(canvas, function(x, y){return y*y*y*y + 2 * x * x - 144;});
+cv.update();
+</script></p>
 
   </article>
 

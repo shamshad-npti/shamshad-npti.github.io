@@ -1,0 +1,13 @@
+<html>
+<head>
+	<script type="text/javascript" src="implicit.js"></script>
+</head>
+<body>
+	<canvas id="paint" style="border: solid 1px green;"></canvas>
+	<form><input type="text" name="equation" /></form>
+	<script type="text/javascript">
+	var cv = new CanvasPlotter(document.getElementById("paint"), function(x, y){return y - 5 * Math.sin(x);});
+	cv.update();
+	</script>
+</body>
+</html>

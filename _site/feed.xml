@@ -5,8 +5,8 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 10 Mar 2016 13:24:27 +0530</pubDate>
-    <lastBuildDate>Thu, 10 Mar 2016 13:24:27 +0530</lastBuildDate>
+    <pubDate>Thu, 17 Mar 2016 20:14:08 +0530</pubDate>
+    <lastBuildDate>Thu, 17 Mar 2016 20:14:08 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -605,6 +605,24 @@ However the first problem can’t be solve without exploring the tree further.&l
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;javascript-implementation-of-quadtree-algorithm&quot;&gt;Javascript implementation of quadtree algorithm&lt;/h2&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.js&quot;&gt;&lt;/script&gt;
+
+&lt;canvas id=&quot;paint&quot; style=&quot;border: solid 1px green;&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
+&lt;form&gt;
+    Enter equation* (Not supported)
+    &lt;input type=&quot;text&quot; name=&quot;equation&quot; value=&quot;2x^2+y^4-144=0&quot; readonly=&quot;&quot; /&gt;
+&lt;/form&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;2x^2+y^4-144=0&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var canvas = document.getElementById(&quot;paint&quot;);
+var cv = new CanvasPlotter(canvas, function(x, y){return y*y*y*y + 2 * x * x - 144;});
+cv.update();
+&lt;/script&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 09 Oct 2015 04:04:34 +0530</pubDate>
         <link>/implicit/curve/2015/10/09/Implicit-curve/</link>

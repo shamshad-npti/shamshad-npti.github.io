@@ -1,12 +1,12 @@
 <html>
 <head>
-	<script type="text/javascript" src="implicit.js"></script>
+	<script type="text/javascript" src="implicit.min.js"></script>
 </head>
 <body>
 	<canvas id="paint" style="border: solid 1px green;"></canvas>
 	<form><input type="text" name="equation" /></form>
 	<script type="text/javascript">
-	var cv = new CanvasPlotter(document.getElementById("paint"), function(x, y){return y - 5 * Math.sin(x);});
+	var cv = new CanvasPlotter(document.getElementById("paint"), function(x, y){return Math.cos(x*y) - 0.5;});
 	cv.update();
 	</script>
 </body>

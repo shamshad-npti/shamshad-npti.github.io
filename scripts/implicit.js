@@ -1,11 +1,11 @@
 "use strict"
 
 var Timer = function() {
-	var me = this;
-	me.start = 0, me.elapse = 0;
-	me.reset = function() { me.start = time(); };
-	me.record = function() { me.elapse = time() - me.start; };
-	function time() { return (new Date()).getTime(); };
+  var me = this;
+  me.start = 0, me.elapse = 0;
+  me.reset = function() { me.start = time(); };
+  me.record = function() { me.elapse = time() - me.start; };
+  function time() { return (new Date()).getTime(); };
 };
 
 var LinkedList = function() {
@@ -88,150 +88,145 @@ var Point = function(x, y, lineTo) {
   var me = this; 
   me.x = x, me.y = y, me.lineTo = lineTo;
 
-	me.equals = function(p) {
-		return equals(me.x, p.x, 1e-6) && equals(me.y, p.y, 1e-6);
-	};
+  me.equals = function(p) {
+    return equals(me.x, p.x, 1e-6) && equals(me.y, p.y, 1e-6);
+  };
 
-	function equals(x, y, eps) {
-		if(x === y) return true;
-		return ((x - eps) < y) && (y < (x + eps));
-	};
+  function equals(x, y, eps) {
+    if(x === y) return true;
+    return ((x - eps) < y) && (y < (x + eps));
+  };
 };
 
 var PointList = function(start, end) {
-	var me = this;
-	me.start = start, me.end = end;
-	me.start.lineTo = false, me.end.lineTo = true;
-	me.points = new LinkedList();
+  var me = this;
+  me.start = start, me.end = end;
+  me.start.lineTo = false, me.end.lineTo = true;
+  me.points = new LinkedList();
 
-	me.merge = function(list) {
-		me.points.push(me.end);
-		list.start.lineTo = true;
-		me.points.push(list.start);
-		me.end = list.end;
-		if(list.points.length == 0) return;
-		me.points.merge(list.points);
-	}
+  me.merge = function(list) {
+    me.points.push(me.end);
+    list.start.lineTo = true;
+    me.points.push(list.start);
+    me.end = list.end;
+    if(list.points.length == 0) return;
+    me.points.merge(list.points);
+  }
 
-	me.push = function(point) {
-		point.lineTo = true;
-		me.points.push(me.end);
-		me.end = point;
-	};
+  me.push = function(point) {
+    point.lineTo = true;
+    me.points.push(me.end);
+    me.end = point;
+  };
 
-	me.unshift = function(point) {
-		point.lineTo = false;
-		me.start.lineTo = true;
-		me.points.unshift(me.start);
-		me.start = point;
-	};
+  me.unshift = function(point) {
+    point.lineTo = false;
+    me.start.lineTo = true;
+    me.points.unshift(me.start);
+    me.start = point;
+  };
 };
 
 var Rectangle = function(func) {
-	var me = this;
-	me.eval = [0, 0, 0, 0], me.rect = [0, 0, 0, 0];
-  me.x = 0, me.y = 0, me.children = null, me.status = 0;
-	me.singular = false, me.func = func;
+  var me = this;
+  me.eval = [0, 0, 0, 0], me.rect = [0, 0, 0, 0];
+  me.x = 0, me.y = 0, me.children = null, me.status = null;
+  me.singular = false, me.func = func;
 
-	me.copy = function(r) {
-		for(var i = 0; i < 4; i++) {
-			me.eval[i] = r.eval[i];
-			me.rect[i] = r.rect[i];
-		}
+  me.copy = function(r) {
+    for(var i = 0; i < 4; i++) {
+      me.eval[i] = r.eval[i];
+      me.rect[i] = r.rect[i];
+    }
     me.x = r.x, me.y = r.y;
-		me.singular = r.singular;
-		me.status = r.status;
-	};
+    me.singular = r.singular;
+  };
 
   me.set = function(x, y, fx, fy, singular) {
     me.x = x, me.y = y, me.rect[2] = fx, me.rect[3] = fy;
     me.singular = singular;
   };
 
-	me.split = function() {
-		if(me.children === null) {
-			me.children = [];
-			for(var i = 0; i < 4; i++) {
-				me.children.push(new Rectangle(me.func));
-			}
-		}
-		var r = me.children;
-		var w2 = me.rect[2] * 0.5;
-		var h2 = me.rect[3] * 0.5;
-		for(var i = 0; i < 4; i++) {
-			r[i].copy(me);
-			r[i].rect[2] = w2;
-			r[i].rect[3] = h2;
-		}
-		r[1].rect[0] += w2;
-		r[2].rect[0] += w2;
-		r[2].rect[1] += h2;
-		r[3].rect[1] += h2;
-		r[0].eval[1] = me.func(r[1].rect[0], r[1].rect[1]);
-		r[0].eval[2] = me.func(r[2].rect[0], r[2].rect[1]);
-		r[0].eval[3] = me.func(r[3].rect[0], r[3].rect[1]);
-		r[1].eval[2] = me.func(r[2].rect[0] + w2, r[2].rect[1]);
-		r[2].eval[3] = me.func(r[2].rect[0], r[2].rect[1] + h2);
-		r[1].eval[0] = r[0].eval[1];
-		r[1].eval[3] = r[0].eval[2];
-		r[2].eval[0] = r[0].eval[2];
-		r[2].eval[1] = r[1].eval[2];
-		r[3].eval[0] = r[0].eval[3];
-		r[3].eval[1] = r[0].eval[2];
-		r[3].eval[2] = r[2].eval[3];
-		return r;
-	};
+  me.split = function() {
+    if(me.children === null) {
+      me.children = [];
+      for(var i = 0; i < 4; i++) {
+        me.children.push(new Rectangle(me.func));
+      }
+    }
+    var r = me.children;
+    var w2 = me.rect[2] * 0.5;
+    var h2 = me.rect[3] * 0.5;
+    for(var i = 0; i < 4; i++) {
+      r[i].copy(me);
+      r[i].rect[2] = w2;
+      r[i].rect[3] = h2;
+    }
+    r[1].rect[0] += w2;
+    r[2].rect[0] += w2;
+    r[2].rect[1] += h2;
+    r[3].rect[1] += h2;
+    r[0].eval[1] = me.func(r[1].rect[0], r[1].rect[1]);
+    r[0].eval[2] = me.func(r[2].rect[0], r[2].rect[1]);
+    r[0].eval[3] = me.func(r[3].rect[0], r[3].rect[1]);
+    r[1].eval[2] = me.func(r[2].rect[0] + w2, r[2].rect[1]);
+    r[2].eval[3] = me.func(r[2].rect[0], r[2].rect[1] + h2);
+    r[1].eval[0] = r[0].eval[1];
+    r[1].eval[3] = r[0].eval[2];
+    r[2].eval[0] = r[0].eval[2];
+    r[2].eval[1] = r[1].eval[2];
+    r[3].eval[0] = r[0].eval[3];
+    r[3].eval[1] = r[0].eval[2];
+    r[3].eval[2] = r[2].eval[3];
+    return r;
+  };
 
-	me.x1 = function() {return me.rect[0]; };
-	me.y1 = function() {return me.rect[1]; };
-	me.x2 = function() {return me.rect[0] + me.rect[2]; };
-	me.y2 = function() {return me.rect[1] + me.rect[3]; };
+  me.x1 = function() {return me.rect[0]; };
+  me.y1 = function() {return me.rect[1]; };
+  me.x2 = function() {return me.rect[0] + me.rect[2]; };
+  me.y2 = function() {return me.rect[1] + me.rect[3]; };
 };
 
 var Implicit = function(func, finish) {
-	var me = this;
-	var EMPTY = 0, FINISHED = -1, T_INV = -1, VALID = 1;
-	var T0000 = 0, T0001 = 1, T0010 = 2, T0011 = 3;
-	var T0100 = 4, T0101 = 5, T0110 = 6, T0111 = 7;
-  var LIST_THRESHOLD = 16, MAX_SPLIT = 40, RES_COARSE = 8;
-  var timer = new Timer(), MAX_DEPTH = 5;
+  var me = this;
+  var EMPTY = 0, FINISHED = -1, T_INV = -1, VALID = 1;
+  var LIST_THRESHOLD = 16, MAX_SPLIT = 32, RES_COARSE = 8;
+  var timer = new Timer(), MAX_DEPTH = 4, T0101 = 5;
 
-	me.func = func, me.finish = finish, me.grid = null;
-	me.temp = null, me.plotDepth = 0, me.segmentCheckDepth = 0;
-	me.openList = [], me.segments = [];
-	me.sw = 0, me.sh = 0, me.pts = [null, null];
+  me.func = func, me.finish = finish, me.grid = null;
+  me.temp = null, me.plotDepth = 0, me.segmentCheckDepth = 0;
+  me.openList = [], me.segments = [];
+  me.sw = 0, me.sh = 0, me.pts = [null, null];
 
-	function intersect(c1, c2) {
-		return c1 * c2 <= 0 ? 1 : 0;
-	}
-
-	function edgeConfig(r) {
-		var cfg = (intersect(r.eval[0], r.eval[1]) << 3) |
-			      (intersect(r.eval[1], r.eval[2]) << 2) |
-			      (intersect(r.eval[2], r.eval[3]) << 1) |
-			      (intersect(r.eval[3], r.eval[0]));
-		if(cfg === 0 || cfg === 15) { return EMPTY; }
-		return cfg;
-	};
-
-  function config(r) {
-    var cfg = 0;
+  function buildStatus(r) {
+    var z = 0, p = 0, n = 0, k = true;
     for(var i = 0; i < 4; i++) {
-      cfg = (cfg << 1) | sign(r.eval[i]);
+      if(!isFinite(r.eval[i]) || isNaN(r.eval[i])) {
+        k = false;
+        break;
+      }
+      if(r.eval[i] < 0.0) n++;
+      else if(r.eval[i] > 0.0) p++;
+      else z++;
     }
-    return cfg >= 8 ? (~cfg) & 0xf : cfg;
+    r.status = {pos: p, neg: n, zero: z, valid: k, empty: !k || ((z + 1) | p | n) >= 4};
   }
 
-  function sign(v) {
-    if((!isFinite(v)) || isNaN(v)) return T_INV;
-    return v >= 0.0 ? 1 : 0;
+  function interpolate(p1, p2, fa, fb) {
+    var r = -fb / (fa - fb);
+    if (r >= 0 && r <= 1) { return r * (p1 - p2) + p2; }
+    return (p1 + p2) * 0.5;
+  };
+
+  function createLine(x1, y1, x2, y2) {
+    me.pts[0] = new Point(x1, y1, false);
+    me.pts[1] = new Point(x2, y2, true);
+    return VALID;
   }
 
-	function interpolate(fa, fb, p1, p2) {
-		var r = -fb / (fa - fb);
-		if (r >= 0 && r <= 1) { return r * (p1 - p2) + p2; }
-		return (p1 + p2) * 0.5;
-	};
+  function oppSign(x, y) { 
+    return x * y < 0.0; 
+  }
 
   me.abortList = function() {
     for(var i = 0; i < me.openList.length; i++) {
@@ -241,101 +236,109 @@ var Implicit = function(func, finish) {
     }
     me.openList = [];
   };
-
-	me.create = function(r, d) {
-		var cfg = config(r);
-		if(cfg === T_INV || (cfg === T0101 && !d)) { return cfg; }
+  
+  me.create = function(r) {
+    if(r.status.empty) return EMPTY;
+    var zer = r.status.zero;
+    var neg = r.status.neg;
+    var pos = r.status.pos;
+    if(((zer + 1) | neg | pos) >= 4) { return EMPTY; }
     var x1 = r.x1(), x2 = r.x2(), y1 = r.y1(), y2 = r.y2();
     var tl = r.eval[0], tr = r.eval[1], br = r.eval[2], bl = r.eval[3];
-    var q1 = 0, q2 = 0;
-		switch(cfg) {
-			case T0001:
-        me.pts[0] = new Point(x1, interpolate(bl, tl, y2, y1), false);
-        me.pts[1] = new Point(interpolate(bl, br, x1, x2), y2, true);
-        q1 = Math.min(Math.abs(bl), Math.abs(tl));
-        q2 = Math.min(Math.abs(bl), Math.abs(br));        
-				break;
-			case T0010:
-        me.pts[0] = new Point(x2, interpolate(br, tr, y2, y1), false);
-        me.pts[1] = new Point(interpolate(br, bl, x2, x1), y2, true);
-        q1 = Math.min(Math.abs(br), Math.abs(tr));
-        q2 = Math.min(Math.abs(br), Math.abs(bl));
-				break;
-			case T0100:
-        me.pts[0] = new Point(x2, interpolate(tr, br, y1, y2), false);
-        me.pts[1] = new Point(interpolate(tr, tl, x2, x1), y1, true);
-        q1 = Math.min(Math.abs(tr), Math.abs(br));
-        q2 = Math.min(Math.abs(tr), Math.abs(tl));
-				break;
-			case T0111:
-        me.pts[0] = new Point(x1, interpolate(tl, bl, y1, y2), false);
-        me.pts[1] = new Point(interpolate(tl, tr, x1, x2), y1, true);
-        q1 = Math.min(Math.abs(bl), Math.abs(tl));
-        q2 = Math.min(Math.abs(tl), Math.abs(tr));
-				break;
-			case T0011:
-        me.pts[0] = new Point(x1, interpolate(tl, bl, y1, y2), false);
-        me.pts[1] = new Point(x2, interpolate(tr, br, y1, y2), true);
-        q1 = Math.min(Math.abs(tl), Math.abs(bl));
-        q2 = Math.min(Math.abs(tr), Math.abs(br));
-				break;
-			case T0110:
-        me.pts[0] = new Point(interpolate(tl, tr, x1, x2), y1, false);
-        me.pts[1] = new Point(interpolate(bl, br, x1, x2), y2, true);
-        q1 = Math.min(Math.abs(tl), Math.abs(tr));
-        q2 = Math.min(Math.abs(bl), Math.abs(br));
-				break;
-			default:
-				return EMPTY;
-		}
-		var p = Math.abs(me.func(me.pts[0].x, me.pts[0].y));
-		var q = Math.abs(me.func(me.pts[1].x, me.pts[1].y));
-		if((p <= q1) && (q <= q2)) {
-			return VALID;
-		}
-		return EMPTY;
-	};
+    switch(zer) {
+      case 0:
+        var k = 0;
+        if(neg === pos && !oppSign(tl, br)) return T0101;
+        if(oppSign(tl, tr)) me.pts[k++] = new Point(interpolate(x1, x2, tl, tr), y1, k !== 0);
+        if(oppSign(tr, br)) me.pts[k++] = new Point(x2, interpolate(y1, y2, tr, br), k !== 0);
+        if(oppSign(br, bl)) me.pts[k++] = new Point(interpolate(x1, x2, bl, br), y2, k !== 0);
+        if(oppSign(bl, tl)) me.pts[k++] = new Point(x1, interpolate(y1, y2, tl, bl), k !== 0);
+        return VALID;
+      case 1:
+        if(neg === 3 || pos === 3) {
+          if(tl === 0.0) return createLine(x1, y1, x1, y1);
+          if(tr === 0.0) return createLine(x2, y1, x2, y1);
+          if(bl === 0.0) return createLine(x1, y2, x2, y2);
+          if(br === 0.0) return createLine(x2, y2, x2, y2);
+        }
+        if(tl === 0.0) {
+          if(oppSign(bl, br)) return createLine(x1, y1, interpolate(x1, x2, bl, br), y2);
+          if(oppSign(tr, br)) return createLine(x1, y1, x2, interpolate(y1, y1, tr, br));
+          return EMPTY;
+        }
+        if(tr === 0.0) {
+          if(oppSign(bl, br)) return createLine(interpolate(x1, x2, bl, br), y2, x2, y1);
+          if(oppSign(bl, tl)) return createLine(x1, interpolate(y1, y2, tl, bl), x2, y1);
+          return EMPTY;
+        }
+        if(br === 0.0) {
+          if(oppSign(tl, tr)) return createLine(interpolate(x1, x2, tl, tr), y1, x2, y2);
+          if(oppSign(tl, bl)) return createLine(x1, interpolate(y1, y2, tl, bl), x2, y2);
+          return EMPTY;
+        }
+        if(bl === 0.0) {
+          if(oppSign(tl, tr)) return createLine(x1, y2, interpolate(x1, x2, tl, tr), y1);
+          if(oppSign(tr, br)) return createLine(x1, y2, x2, interpolate(y1, y2, tr, br));
+          return EMPTY;
+        }
+        return EMPTY;
+      case 2:
+        if(pos === 2 || neg === 2) {
+          if(tl === 0.0) {
+            if(tr === 0.0) return createLine(x1, y1, x2, y1);
+            if(bl === 0.0) return createLine(x1, y1, x1, y2);
+          } else if(br === 0.0) {
+            if(tr === 0.0) return createLine(x2, y1, x2, y2);
+            if(bl === 0.0) return createLine(x1, y2, x2, y2);
+          }
+        } else {
+          if(tr === 0.0 && bl === 0.0) return createLine(x1, y2, x2, y1);
+          if(tl === 0.0 && br === 0.0) return createLine(x1, y1, x2, y2);
+        }
+        return EMPTY;
+    }
+  };
 
-	me.append = function(r, d) {
-		var cfg = me.create(r, d);
-		if(cfg === VALID) {
-			if(me.pts[0].x > me.pts[1].x) {
-				var temp = me.pts[0]; me.pts[0] = me.pts[1]; me.pts[1] = temp;
-			}
-			var inx1 = -1, inx2 = -1;
+  me.append = function(r) {
+    var cfg = me.create(r);
+    if(cfg === VALID) {
+      if(me.pts[0].x > me.pts[1].x) {
+        var temp = me.pts[0]; me.pts[0] = me.pts[1]; me.pts[1] = temp;
+      }
+      var inx1 = -1, inx2 = -1;
 
-			for(var i = 0; i < me.openList.length; i++) {
-				if(me.pts[1].equals(me.openList[i].start)) {
-					inx1 = i; 
+      for(var i = 0; i < me.openList.length; i++) {
+        if(me.pts[1].equals(me.openList[i].start)) {
+          inx1 = i; 
           break;
-				}
-			}
-			
-			for(var i = 0; i < me.openList.length; i++) {
-				if(me.pts[0].equals(me.openList[i].end)) {
-					inx2 = i;
-					break;
-				}
-			}
+        }
+      }
+      
+      for(var i = 0; i < me.openList.length; i++) {
+        if(me.pts[0].equals(me.openList[i].end)) {
+          inx2 = i;
+          break;
+        }
+      }
 
-			if(inx1 !== -1 && inx2 !== -1) {
-				me.openList[inx2].merge(me.openList[inx1]);
-				me.openList.splice(inx1, 1);
-			} else if(inx1 !== -1) {
-				me.openList[inx1].unshift(me.pts[0]);
-			} else if(inx2 !== -1) {
-				me.openList[inx2].push(me.pts[1]);
-			} else {
-				me.openList.push(new PointList(me.pts[0], me.pts[1]));
-			}
+      if(inx1 !== -1 && inx2 !== -1) {
+        me.openList[inx2].merge(me.openList[inx1]);
+        me.openList.splice(inx1, 1);
+      } else if(inx1 !== -1) {
+        me.openList[inx1].unshift(me.pts[0]);
+      } else if(inx2 !== -1) {
+        me.openList[inx2].push(me.pts[1]);
+      } else {
+        me.openList.push(new PointList(me.pts[0], me.pts[1]));
+      }
       if(me.openList.length > LIST_THRESHOLD) {
         me.abortList();
       }
-		}
-		return cfg;
-	};
+    }
+    return cfg;
+  };
 
-	me.update = function(x1, y1, x2, y2, px, py) {
+  me.update = function(x1, y1, x2, y2, px, py) {
     x1 -= 0.25 * Math.PI / px;
     me.sw = Math.min(MAX_SPLIT, Math.floor(px / RES_COARSE));
     me.sh = Math.min(MAX_SPLIT, Math.floor(py / RES_COARSE));
@@ -387,7 +390,7 @@ var Implicit = function(func, finish) {
         rect.eval[1] = vertices[j];
         rect.eval[2] = cur;
         rect.eval[3] = prev;
-        rect.status = config(rect);
+        rect.status = buildStatus(rect);
         vertices[j - 1] = prev;
         prev = cur;
       }
@@ -398,13 +401,13 @@ var Implicit = function(func, finish) {
 
     if (timer.elapse <= 10) {
       // Fast device optimize for UX
-      me.plotDepth = 3;
-      me.segmentCheckDepth = 2;
+      me.plotDepth = 2;
+      me.segmentCheckDepth = 1;
       LIST_THRESHOLD = 48;
     } else {
       // Slow device detected reduce parameters
-      me.plotDepth = 2;
-      me.segmentCheckDepth = 1;
+      me.plotDepth = 1;
+      me.segmentCheckDepth = 0;
       LIST_THRESHOLD = 24;
     }
 
@@ -424,7 +427,7 @@ var Implicit = function(func, finish) {
       // I can't do anything more. I've been working for 500 ms
       // Therefore I am tired
       return;
-    } else if (timer.elapse >= 300) {
+    } else if (timer.elapse >= 200) {
       // I am exhausted, reducing load!
       me.plotDepth -= 1;
       me.segmentCheckDepth -= 1;
@@ -443,24 +446,24 @@ var Implicit = function(func, finish) {
       }
     }
     me.abortList();
-		me.finish(me.segments);
-	};
+    me.finish(me.segments);
+  };
 
-	me.makeTree = function(r, d) {
-		var children = r.split();
-		me.plot(children[0], d);
-		me.plot(children[1], d);
-		me.plot(children[2], d);
-		me.plot(children[3], d);
-	};
+  me.makeTree = function(r, d) {
+    var children = r.split();
+    me.plot(children[0], d);
+    me.plot(children[1], d);
+    me.plot(children[2], d);
+    me.plot(children[3], d);
+  };
 
-	me.plot = function(r, d) {
-		if(d < me.segmentCheckDepth) {
-			me.makeTree(r, d + 1);
-			return;
-		}
-		var cfg = edgeConfig(r);
-    if(cfg !== EMPTY) {
+  me.plot = function(r, d) {
+    if(d < me.segmentCheckDepth) {
+      me.makeTree(r, d + 1);
+      return;
+    }
+    buildStatus(r);
+    if(!r.status.empty) {
       if(d >= me.plotDepth) {
         if(me.append(r, d === MAX_DEPTH) === T0101 && d < MAX_DEPTH) {
           me.makeTree(r, d + 1);
@@ -469,7 +472,7 @@ var Implicit = function(func, finish) {
         me.makeTree(r, d + 1);
       }
     }
-	};
+  };
  };
 
  var CanvasPlotter = function(canvas, func) {
@@ -487,12 +490,14 @@ var Implicit = function(func, finish) {
   me.tx = 0; me.ty = 0;
   me.isdown = false;
   me.mouseX = 0; me.mouseY = 0;
+  me.working = false;
 
   function attr(elem, name) {
     var atr = elem.getAttribute(name);
     if(atr !== undefined && atr !== null) return atr;
     return "";
   }
+
   me.mousedown = function(evt) {
     if(evt.button != 0) return;
     me.processEvt(evt);
@@ -593,6 +598,7 @@ var Implicit = function(func, finish) {
     me.plot = new Implicit(me.func, me.finish);
     me.plot.update(me.x1, me.y1, me.x2, me.y2, me.px, me.py);
   }
+
   me.canvas.addEventListener("mousedown", me.mousedown, false);
   me.canvas.addEventListener("mouseup", me.mouseup, false);
   me.canvas.addEventListener("mousemove", me.mousemove, false);

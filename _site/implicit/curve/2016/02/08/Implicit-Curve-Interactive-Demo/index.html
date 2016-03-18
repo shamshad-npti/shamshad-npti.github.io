@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Shamshad's Blog!</title>
+    <title>Implicit Curve Interactive Demo</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Irresistible Math! :)">
-    <link rel="canonical" href="/">
+    <link rel="canonical" href="/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,50 +53,36 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>Implicit Curve Interactive Demo</h1>
+    <p class="meta">Feb 8, 2016</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Feb 8, 2016</span>
-        <a class="post-link" href="/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/">Implicit Curve Interactive Demo</a>
-        <div>Interactive demo of implicit curve in html canvas using javascript</div>
-      </li>
-    
-      <li>
-        <span class="post-date">Feb 5, 2016</span>
-        <a class="post-link" href="/implicit/curve/2016/02/05/Error-Function-Minimization/">Error Function Minimization</a>
-        <div>Different techniques to minimize convex and non-convex error function</div>
-      </li>
-    
-      <li>
-        <span class="post-date">Jan 11, 2016</span>
-        <a class="post-link" href="/implicit/curve/2016/01/11/Marching-Cube/">Marching Cube Algorithm For Implicit Surface Plotting</a>
-        <div>Description of marching cube algorithm for surface plotting with some application in science and mathematics</div>
-      </li>
-    
-      <li>
-        <span class="post-date">Dec 19, 2015</span>
-        <a class="post-link" href="/implicit/curve/2015/12/19/Intersection-Between-Implicit-Cruve/">Intersection between Implicit Curves</a>
-        <div>Discussion on Newton's method and Broyden's method with some interesting application in geometry and machine learning ;-)</div>
-      </li>
-    
-      <li>
-        <span class="post-date">Oct 9, 2015</span>
-        <a class="post-link" href="/implicit/curve/2015/10/09/Implicit-curve/">Quadtree Algorithm for Implicit Curve Drawing</a>
-        <div>Explanation of quadtree algorithm for implicit curve drawing, and a brief overview of marching square, :-)</div>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+  <script type="text/javascript" src="/scripts/implicit.min.js"></script>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+<canvas id="paint" style="border: solid 1px green;" width="640" height="480"></canvas>
+<form>
+    Enter equation* (Not supported)
+    <input type="text" name="equation" value="|x*y| - 5 = 0" readonly="" />
+</form>
+<p><script type="math/tex">|xy| - 5 = 0</script>
+<script type="text/javascript">
+var canvas = document.getElementById("paint");
+var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
+cv.update();
+</script></p>
+
+  </article>
 
 </div>
-
       </div>
     </div>
+    
+    <div id="disqus_thread"></div>
+    <div class="spot-im-frame-inpage" data-post-id="/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo"></div>
     
     <footer class="site-footer">
 

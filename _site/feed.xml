@@ -5,9 +5,36 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 18 Mar 2016 00:50:32 +0530</pubDate>
-    <lastBuildDate>Fri, 18 Mar 2016 00:50:32 +0530</lastBuildDate>
+    <pubDate>Fri, 18 Mar 2016 21:31:53 +0530</pubDate>
+    <lastBuildDate>Fri, 18 Mar 2016 21:31:53 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
+    
+      <item>
+        <title>Implicit Curve Interactive Demo</title>
+        <description>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;canvas id=&quot;paint&quot; style=&quot;border: solid 1px green;&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
+&lt;form&gt;
+    Enter equation* (Not supported)
+    &lt;input type=&quot;text&quot; name=&quot;equation&quot; value=&quot;|x*y| - 5 = 0&quot; readonly=&quot;&quot; /&gt;
+&lt;/form&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;|xy| - 5 = 0&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var canvas = document.getElementById(&quot;paint&quot;);
+var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
+cv.update();
+&lt;/script&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Feb 2016 13:54:12 +0530</pubDate>
+        <link>/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/</link>
+        <guid isPermaLink="true">/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/</guid>
+        
+        
+        <category>implicit</category>
+        
+        <category>curve</category>
+        
+      </item>
     
       <item>
         <title>Error Function Minimization</title>
@@ -495,7 +522,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
         &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Time taken to iterate &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; times: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;  
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;// output : Time taken to execute 10000000 iteration: 20ms&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -504,7 +531,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    
+    &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Time taken to iterate &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot; times: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ms&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -609,18 +636,19 @@ However the first problem can’t be solve without exploring the tree further.&l
 &lt;hr /&gt;
 
 &lt;h2 id=&quot;javascript-implementation-of-quadtree-algorithm&quot;&gt;Javascript implementation of quadtree algorithm&lt;/h2&gt;
+&lt;p&gt;Try interactive demo &lt;a href=&quot;/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
-&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;canvas id=&quot;paint&quot; style=&quot;border: solid 1px green;&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
 &lt;form&gt;
     Enter equation* (Not supported)
-    &lt;input type=&quot;text&quot; name=&quot;equation&quot; value=&quot;2x^2+y^4-144=0&quot; readonly=&quot;&quot; /&gt;
+    &lt;input type=&quot;text&quot; name=&quot;equation&quot; value=&quot;|x*y|-5=0&quot; readonly=&quot;&quot; /&gt;
 &lt;/form&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;2x^2+y^4-144=0&lt;/script&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;|xy| - 5=0&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 var canvas = document.getElementById(&quot;paint&quot;);
-var cv = new CanvasPlotter(canvas, function(x, y){return y*y*y*y + 2 * x * x - 144;});
+var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
 cv.update();
 &lt;/script&gt;&lt;/p&gt;
 </description>

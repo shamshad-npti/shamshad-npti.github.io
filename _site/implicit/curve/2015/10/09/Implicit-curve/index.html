@@ -149,7 +149,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Time taken to iterate &quot;</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="s">&quot; times: &quot;</span> <span class="o">+</span> <span class="n">t</span><span class="o">);</span>
     <span class="o">}</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">now</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>  
+        <span class="k">return</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
 <span class="c1">// output : Time taken to execute 10000000 iteration: 20ms</span></code></pre></div>
@@ -158,7 +158,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="nx">z</span> <span class="o">=</span> <span class="mi">10000000</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">z</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">k</span><span class="o">++</span><span class="p">;</span>    
+    <span class="nx">k</span><span class="o">++</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="nx">time</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">time</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Time taken to iterate &quot;</span> <span class="o">+</span> <span class="nx">z</span> <span class="o">+</span> <span class="s2">&quot; times: &quot;</span> <span class="o">+</span> <span class="nx">time</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">);</span>
@@ -263,18 +263,19 @@ However the first problem can’t be solve without exploring the tree further.</
 <hr />
 
 <h2 id="javascript-implementation-of-quadtree-algorithm">Javascript implementation of quadtree algorithm</h2>
+<p>Try interactive demo <a href="/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/">here</a></p>
 
-<script type="text/javascript" src="/scripts/implicit.js"></script>
+<script type="text/javascript" src="/scripts/implicit.min.js"></script>
 
 <canvas id="paint" style="border: solid 1px green;" width="640" height="480"></canvas>
 <form>
     Enter equation* (Not supported)
-    <input type="text" name="equation" value="2x^2+y^4-144=0" readonly="" />
+    <input type="text" name="equation" value="|x*y|-5=0" readonly="" />
 </form>
-<p><script type="math/tex">2x^2+y^4-144=0</script>
+<p><script type="math/tex">|xy| - 5=0</script>
 <script type="text/javascript">
 var canvas = document.getElementById("paint");
-var cv = new CanvasPlotter(canvas, function(x, y){return y*y*y*y + 2 * x * x - 144;});
+var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
 cv.update();
 </script></p>
 

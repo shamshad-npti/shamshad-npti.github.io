@@ -102,7 +102,7 @@ public class PerformanceTest {
         System.out.println("Time taken to iterate " + z + " times: " + t);
     }
     public static long now() {
-        return System.currentTimeMillis();  
+        return System.currentTimeMillis();
     }
 }
 // output : Time taken to execute 10000000 iteration: 20ms
@@ -113,7 +113,7 @@ time = Date.now();
 k = 0;
 z = 10000000;
 for(i = 0; i < z; i++) {
-    k++;    
+    k++;
 }
 time = Date.now() - time;
 console.log("Time taken to iterate " + z + " times: " + time + "ms");
@@ -224,16 +224,17 @@ plot(x, y, dx, dy, depth) {
 
 Javascript implementation of quadtree algorithm
 ----
+Try interactive demo [here]({% post_url 2016-02-08-Implicit-Curve-Interactive-Demo %})
 
-<script type="text/javascript" src="{{ "/scripts/implicit.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/scripts/implicit.min.js" | prepend: site.baseurl }}"></script>
 <canvas id="paint" style="border: solid 1px green;" width="640" height="480"></canvas>
 <form>
     Enter equation* (Not supported)
-    <input type="text" name="equation" value="2x^2+y^4-144=0" readonly />
+    <input type="text" name="equation" value="|x*y|-5=0" readonly />
 </form>
-$$ 2x^2+y^4-144=0 $$
+$$ |xy| - 5=0 $$
 <script type="text/javascript">
 var canvas = document.getElementById("paint");
-var cv = new CanvasPlotter(canvas, function(x, y){return y*y*y*y + 2 * x * x - 144;});
+var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
 cv.update();
 </script>

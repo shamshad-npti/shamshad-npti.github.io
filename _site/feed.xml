@@ -5,13 +5,13 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 18 Mar 2016 21:31:53 +0530</pubDate>
-    <lastBuildDate>Fri, 18 Mar 2016 21:31:53 +0530</lastBuildDate>
+    <pubDate>Sat, 19 Mar 2016 02:43:18 +0530</pubDate>
+    <lastBuildDate>Sat, 19 Mar 2016 02:43:18 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
         <title>Implicit Curve Interactive Demo</title>
-        <description>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.min.js&quot;&gt;&lt;/script&gt;
+        <description>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.js&quot;&gt;&lt;/script&gt;
 
 &lt;canvas id=&quot;paint&quot; style=&quot;border: solid 1px green;&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
 &lt;form&gt;

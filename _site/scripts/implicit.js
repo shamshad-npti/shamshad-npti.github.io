@@ -338,10 +338,15 @@ var Implicit = function(func, finish) {
     return cfg;
   };
 
-  me.update = function(x1, y1, x2, y2, px, py) {
+  me.update = function(x1, y1, x2, y2, px, py, fast) {
     x1 -= 0.25 * Math.PI / px;
-    me.sw = Math.min(MAX_SPLIT, Math.floor(px / RES_COARSE));
-    me.sh = Math.min(MAX_SPLIT, Math.floor(py / RES_COARSE));
+    if(fast) {
+      me.sw = 8;
+      me.sh = 8;
+    } else {
+      me.sw = Math.min(MAX_SPLIT, Math.floor(px / RES_COARSE));
+      me.sh = Math.min(MAX_SPLIT, Math.floor(py / RES_COARSE));      
+    }
     if (me.sw == 0 || me.sh == 0) { return; }
     if (me.grid === null || me.grid.length !== me.sh || me.grid[0].length !== me.sw) {
       me.grid = [];
@@ -502,6 +507,7 @@ var Implicit = function(func, finish) {
     if(evt.button != 0) return;
     me.processEvt(evt);
     me.mouseX = me.mx; me.mouseY = me.my;
+    me.canvas.style = me.style + ";cursor: move;";
     me.isdown = true;
   };
 
@@ -514,20 +520,19 @@ var Implicit = function(func, finish) {
     dx /= me.tx; dy /= me.ty;
     me.x1 -= dx; me.x2 -= dx; 
     me.y1 += dy; me.y2 += dy;
-    me.canvas.style = me.style + ";cursor: move;";
-    me.update();
+    me.update(true);
   };
 
   me.mouseup = function(evt) {
     if(!me.isdown) return;
+    me.isdown = false;
     me.processEvt(evt);
     me.mx -= me.mouseX; me.my -= me.mouseY;
     me.mx /= me.tx; me.my /= me.ty;
     me.x1 -= me.mx; me.x2 -= me.mx; 
     me.y1 += me.my; me.y2 += me.my;
-    me.isdown = false;
     me.canvas.style = me.style;
-    me.update();
+    me.update(false);
   }
 
   me.processEvt = function(evt) {
@@ -590,17 +595,16 @@ var Implicit = function(func, finish) {
     me.ctx.stroke();
   }
 
-  me.update = function() {
+  me.update = function(fast = false) {
     me.px = canvas.scrollWidth;
     me.py = canvas.scrollHeight;
     me.tx = me.px / (me.x2 - me.x1);
     me.ty = me.py / (me.y2 - me.y1);
     me.plot = new Implicit(me.func, me.finish);
-    me.plot.update(me.x1, me.y1, me.x2, me.y2, me.px, me.py);
+    me.plot.update(me.x1, me.y1, me.x2, me.y2, me.px, me.py, fast);
   }
-
   me.canvas.addEventListener("mousedown", me.mousedown, false);
   me.canvas.addEventListener("mouseup", me.mouseup, false);
   me.canvas.addEventListener("mousemove", me.mousemove, false);
   document.body.addEventListener("mouseup", function() { me.isdown = false; }, false);
- };
+};

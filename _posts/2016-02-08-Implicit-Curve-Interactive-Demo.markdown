@@ -8,7 +8,7 @@ id: implicit_curve_demo
 comments: true
 ---
 
-<script type="text/javascript" src="{{ "/scripts/implicit.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/scripts/implicit.js" | prepend: site.baseurl }}"></script>
 <canvas id="paint" style="border: solid 1px green;" width="640" height="480"></canvas>
 <form>
     Enter equation* (Not supported)

@@ -5,25 +5,46 @@
     <description>Irresistible Math! :)</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 19 Mar 2016 02:43:18 +0530</pubDate>
-    <lastBuildDate>Sat, 19 Mar 2016 02:43:18 +0530</lastBuildDate>
+    <pubDate>Sun, 27 Mar 2016 18:07:53 +0530</pubDate>
+    <lastBuildDate>Sun, 27 Mar 2016 18:07:53 +0530</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
         <title>Implicit Curve Interactive Demo</title>
-        <description>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.js&quot;&gt;&lt;/script&gt;
+        <description>&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/math.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;/scripts/implicit.js&quot;&gt;&lt;/script&gt;
 
 &lt;canvas id=&quot;paint&quot; style=&quot;border: solid 1px green;&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
-&lt;form&gt;
-    Enter equation* (Not supported)
-    &lt;input type=&quot;text&quot; name=&quot;equation&quot; value=&quot;|x*y| - 5 = 0&quot; readonly=&quot;&quot; /&gt;
+&lt;form id=&quot;eq_form&quot;&gt;
+	&lt;input type=&quot;text&quot; placeholder=&quot;Equation&quot; name=&quot;equation&quot; id=&quot;equation&quot; /&gt;
+	&lt;span id=&quot;error&quot;&gt; &lt;/span&gt;
+	&lt;div style=&quot;font-size: smaller; color:#222; padding-top:20px;&quot;&gt;
+		&lt;div style=&quot;font-size: large;&quot;&gt;You may like to try following equation&lt;/div&gt;
+		&lt;div&gt;abs(x) + abs(y) - 6&lt;/div&gt;
+		&lt;div&gt;x^3 + y - 4&lt;/div&gt;
+		&lt;div&gt;x^4 + y^4 - x*y - 8&lt;/div&gt;
+	&lt;/div&gt;
 &lt;/form&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;|xy| - 5 = 0&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 var canvas = document.getElementById(&quot;paint&quot;);
-var cv = new CanvasPlotter(canvas, function(x, y){return Math.abs(x*y) - 5;});
-cv.update();
-&lt;/script&gt;&lt;/p&gt;
+var cv = new CanvasPlotter(canvas, function(x, y) {return -1;});
+var error = document.getElementById(&quot;error&quot;);
+document.getElementById(&quot;eq_form&quot;).addEventListener(&quot;submit&quot;, function(evt) {
+	evt.preventDefault();
+	try {
+		var eqn = document.getElementById(&quot;equation&quot;).value;
+		fn = math.eval(&quot;f(x, y) = &quot; + eqn);
+		cv.func = fn;
+		cv.update();
+		error.innerHTML = &quot;&quot;;
+	} catch(ex) {
+		error.innerHTML = &quot;Invalid input!&quot;;
+		console.log(&quot;Invalid equation!&quot;);
+	}
+});
+&lt;/script&gt;
+
 </description>
         <pubDate>Mon, 08 Feb 2016 13:54:12 +0530</pubDate>
         <link>/implicit/curve/2016/02/08/Implicit-Curve-Interactive-Demo/</link>

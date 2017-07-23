@@ -5,7 +5,7 @@ description: "Usual day to day stuffs"
 baseurl: ""
 url: ""
 twitter_username: shamshad_saraindia
-github_username:  shamshad.npti
+github_username:  shamshad-npti
 comments: true
 # Build settings
 markdown: kramdown

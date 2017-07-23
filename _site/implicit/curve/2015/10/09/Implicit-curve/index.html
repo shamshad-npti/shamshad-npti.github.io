@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Quadtree Algorithm for Implicit Curve Drawing</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Irresistible Math! :)">
+    <meta name="description" content="Usual day to day stuffs">
     <link rel="canonical" href="/implicit/curve/2015/10/09/Implicit-curve/">
 
     <!-- Custom CSS -->
@@ -116,7 +116,7 @@ cell has a curve segment. The square cells with curve segments are explored furt
 
 <p class="img"><img src="/assets/qtree.png" alt="Space exploration for |x| + |y| = 0" /><em>Figure 2: Space exploration for |x| - |y| = 0</em></p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">// this is pseudo code for quadtree algorithm</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// this is pseudo code for quadtree algorithm</span>
 <span class="nx">plot</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">dx</span><span class="p">,</span> <span class="nx">dy</span><span class="p">,</span> <span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">depth</span> <span class="o">&lt;</span> <span class="nx">SEARCH_DEPTH</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">dx</span> <span class="o">=</span> <span class="nx">dx</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">;</span>
@@ -145,7 +145,7 @@ cell has a curve segment. The square cells with curve segments are explored furt
 <p>I implemented this algorithm for <a href="http://www.geogebra.org" title="GeoGebra">GeoGebra</a> which supports a range of platform including desktop and web. The implemented algorithm worked fine on desktop however gui often became unresponsive when I tested the algorithm on GeoGebra Web. I tried some optimizations but they failed to work. Finally, I ran these diagonstics for java and javascript separately to discover the actual difference in performance on my 2.7 GHz, 8 GB Quad Core
 Dell notebook. It prohabited the algorithm from exploring the tree deeply in web view.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PerformanceTest</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PerformanceTest</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="n">now</span><span class="o">();</span>
         <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
@@ -164,7 +164,7 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 <span class="o">}</span>
 <span class="c1">// output : Time taken to execute 10000000 iteration: 20ms</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="nx">time</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">time</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
 <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="nx">z</span> <span class="o">=</span> <span class="mi">10000000</span><span class="p">;</span>
 <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">z</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -177,9 +177,9 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 <h4 id="bisection-vs-linear-interpolation">Bisection vs Linear Interpolation</h4>
 <p>Suppose the algorithm has detected a curve segment passing between two points <script type="math/tex">P(x, y)</script> and <script type="math/tex">Q(x, y)</script>. That is, the value evaluated at point <script type="math/tex">P</script> and <script type="math/tex">Q</script> have opposite sign. How can we approximate the curve between <script type="math/tex">P</script> and <script type="math/tex">Q</script>. There are two method - bisection, linear interpolation. In bisection method we take the mid-point of <script type="math/tex">P</script> and <script type="math/tex">Q</script>. Intuitively, it is not a good method, because if the value of funtion at <script type="math/tex">P</script> is more close to zero than that of function at <script type="math/tex">Q</script> then it is more likely that the curve is close to point <script type="math/tex">P</script>.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">// bisection method</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// bisection method</span>
 <span class="n">Point</span> <span class="nf">bisection</span><span class="o">(</span><span class="n">Point</span> <span class="n">p</span><span class="o">,</span> <span class="n">Point</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">q</span><span class="o">.</span><span class="na">y</span><span class="o">));</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Point</span><span class="o">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">q</span><span class="o">.</span><span class="na">y</span><span class="o">));</span>
 <span class="o">}</span></code></pre></div>
 
 <p>Let’s assume that <script type="math/tex">PQ</script> is parallel to x-axis and that <script type="math/tex">P = (x_1, y)</script> and <script type="math/tex">Q = (x_2, y)</script>. Let <script type="math/tex">R = (x_r, y)</script> be a point on <script type="math/tex">PQ</script> where function evaluate to zero and <script type="math/tex">M = mid(P, Q)</script> be the mid point of <script type="math/tex">P</script> and <script type="math/tex">Q</script>.</p>
@@ -207,13 +207,13 @@ Dell notebook. It prohabited the algorithm from exploring the tree deeply in web
 <p>Here the error term in approxmation is <script type="math/tex">O({\epsilon_1}^2 - {\epsilon_2}^2)</script> which is quadratic and therfore smaller than that of the bisection method for <script type="math/tex">% <![CDATA[
 \epsilon_1, \epsilon_2 < 1.0 %]]></script></p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="c1">// code for linear interpolation</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// code for linear interpolation</span>
 <span class="kd">public</span> <span class="n">Point</span> <span class="nf">interpolateX</span><span class="o">(</span><span class="n">Point</span> <span class="n">p1</span><span class="o">,</span> <span class="n">Point</span> <span class="n">p2</span><span class="o">,</span> <span class="kt">double</span> <span class="n">f1</span><span class="o">,</span> <span class="kt">double</span> <span class="n">f2</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="n">f2</span> <span class="o">-</span> <span class="n">f1</span><span class="o">;</span>
     <span class="k">if</span><span class="o">(!</span><span class="n">Double</span><span class="o">.</span><span class="na">isFinite</span><span class="o">(</span><span class="n">r</span><span class="o">)</span> <span class="o">||</span> <span class="n">Double</span><span class="o">.</span><span class="na">isNan</span><span class="o">(</span><span class="n">r</span><span class="o">)</span> <span class="o">||</span> <span class="n">isZero</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">eps</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">bisection</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nf">bisection</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span>
     <span class="o">}</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">f2</span> <span class="o">*</span> <span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">p1</span><span class="o">.</span><span class="na">x</span><span class="o">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">,</span> <span class="n">p1</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Point</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">f2</span> <span class="o">*</span> <span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">p1</span><span class="o">.</span><span class="na">x</span><span class="o">)</span> <span class="o">/</span> <span class="n">r</span><span class="o">,</span> <span class="n">p1</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
 <span class="o">}</span></code></pre></div>
 
 <h3 id="limitations">Limitations</h3>
@@ -225,7 +225,7 @@ However the first problem can’t be solve without exploring the tree further.</
 <h3 id="improvement-in-quadtree">Improvement in quadtree</h3>
 <p>To improve the algorithm we need to maintain gradient information and share information among neighbors. Both can increase the complexity if evaluated at each level of the tree.Therefore, combined idea of marching cube and quadtree is used. The function and its gradient is evalauted at the <code>SEARCH_DEPTH</code>. The gradients tend to zero near singularity. If gradients are too close to zero the algorithm mark the cell as singular. The algorithm when proceed beyond the <code>SEARCH_DEPTH</code>, it checks the neiborhood and mark them whenever it add a segment.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="c1">// pseudo code of modified quadtree algorithm</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// pseudo code of modified quadtree algorithm</span>
 <span class="c1">// grid is an nxn array</span>
 <span class="c1">// grid status can be : </span>
 <span class="c1">// singular, empty, finished</span>
@@ -353,7 +353,7 @@ cv.update();
     </div>
 
     <div class="footer-col-3 column">
-      <p class="text">Irresistible Math! :)</p>
+      <p class="text">Usual day to day stuffs</p>
     </div>
 
   </div>
